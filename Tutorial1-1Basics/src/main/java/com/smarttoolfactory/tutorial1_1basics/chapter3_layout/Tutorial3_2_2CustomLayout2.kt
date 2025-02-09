@@ -51,16 +51,16 @@ private fun TutorialContent() {
             .verticalScroll(rememberScrollState())
     ) {
 
-        TutorialHeader(text = "CustomLayouts 2")
+        TutorialHeader(text = "Пользовательские Layout'ы 2")
         StyleableTutorialText(
-            text = "1-) Custom layouts can use an object that implements **MeasurePolicy** " +
-                    "interface. This example uses"
+            text = "1) Пользовательские лейауты могут использовать объект, который " +
+                    "реализует интерфейс **MeasurePolicy**. В этом примере мы рассмотрим такой подход."
         )
 
-        TutorialText2(text = "CustomLayout with fillMaxWidth")
+        TutorialText2(text = "Пользовательский лейаут с fillMaxWidth")
 
-        // This layout that will occupy twice as much space as its children,
-        // and will position them to be bottom right aligned.
+        // Этот лейаут занимает в два раза больше места, чем суммарные габариты
+        // его дочерних элементов, и выравнивает их по нижнему правому углу.
         CustomLayout(
             modifier = Modifier
                 .padding(8.dp)
@@ -70,19 +70,19 @@ private fun TutorialContent() {
         ) {
             Column(modifier = Modifier.background(Color.LightGray)) {
                 Text(
-                    "First Text",
+                    "Первый текст",
                     modifier = Modifier
                         .background(Color(0xffF44336)),
                     color = Color.White
                 )
                 Text(
-                    "Second Text",
+                    "Второй текст",
                     modifier = Modifier
                         .background(Color(0xff9C27B0)),
                     color = Color.White
                 )
                 Text(
-                    "Third Text",
+                    "Третий текст",
                     modifier = Modifier
                         .background(Color(0xff2196F3)),
                     color = Color.White
@@ -90,7 +90,7 @@ private fun TutorialContent() {
             }
         }
 
-        TutorialText2(text = "CustomLayout with no width Modifier")
+        TutorialText2(text = "Пользовательский лейаут без модификатора ширины")
         CustomLayout(
             modifier = Modifier
                 .padding(8.dp)
@@ -99,19 +99,19 @@ private fun TutorialContent() {
         ) {
             Column(modifier = Modifier.background(Color.LightGray)) {
                 Text(
-                    "First Text",
+                    "Первый текст",
                     modifier = Modifier
                         .background(Color(0xffF44336)),
                     color = Color.White
                 )
                 Text(
-                    "Second Text",
+                    "Второй текст",
                     modifier = Modifier
                         .background(Color(0xff9C27B0)),
                     color = Color.White
                 )
                 Text(
-                    "Third Text",
+                    "Третий текст",
                     modifier = Modifier
                         .background(Color(0xff2196F3)),
                     color = Color.White
@@ -120,17 +120,19 @@ private fun TutorialContent() {
         }
 
         StyleableTutorialText(
-            text = "2-) Intrinsic dimensions can be used to set dimensions like placeholders" +
-                    "which a Composable recursively checks children to find suitable one. Even" +
-                    "if this is a column is laid out with total height of its children " +
-                    "setting fixed(this is for demonstration) min and max intrinsic heights " +
-                    "forces to the space according to intrinsic value not actual height."
+            text = "2) Вложенные размеры (intrinsic dimensions) можно использовать, чтобы " +
+                    "установить габариты наподобие placeholder'ов. Компонент рекурсивно " +
+                    "опрашивает дочерние элементы, чтобы найти подходящее значение. Даже " +
+                    "если это Column, выложенный по сумме высот дочерних элементов, " +
+                    "установка (для демонстрации) фиксированных значений в min/max intrinsic " +
+                    "height приведёт к тому, что свободное пространство будет подгоняться " +
+                    "под эти значения, а не под реальную высоту."
         )
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            TutorialText2(text = "No height Modifier")
+            TutorialText2(text = "Без модификатора высоты")
             CustomColumnWithIntrinsicDimensions(
                 modifier = Modifier
                     .width(100.dp)
@@ -138,13 +140,13 @@ private fun TutorialContent() {
                     .padding(4.dp)
             ) {
                 Text(
-                    "First Text",
+                    "Первый текст",
                     modifier = Modifier
                         .background(Color(0xffF44336)),
                     color = Color.White
                 )
                 Text(
-                    "Second Text",
+                    "Второй текст",
                     modifier = Modifier
                         .background(Color(0xff9C27B0)),
                     color = Color.White
@@ -160,13 +162,13 @@ private fun TutorialContent() {
                     .padding(4.dp)
             ) {
                 Text(
-                    "First Text",
+                    "Первый текст",
                     modifier = Modifier
                         .background(Color(0xffF44336)),
                     color = Color.White
                 )
                 Text(
-                    "Second Text",
+                    "Второй текст",
                     modifier = Modifier
                         .background(Color(0xff9C27B0)),
                     color = Color.White
@@ -182,22 +184,22 @@ private fun TutorialContent() {
                     .padding(4.dp)
             ) {
                 Text(
-                    "First Text",
+                    "Первый текст",
                     modifier = Modifier
                         .background(Color(0xffF44336)),
                     color = Color.White
                 )
                 Text(
-                    "Second Text",
+                    "Второй текст",
                     modifier = Modifier
                         .background(Color(0xff9C27B0)),
                     color = Color.White
                 )
             }
 
-            TutorialText2(text = "height(IntrinsicSize.Min) siblings")
+            TutorialText2(text = "height(IntrinsicSize.Min) у братьев (siblings)")
 
-            // 🔥🔥 Height is determined by biggest Intrinsic.Min provided by Layouts
+            // 🔥🔥 Высота определяется наибольшим IntrinsicSize.Min, который вернули Layout'ы
             Row(
                 modifier = Modifier
                     .height(IntrinsicSize.Min)
@@ -206,39 +208,34 @@ private fun TutorialContent() {
 
                 CustomColumnWithIntrinsicDimensions(
                     modifier = Modifier
-                        // This effects height of this composable
-                        // Parent height comes from the one in Layout by comparing
-                        // it with other Composable's intrinsic height
-                        // Even without this parent will have same height
+                        // Это влияет на высоту этого компонента
+                        // Родительская высота определяется сравнением с другими,
+                        // чтобы определить наибольший IntrinsicSize
                         .height(IntrinsicSize.Min)
                         .width(100.dp)
                         .background(Blue400)
                         .padding(4.dp)
                 ) {
                     Text(
-                        "First Text",
+                        "Первый текст",
                         modifier = Modifier
                             .background(Color(0xffF44336)),
                         color = Color.White
                     )
-
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
 
                 CustomColumnWithIntrinsicDimensions2(
                     modifier = Modifier
-                        // This effects height of this composable
-                        // Parent height comes from the one in Layout by comparing
-                        // it with other Composable's intrinsic height
-                        // Even without this parent will have same height
+                        // Аналогично
                         .height(IntrinsicSize.Min)
                         .width(100.dp)
                         .background(Yellow400)
                         .padding(4.dp)
                 ) {
                     Text(
-                        "First Text",
+                        "Первый текст",
                         modifier = Modifier
                             .background(Color(0xffF44336)),
                         color = Color.White
@@ -246,8 +243,8 @@ private fun TutorialContent() {
                 }
             }
 
-            // 🔥🔥 Height is determined by biggest Intrinsic.Min provided by Layouts
-            TutorialText2(text = "height(IntrinsicSize.Max) siblings")
+            // 🔥🔥 Высота определяется наибольшим IntrinsicSize.Max, который вернули Layout'ы
+            TutorialText2(text = "height(IntrinsicSize.Max) у братьев (siblings)")
             Row(
                 modifier = Modifier
                     .border(1.dp, Color.Red)
@@ -256,17 +253,14 @@ private fun TutorialContent() {
 
                 CustomColumnWithIntrinsicDimensions(
                     modifier = Modifier
-                        // This effects height of this composable
-                        // Parent height comes from the one in Layout by comparing
-                        // it with other Composable's intrinsic height
-                        // Even without this parent will have same height
+                        // Это влияет на высоту этого компонента
                         .height(IntrinsicSize.Max)
                         .width(100.dp)
                         .background(Blue400)
                         .padding(4.dp)
                 ) {
                     Text(
-                        "First Text",
+                        "Первый текст",
                         modifier = Modifier
                             .border(2.dp, Green400)
                             .background(Color(0xffF44336)),
@@ -278,17 +272,14 @@ private fun TutorialContent() {
 
                 CustomColumnWithIntrinsicDimensions2(
                     modifier = Modifier
-                        // This effects height of this composable
-                        // Parent height comes from the one in Layout by comparing
-                        // it with other Composable's intrinsic height
-                        // Even without this parent will have same height
+                        // Аналогично
                         .height(IntrinsicSize.Max)
                         .width(100.dp)
                         .background(Yellow400)
                         .padding(4.dp)
                 ) {
                     Text(
-                        "First Text",
+                        "Первый текст",
                         modifier = Modifier
                             .border(2.dp, Brown400)
                             .background(Color(0xffF44336)),
@@ -306,51 +297,53 @@ private fun CustomLayout(
     content: @Composable () -> Unit
 ) {
 
-    // We build a layout that will occupy twice as much space as its children,
-    // and will position them to be bottom right aligned.
+    // Построим лейаут, занимающий вдвое больше места, чем суммарные габариты его дочерних элементов,
+    // и выравнивающий их по правому нижнему углу.
     val measurePolicy = MeasurePolicy { measurables, constraints ->
 
         println(
             "🔥 CustomLayout Constraints\n" +
-                    "minWidth ${constraints.minWidth}, " +
+                    "minWidth: ${constraints.minWidth}, " +
                     "maxWidth: ${constraints.maxWidth}, " +
                     "boundedWidth: ${constraints.hasBoundedWidth}, " +
                     "fixedWidth: ${constraints.hasFixedWidth}\n" +
-                    "minHeight ${constraints.minHeight}, " +
+                    "minHeight: ${constraints.minHeight}, " +
                     "maxHeight: ${constraints.maxHeight}, " +
                     "hasBoundedHeight: ${constraints.hasBoundedHeight}, " +
                     "hasFixedHeight: ${constraints.hasFixedHeight}\n"
         )
 
-        // measurables contain each element corresponding to each of our layout children.
-        // Constraints object contains min/max bounds that our parent is currently measuring
-        // child Composables with.
+        // measurables — это список элементов (каждый дочерний элемент) для нашего лейаута.
         val childConstraints = Constraints(
             minWidth = constraints.minWidth,
             minHeight = constraints.minHeight
         )
-        // Measure children with childConstraints
+        // Измеряем детей с childConstraints
         val placeables = measurables.map { it.measure(childConstraints) }
 
-        // We set dimension of this Composable that contains child Composable to
-        // double width and height of longest and tallest composables
+        // Определяем размеры текущего лейаута: двойная ширина и высота
+        // самого широкого и самого высокого дочернего элемента
         val layoutWidth = (placeables.maxByOrNull { it.width }?.width ?: 0) * 2
         val layoutHeight = (placeables.maxByOrNull { it.height }?.height ?: 0) * 2
 
-        // We call layout to set the size of the current layout and to provide the positioning
-        // of the children. The children are placed relative to the current layout place.
         layout(layoutWidth, layoutHeight) {
+            // Размещаем детей в правом нижнем углу
             placeables.forEach {
-                it.placeRelative(layoutWidth - it.width, layoutHeight - it.height)
+                it.placeRelative(
+                    x = layoutWidth - it.width,
+                    y = layoutHeight - it.height
+                )
             }
         }
     }
+
     Layout(modifier = modifier, content = content, measurePolicy = measurePolicy)
 }
 
 /**
- * CustomColumn same as in previous tutorial except with Intrinsic Height that
- * overrides its children's total height with fixed values set for this example
+ * CustomColumn из предыдущего урока, но с Intrinsic Height,
+ * где minIntrinsicHeight и maxIntrinsicHeight возвращают
+ * некоторый статический размер (для демонстрации).
  */
 @Composable
 fun CustomColumnWithIntrinsicDimensions(
@@ -375,7 +368,7 @@ fun CustomColumnWithIntrinsicDimensions(
                 it.height
             }
 
-            // 🔥 This can be sum or longest of Composable widths, or maxWidth of Constraints
+            // 🔥 Можно также взять максимум ширины Composable или maxWidth Constraints
             val maxWidth: Int = placeables.maxOf {
                 it.width
             }
@@ -394,8 +387,7 @@ fun CustomColumnWithIntrinsicDimensions(
         ): Int {
 
             println("🍏 minIntrinsicHeight() width: $width, measurables: ${measurables.size}")
-            // 🔥 This is just sample to show usage of minIntrinsicHeight, don't set
-            // static values
+            // 🔥 Для примера возвращаем статическое значение
             return 200
         }
 
@@ -405,9 +397,7 @@ fun CustomColumnWithIntrinsicDimensions(
         ): Int {
 
             println("🍎 maxIntrinsicHeight() width: $width, measurables: ${measurables.size}")
-
-            // 🔥 This is just sample to show usage of maxIntrinsicHeight, don't set
-            // static values
+            // 🔥 Для примера возвращаем статическое значение
             return 400
         }
     }
@@ -417,8 +407,8 @@ fun CustomColumnWithIntrinsicDimensions(
 
 
 /**
- * CustomColumn with smaller `minIntrinsicHeight`
- * and bigger `maxIntrinsicHeight
+ * CustomColumn, где minIntrinsicHeight возвращает меньшее значение,
+ * а maxIntrinsicHeight — большее.
  */
 @Composable
 fun CustomColumnWithIntrinsicDimensions2(
@@ -443,7 +433,6 @@ fun CustomColumnWithIntrinsicDimensions2(
                 it.height
             }
 
-            // 🔥 This can be sum or longest of Composable widths, or maxWidth of Constraints
             val maxWidth: Int = placeables.maxOf {
                 it.width
             }
@@ -462,8 +451,7 @@ fun CustomColumnWithIntrinsicDimensions2(
         ): Int {
 
             println("🚙 minIntrinsicHeight() width: $width, measurables: ${measurables.size}")
-            // 🔥 This is just sample to show usage of minIntrinsicHeight, don't set
-            // static values
+            // 🔥 Для примера возвращаем статическое значение (не делать так в реальном коде)
             return 80
         }
 
@@ -473,9 +461,7 @@ fun CustomColumnWithIntrinsicDimensions2(
         ): Int {
 
             println("🚗 maxIntrinsicHeight() width: $width, measurables: ${measurables.size}")
-
-            // 🔥 This is just sample to show usage of maxIntrinsicHeight, don't set
-            // static values
+            // 🔥 Для примера возвращаем статическое значение (не делать так в реальном коде)
             return 500
         }
     }

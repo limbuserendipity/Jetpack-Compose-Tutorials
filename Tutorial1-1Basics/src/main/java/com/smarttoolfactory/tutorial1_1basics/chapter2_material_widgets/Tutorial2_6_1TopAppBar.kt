@@ -94,7 +94,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "1-) TopAppbar with IconButtons as Toolbar menus in classic Views"
+                    text = "1-) TopAppbar с IconButtons как меню Toolbar в классических View"
                 )
             }
             item {
@@ -102,7 +102,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
             }
             item {
                 StyleableTutorialText(
-                    text = "2-) TopAppbar with Overflow menu"
+                    text = "2-) TopAppbar с Overflow-меню"
                 )
             }
             item {
@@ -115,7 +115,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "3-) Fixed tabs only with text. **TabRow** is our fixed Row with equal size for each tab that contains tabs."
+                    text = "3-) Фиксированные вкладки только с текстом. **TabRow** — это наша фиксированная Row с равным размером для каждой вкладки."
                 )
             }
             item {
@@ -124,7 +124,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "4-) Fixed tabs only with icon"
+                    text = "4-) Фиксированные вкладки только с иконкой"
                 )
             }
             item {
@@ -133,7 +133,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "5-) Fixed tabs with text and icon"
+                    text = "5-) Фиксированные вкладки с текстом и иконкой"
                 )
             }
             item {
@@ -142,7 +142,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "6-) Fixed tabs with horizontally placed text and icon"
+                    text = "6-) Фиксированные вкладки с горизонтально расположенными текстом и иконкой"
                 )
             }
             item {
@@ -150,7 +150,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
             }
             item {
                 StyleableTutorialText(
-                    text = "7-) Scrollable tabs"
+                    text = "7-) Прокручиваемые вкладки (Scrollable tabs)"
                 )
             }
             item {
@@ -158,7 +158,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
             }
             item {
                 StyleableTutorialText(
-                    text = "8-) Custom tabs"
+                    text = "8-) Пользовательские вкладки (Custom tabs)"
                 )
             }
             item {
@@ -167,7 +167,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "9-) TopAppBar and Tabs"
+                    text = "9-) TopAppBar и вкладки"
                 )
             }
             item {
@@ -176,12 +176,12 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 
             item {
                 StyleableTutorialText(
-                    text = "10-) Whatsapp TopAppbar"
+                    text = "10-) TopAppbar в стиле Whatsapp"
                 )
             }
             item {
                 ChatAppbar(
-                    title = "Custom Chat",
+                    title = "Пользовательский чат",
                     description = "Alice, Brook, Jack, Jason, Brad, No Name User",
                     onBack = onBack
                 )
@@ -235,7 +235,6 @@ private fun ActionTopAppBarReview() {
 
 @Composable
 fun OverflowTopAppBar() {
-
     var showMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -326,10 +325,9 @@ private fun TopAppBarWithTabComponentReview() {
 @Composable
 fun ActionMenu(
     items: List<ActionItemSpec>,
-    defaultIconSpace: Int = 3, // includes overflow menu
+    defaultIconSpace: Int = 3,
     menuExpanded: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
-    // decide how many ifRoom icons to show as actions
     val (actionItems, overflowItems) = remember(items, defaultIconSpace) {
         separateIntoActionAndOverflow(items, defaultIconSpace)
     }
@@ -350,7 +348,6 @@ fun ActionMenu(
             ) {
                 for (item in overflowItems) {
                     DropdownMenuItem(onClick = item.onClick) {
-                        //Icon(item.icon, item.name) just have text in the overflow menu
                         Text(item.name)
                     }
                 }
@@ -378,8 +375,8 @@ private fun ActionMenuReview() {
 
 @Composable
 fun ChatAppbar(
-    title: String = "Title",
-    description: String = "Description",
+    title: String = "Заголовок",
+    description: String = "Описание",
     onClick: (() -> Unit)? = null,
     onBack: (() -> Unit)? = null
 ) {
@@ -389,7 +386,6 @@ fun ChatAppbar(
         contentColor = Color.White
     )
     {
-
         Row(
             modifier = Modifier.weight(1f)
         ) {
@@ -508,4 +504,3 @@ private fun ChatAppbarActions(
         }
     }
 }
-

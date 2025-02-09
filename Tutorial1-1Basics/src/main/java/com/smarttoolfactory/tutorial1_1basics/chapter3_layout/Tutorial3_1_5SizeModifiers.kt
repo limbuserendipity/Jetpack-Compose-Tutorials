@@ -34,7 +34,7 @@ import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
 
 /*
-    Refer this answer for more details
+    Подробнее по теме см. по ссылке:
     https://stackoverflow.com/a/73316247/5457853
  */
 @Preview(showBackground = true)
@@ -55,21 +55,21 @@ private fun TutorialContent() {
         TutorialHeader(text = "Size Modifiers")
 
         StyleableTutorialText(
-            text = "SizeModifiers return min-max constraints range that " +
-                    "these composables are measured with. " +
-                    "Measurement takes into consideration these min-max range while " +
-                    "measuring, for instance if min=100dp, max=200dp. Content of Composable is " +
-                    "measured between 100dp and 200dp\n. " +
-                    "For example, a content with 30.dp width when measured with " +
-                    "widthIn(min=100, max=200) the width assigned is 100.dp. Because of this " +
-                    "sometimes it's required to change bounds with min=0, max= parent width" +
-                    "or Constraints.Infinity\n" +
-                    "In this example observe which modifier returns which Constraints to " +
-                    "be familiar with Constraints.",
-
+            text = "SizeModifiers возвращают диапазон min-max ограничений, " +
+                    "с которыми измеряются эти Composable. " +
+                    "При измерении учитывается этот диапазон min-max. " +
+                    "Например, если min=100dp, max=200dp, то содержимое Composable " +
+                    "измеряется между 100dp и 200dp.\n" +
+                    "Допустим, контент с шириной 30.dp при widthIn(min=100, max=200) " +
+                    "получит ширину 100.dp. Из-за этого иногда нужно изменять " +
+                    "границы (bounds) с min=0 или max=ширина родителя, " +
+                    "либо Constraints.Infinity.\n" +
+                    "В этом примере посмотрите, какие модификаторы " +
+                    "возвращают какие Constraints, чтобы понять, как это работает.",
             bullets = false
         )
-        // 🔥 Not vertical scroll returns Constraints.Infinity for maxHeight
+        // 🔥 Если бы не было вертикального скролла,
+        // то maxHeight могла бы быть Constraints.Infinity
         SizeModifierConstraintsSample()
         SizeInModifierSample()
         RequiredSizeModifierSample()
@@ -81,7 +81,7 @@ private fun TutorialContent() {
 private fun SizeModifierConstraintsSample() {
     Column(modifier = Modifier) {
 
-        TutorialText2(text = "No Dimension Modifier")
+        TutorialText2(text = "Без модификатора размера (No Dimension Modifier)")
 
         BoxWithConstraints(modifier = Modifier.background(Brown400)) {
             val hasBoundedWidth = constraints.hasBoundedWidth
@@ -103,7 +103,7 @@ private fun SizeModifierConstraintsSample() {
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-        TutorialText2(text = "FillMaxWidth and 200.dp Height")
+        TutorialText2(text = "FillMaxWidth и высота 200.dp")
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,7 +158,7 @@ private fun SizeModifierConstraintsSample() {
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-        TutorialText2(text = "200.dp Width and Height")
+        TutorialText2(text = "Ширина и высота по 200.dp")
         BoxWithConstraints(
             modifier = Modifier
                 .width(200.dp)
@@ -190,7 +190,7 @@ private fun SizeModifierConstraintsSample() {
 @Preview(showBackground = true)
 @Composable
 private fun SizeInModifierSample() {
-    TutorialText2(text = "200.dp WidthIn(min) and HeightIn(min)")
+    TutorialText2(text = "widthIn(min=200.dp) и heightIn(min=200.dp)")
     BoxWithConstraints(
         modifier = Modifier
             .widthIn(min = 200.dp)
@@ -221,7 +221,7 @@ private fun SizeInModifierSample() {
 @Composable
 private fun RequiredSizeModifierSample() {
     Column {
-        TutorialText2(text = "200.dp requiredWidth(min) and requiredHeight(min)")
+        TutorialText2(text = "requiredWidthIn(min=200.dp) и requiredHeightIn(min=200.dp)")
         BoxWithConstraints(
             modifier = Modifier
                 .requiredWidthIn(min = 200.dp)
@@ -247,7 +247,7 @@ private fun RequiredSizeModifierSample() {
             )
         }
 
-        TutorialText2(text = "200.dp defaultMinSize()")
+        TutorialText2(text = "defaultMinSize(200.dp)")
         BoxWithConstraints(
             modifier = Modifier
                 .defaultMinSize(200.dp)
@@ -272,7 +272,7 @@ private fun RequiredSizeModifierSample() {
             )
         }
 
-        TutorialText2(text = "200.dp WidthIn(max)")
+        TutorialText2(text = "widthIn(max=200.dp)")
         BoxWithConstraints(
             modifier = Modifier
                 .widthIn(max = 200.dp)

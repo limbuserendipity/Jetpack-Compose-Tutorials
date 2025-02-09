@@ -69,8 +69,8 @@ fun Tutorial2_12Screen() {
 
 @Composable
 private fun TutorialContent() {
-    // To show dialog we set one of the flags to true and set it back to false
-    // in onDismissRequest function of dialog.
+    // Чтобы отобразить диалог, мы устанавливаем один из флагов в true
+    // и переключаем его обратно в false в onDismissRequest диалога.
     var showAlertDialog by remember { mutableStateOf(false) }
     var showAlertDialogWithStyle by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
@@ -89,14 +89,15 @@ private fun TutorialContent() {
 
             TutorialHeader(text = "AlertDialog")
             StyleableTutorialText(
-                text = "1-) Alert dialogs interrupt users with urgent information, details, or actions."
+                text = "1-) Диалоги Alert прерывают работу пользователя срочной информацией, деталями или действиями."
             )
 
             OutlinedButton(
                 modifier = Modifier.fillMaxSize(),
                 onClick = {
                     showAlertDialog = !showAlertDialog
-                }) {
+                }
+            ) {
                 Text("AlertDialog")
 
                 if (showAlertDialog) {
@@ -112,8 +113,9 @@ private fun TutorialContent() {
                 modifier = Modifier.fillMaxSize(),
                 onClick = {
                     showAlertDialogWithStyle = !showAlertDialogWithStyle
-                }) {
-                Text("AlertDialog with Style")
+                }
+            ) {
+                Text("AlertDialog со стилем")
 
                 if (showAlertDialogWithStyle) {
                     AlertDialogExample2 {
@@ -127,15 +129,16 @@ private fun TutorialContent() {
 
             TutorialHeader(text = "Dialog")
             StyleableTutorialText(
-                text = "2-) Unlike **AlertDialog**, **Dialog** does not have slots fo " +
-                        "**dismissButton, confirmButton, or buttons**. " +
-                        "Allows customization of everything inside it."
+                text = "2-) В отличие от **AlertDialog**, **Dialog** не имеет слотов для " +
+                        "**dismissButton, confirmButton, или кнопок**. " +
+                        "Это позволяет полностью настраивать содержимое диалога."
             )
             OutlinedButton(
                 modifier = Modifier.fillMaxSize(),
                 onClick = {
                     showDialog = !showDialog
-                }) {
+                }
+            ) {
                 Text("Dialog")
 
                 if (showDialog) {
@@ -145,22 +148,22 @@ private fun TutorialContent() {
                 }
             }
 
-            TutorialText2(text = "Custom Dialog")
+            TutorialText2(text = "Пользовательский диалог")
 
             OutlinedButton(
                 modifier = Modifier.fillMaxSize(),
                 onClick = {
                     showCustomDialog = !showCustomDialog
-                }) {
-
-                Text("Custom Dialog")
+                }
+            ) {
+                Text("Пользовательский диалог")
 
                 if (showCustomDialog) {
                     CustomDialogExample(
                         onDismiss = {
                             showCustomDialog = !showCustomDialog
                             if (!isInPreview) {
-                                Toast.makeText(context, "Dialog dismissed!", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Диалог закрыт!", Toast.LENGTH_SHORT)
                                     .show()
                             }
                         },
@@ -169,7 +172,7 @@ private fun TutorialContent() {
                             if (!isInPreview) {
                                 Toast.makeText(
                                     context,
-                                    "Negative Button Clicked!",
+                                    "Нажата негативная кнопка!",
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
@@ -180,7 +183,7 @@ private fun TutorialContent() {
                             if (!isInPreview) {
                                 Toast.makeText(
                                     context,
-                                    "Positive Button Clicked!",
+                                    "Нажата позитивная кнопка!",
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
@@ -192,14 +195,14 @@ private fun TutorialContent() {
         }
 
         item {
-            TutorialText2(text = "Custom Dialog with Result")
+            TutorialText2(text = "Пользовательский диалог с результатом")
             OutlinedButton(
                 modifier = Modifier.fillMaxSize(),
                 onClick = {
                     showCustomDialogWithResult = !showCustomDialogWithResult
-                }) {
-
-                Text("Custom Dialog with Result")
+                }
+            ) {
+                Text("Пользовательский диалог с результатом")
 
                 if (showCustomDialogWithResult) {
                     CustomDialogWithResultExample(
@@ -207,7 +210,7 @@ private fun TutorialContent() {
                         onDismiss = {
                             showCustomDialogWithResult = !showCustomDialogWithResult
                             if (!isInPreview) {
-                                Toast.makeText(context, "Dialog dismissed!", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Диалог закрыт!", Toast.LENGTH_SHORT)
                                     .show()
                             }
                         },
@@ -216,7 +219,7 @@ private fun TutorialContent() {
                             if (!isInPreview) {
                                 Toast.makeText(
                                     context,
-                                    "Negative Button Clicked!",
+                                    "Нажата негативная кнопка!",
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
@@ -227,7 +230,7 @@ private fun TutorialContent() {
                             if (!isInPreview) {
                                 Toast.makeText(
                                     context,
-                                    "Selected color: $color",
+                                    "Выбран цвет: $color",
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
@@ -250,7 +253,7 @@ private fun AlertDialogExample(onDismiss: () -> Unit) {
                 modifier = Modifier
                     .padding(8.dp)
             ) {
-                Text(text = "Cancel")
+                Text(text = "Отмена")
             }
         },
         confirmButton = {
@@ -263,7 +266,7 @@ private fun AlertDialogExample(onDismiss: () -> Unit) {
             }
         },
         title = {
-            Text(text = "AlertDialog Title", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(text = "Заголовок AlertDialog", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         },
         text = {
             Text(text = dialogText)
@@ -273,21 +276,21 @@ private fun AlertDialogExample(onDismiss: () -> Unit) {
 
 @Composable
 private fun AlertDialogExample2(onDismiss: () -> Unit) {
-    // This example uses button Composable to create buttons instead of confirmButton and dismissButton
+    // В этом примере используется button Composable для создания кнопок, вместо confirmButton и dismissButton
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        // Properties used to customize the behavior of dialog
+        // Настройки, используемые для кастомизации поведения диалога
         properties = DialogProperties(
             dismissOnBackPress = true,
             dismissOnClickOutside = false,
             securePolicy = SecureFlagPolicy.Inherit
         ),
         title = {
-            Text("AlertDialog with Style", fontWeight = FontWeight.Bold)
+            Text("AlertDialog со стилем", fontWeight = FontWeight.Bold)
         },
         text = {
-            Text(text = "This dialog has buttons with custom style and aligned vertically as in Column. Properties set custom behaviour of a dialog such as dismissing when back button pressed or pressed outside of dialog")
+            Text(text = "У этого диалога кнопки с пользовательским стилем, расположенные вертикально, как в Column. Свойства задают пользовательское поведение диалога, например закрытие при нажатии кнопки назад или вне диалога.")
         },
         buttons = {
             OutlinedButton(
@@ -297,7 +300,7 @@ private fun AlertDialogExample2(onDismiss: () -> Unit) {
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = "Cancel")
+                Text(text = "Отмена")
             }
             Spacer(modifier = Modifier.width(8.dp))
             OutlinedButton(
@@ -333,7 +336,7 @@ private fun DialogExample(onDismiss: () -> Unit) {
             ) {
 
                 Text(
-                    text = "Dialog Title",
+                    text = "Заголовок диалога",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(8.dp)
@@ -362,7 +365,7 @@ private fun CustomDialogExample(
 
             Column {
 
-                // Header
+                // Шапка
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -375,15 +378,13 @@ private fun CustomDialogExample(
                         contentDescription = null,
                         modifier = Modifier
                             .graphicsLayer(scaleX = 1.2f, scaleY = 1.2f)
-                            .align(
-                                Alignment.Center
-                            )
+                            .align(Alignment.Center)
                     )
                 }
 
                 Column(modifier = Modifier.padding(16.dp)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text("To send a nearby place or your location, allow access to your location.")
+                        Text("Чтобы отправить место поблизости или свою геолокацию, разрешите доступ к вашим координатам.")
                     }
                     Row(
                         horizontalArrangement = Arrangement.End,
@@ -391,7 +392,7 @@ private fun CustomDialogExample(
                     ) {
 
                         Text(
-                            text = "NOT NOW", color = color,
+                            text = "НЕ СЕЙЧАС", color = color,
                             modifier = Modifier
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
@@ -403,7 +404,7 @@ private fun CustomDialogExample(
 
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "CONTINUE", color = color,
+                            text = "ПРОДОЛЖИТЬ", color = color,
                             modifier = Modifier
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
@@ -447,18 +448,17 @@ fun CustomDialogWithResultExample(
 
             val widthInDp = LocalDensity.current.run { maxWidth }
 
-
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Text(
-                    text = "Color",
+                    text = "Цвет",
                     color = Blue400,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 12.dp)
                 )
 
-                // Initial and Current Colors
+                // Начальный и текущий цвета
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -493,7 +493,7 @@ fun CustomDialogWithResultExample(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sliders
+                // Слайдеры
                 ColorSlider(
                     modifier = Modifier
                         .padding(start = 12.dp, end = 12.dp)
@@ -532,15 +532,13 @@ fun CustomDialogWithResultExample(
                 )
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Buttons
-
+                // Кнопки
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
                         .background(Color(0xffF3E5F5)),
                     verticalAlignment = Alignment.CenterVertically
-
                 ) {
 
                     TextButton(
@@ -549,7 +547,7 @@ fun CustomDialogWithResultExample(
                             .weight(1f)
                             .fillMaxHeight()
                     ) {
-                        Text(text = "CANCEL")
+                        Text(text = "ОТМЕНА")
                     }
                     TextButton(
                         modifier = Modifier
@@ -574,7 +572,7 @@ private fun DialogButtons(onDismiss: () -> Unit) {
             onClick = onDismiss,
             modifier = Modifier.padding(8.dp)
         ) {
-            Text(text = "Cancel")
+            Text(text = "Отмена")
         }
         TextButton(
             onClick = onDismiss,
@@ -586,9 +584,9 @@ private fun DialogButtons(onDismiss: () -> Unit) {
 }
 
 val dialogText = """
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown 
-    printer took a galley of type and scrambled it to make a type specimen book.
+    Lorem Ipsum — это текст-«рыба», часто используемый в печати и вэб-дизайне. 
+    Lorem Ipsum является стандартной «рыбой» для текстов на латинице с начала XVI века, когда 
+    неизвестный печатник взял шрифт и скомбинировал отдельные буквы так, чтобы получить макет текста.
 """.trimIndent()
 
 @Preview

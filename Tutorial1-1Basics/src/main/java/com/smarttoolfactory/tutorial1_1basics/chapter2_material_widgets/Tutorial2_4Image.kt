@@ -84,8 +84,8 @@ private fun TutorialContent() {
             TutorialHeader(text = "Image")
 
             StyleableTutorialText(
-                text = "1-) Image component lays out and draws a given  ImageBitmap, ImageVector," +
-                        "or Painter."
+                text = "1-) Компонент Image размещает и отрисовывает указанные ImageBitmap, ImageVector " +
+                        "или Painter."
             )
 
             ImageFromPainterExample()
@@ -93,57 +93,55 @@ private fun TutorialContent() {
             ImageFromImageBitmapExample()
 
             StyleableTutorialText(
-                text = "2-) With Canvas we can draw on a ImageBitmap and set ImageBitmap to an Image."
+                text = "2-) С помощью Canvas можно рисовать на ImageBitmap и устанавливать его в Image."
             )
 
             DrawOverImageBitmapExample()
             DrawOverImageBitmapExample2()
 
             StyleableTutorialText(
-                text = """3-) With androidx.compose.ui.graphics.Canvas 
-                    we can add a watermark on ImageBitmap and use this ImageBitmap for Image
-                    or save it into a file.
-                    """
+                text = "3-) С помощью androidx.compose.ui.graphics.Canvas можно добавить водяной знак на ImageBitmap, " +
+                        "использовать этот ImageBitmap в Image или сохранить его в файл."
             )
             DrawOnImageBitmapExample()
 
             StyleableTutorialText(
-                text = "4-) Set shape or/and filter for the Image."
+                text = "4-) Установите форму (shape) и/или фильтр для изображения."
             )
             ImageShapeAndFilterExample()
 
             StyleableTutorialText(
-                text = "5-) **graphicLayer** modifier to apply effects to content, such as scaling (scaleX, scaleY), rotation (rotationX, rotationY, rotationZ), opacity (alpha), shadow (shadowElevation, shape), and clipping (clip, shape)."
+                text = "5-) Модификатор graphicLayer применяется для добавления эффектов, таких как масштабирование (scaleX, scaleY), " +
+                        "вращение (rotationX, rotationY, rotationZ), прозрачность (alpha), тень (shadowElevation, shape) и обрезка (clip, shape)."
             )
             ImageGraphicLayer()
 
             StyleableTutorialText(
-                text = "6-) **graphicLayer** alpha set to .99 and **blendMode** set on **drawImage** can be used to " +
-                        "apply Porter Duff Modes to src and dst images"
+                text = "6-) graphicLayer с alpha = .99 и blendMode в drawImage можно использовать " +
+                        "для применения режимов Porter Duff Modes к изображениям src и dst."
             )
             ImageFromBlendMode()
 
 
             StyleableTutorialText(
-                text = "7) Use Glide library to fetch an image resource from network and " +
-                        "set it to Image component."
+                text = "7) Используйте библиотеку Glide для загрузки изображения из сети " +
+                        "и установки его в компонент Image."
             )
 
-            // Previews rendered within Android Studio cannot access Network to load images. Skipping this Composable while rendering Preview.
             if (!isInPreview) {
                 ImageDownloadWithGlideExample()
             }
 
             StyleableTutorialText(
-                text = "8) Use Coil library to fetch an image resource from network and " +
-                        "set it to Image component."
+                text = "8) Используйте библиотеку Coil для загрузки изображения из сети " +
+                        "и установки его в компонент Image."
             )
             ImageDownloadWithCoilExample()
 
 
             StyleableTutorialText(
-                text = "9-) ContentScale represents a rule to apply to scale a source " +
-                        "rectangle to be inscribed into a destination."
+                text = "9-) ContentScale задает правила масштабирования исходного " +
+                        "прямоугольника вмещающего в целевой прямоугольник."
             )
             ImageContentScaleExample()
         }
@@ -152,14 +150,16 @@ private fun TutorialContent() {
 
 @Composable
 private fun ImageFromPainterExample() {
-    TutorialText2(text = "Image from painterResource")
+    // Изображение из painterResource
+    TutorialText2(text = "Изображение из painterResource")
     val painter: Painter = painterResource(id = R.drawable.landscape1)
     Image(painter, contentDescription = null)
 }
 
 @Composable
 private fun ImageFromVectorDrawableExample() {
-    TutorialText2(text = "Image from vector Drawable")
+    // Изображение из векторного Drawable
+    TutorialText2(text = "Изображение из векторного Drawable")
     FullWidthRow(
         modifier = Modifier
             .background(Color.LightGray)
@@ -167,7 +167,7 @@ private fun ImageFromVectorDrawableExample() {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Painters from vector drawables
+        // Пейнтеры из векторных Drawable
         val vectorRes1: Painter = painterResource(id = R.drawable.vd_clock_alarm)
         Image(vectorRes1, modifier = Modifier.size(60.dp), contentDescription = null)
 
@@ -184,8 +184,8 @@ private fun ImageFromVectorDrawableExample() {
 
 @Composable
 fun ImageFromImageBitmapExample() {
-
-    TutorialText2(text = "Image from ImageBitmap")
+    // Изображение из ImageBitmap
+    TutorialText2(text = "Изображение из ImageBitmap")
 
     val imageBitmap = ImageBitmap.imageResource(
         LocalContext.current.resources,
@@ -197,8 +197,8 @@ fun ImageFromImageBitmapExample() {
 
 @Composable
 fun DrawOverImageBitmapExample() {
-
-    TutorialText2(text = "Draw over ImageBitmap with Painter")
+    // Рисование поверх ImageBitmap с использованием Painter
+    TutorialText2(text = "Рисование поверх ImageBitmap с использованием Painter")
 
     val imageBitmap: ImageBitmap = ImageBitmap.imageResource(
         LocalContext.current.resources,
@@ -222,13 +222,12 @@ fun DrawOverImageBitmapExample() {
     }
 
     Image(painter = customPainter, contentDescription = null)
-
 }
 
 @Composable
 fun DrawOverImageBitmapExample2() {
-
-    TutorialText2(text = "Draw over ImageBitmap with Canvas")
+    // Рисование поверх ImageBitmap с использованием Canvas
+    TutorialText2(text = "Рисование поверх ImageBitmap с использованием Canvas")
 
     val imageBitmap: ImageBitmap = ImageBitmap.imageResource(
         LocalContext.current.resources,
@@ -251,9 +250,8 @@ fun DrawOverImageBitmapExample2() {
             color = Color.Red.toArgb()
         }
 
-        // 🔥🔥 There is not a built-in function as of 1.0.0
-        // for drawing text so we get the native canvas to draw text and use a Paint object
-
+        // 🔥🔥 На момент версии 1.0.0 нет встроенной функции для рисования текста,
+        // поэтому мы берем нативный canvas для рисования текста и используем Paint
         drawContext.canvas.nativeCanvas.drawText(
             "Android",
             center.x,
@@ -262,12 +260,11 @@ fun DrawOverImageBitmapExample2() {
         )
     }
 
-
-    // 🔥 We get the exact Dp values using density for width and height of image which is in pixels
+    // 🔥 Получаем точные значения Dp, используя density, так как ширина и высота изображения в пикселях
     val (widthInDp, heightInDp) =
         LocalDensity.current.run { Pair(imageBitmap.width.toDp(), imageBitmap.height.toDp()) }
 
-    // 🔥 Used Stroke, instead of Fill for DrawStyle
+    // 🔥 Используем Stroke вместо Fill для DrawStyle
     androidx.compose.foundation.Canvas(
         modifier = Modifier
             .background(Color.Green)
@@ -279,8 +276,8 @@ fun DrawOverImageBitmapExample2() {
 
 @Composable
 private fun DrawOnImageBitmapExample() {
-
-    TutorialText2(text = "Draw on ImageBitmap and return it")
+    // Рисование непосредственно на ImageBitmap и возврат результата
+    TutorialText2(text = "Рисование непосредственно на ImageBitmap и возврат результата")
 
     val option = BitmapFactory.Options()
     option.apply {
@@ -294,10 +291,8 @@ private fun DrawOnImageBitmapExample() {
         option
     ).asImageBitmap()
 
-    // 🔥 This is a function that returns Canvas which can be used to draw on an
-    // ImageBitmap that was sent as param. ImageBitmap that returned can be
-    // be used to display on Image or can be saved to a physical file.
-
+    // 🔥 Это функция, которая возвращает Canvas, с помощью которого можно рисовать на ImageBitmap.
+    // Полученный ImageBitmap можно отобразить с помощью Image или сохранить в файл.
     val canvas: androidx.compose.ui.graphics.Canvas = Canvas(imageBitmap)
 
     val paint = remember {
@@ -305,7 +300,6 @@ private fun DrawOnImageBitmapExample() {
             style = PaintingStyle.Stroke
             strokeWidth = 10f
             color = Color(0xff29B6F6)
-
         }
     }
 
@@ -318,18 +312,17 @@ private fun DrawOnImageBitmapExample() {
     )
 
     Image(bitmap = imageBitmap, contentDescription = null)
-
 }
 
 @Composable
 private fun ImageShapeAndFilterExample() {
-
     val avatarBitmap1: Painter = painterResource(id = R.drawable.avatar_1_raster)
     val avatarBitmap2 = painterResource(id = R.drawable.avatar_2_raster)
     val avatarBitmap3 = painterResource(id = R.drawable.avatar_3_raster)
     val avatarBitmap4 = painterResource(id = R.drawable.avatar_4_raster)
 
-    TutorialText2(text = "Shape")
+    // Форма (Shape)
+    TutorialText2(text = "Форма (Shape)")
 
     FullWidthRow(
         modifier = Modifier.height(100.dp),
@@ -357,7 +350,7 @@ private fun ImageShapeAndFilterExample() {
             contentDescription = null
         )
 
-        // 🔥 Adding clip = true flag adds shadow and clips to shape
+        // 🔥 Установка clip = true добавляет тень и обрезает по форме
         Image(
             modifier = Modifier
                 .shadow(2.dp, diamondShape, clip = true),
@@ -366,7 +359,8 @@ private fun ImageShapeAndFilterExample() {
         )
     }
 
-    TutorialText2(text = "Color Filter")
+    // Цветовой фильтр (Color Filter)
+    TutorialText2(text = "Цветовой фильтр (Color Filter)")
     FullWidthRow(
         modifier = Modifier.height(100.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -412,20 +406,19 @@ private fun ImageFromBlendMode() {
         R.drawable.composite_dst
     )
 
-
     androidx.compose.foundation.Canvas(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            // Provide a slight opacity to for compositing into an
-            // offscreen buffer to ensure blend modes are applied to empty pixel information
-            // By default any alpha != 1.0f will use a compositing layer by default
+            // Небольшая прозрачность для компоновки в буфер "offscreen",
+            // чтобы режимы смешивания применялись к пустым пикселям.
+            // По умолчанию любой alpha != 1.0f будет использовать отдельный слой.
             .graphicsLayer(alpha = 0.99f)
     ) {
 
         val dimension = (size.height.coerceAtMost(size.width) * .9f).toInt()
 
-        // Images on left
+        // Изображение слева
         drawImage(
             image = imageBitmapDst,
             dstSize = IntSize(dimension, dimension)
@@ -436,7 +429,7 @@ private fun ImageFromBlendMode() {
             blendMode = BlendMode.SrcOut
         )
 
-        // Images on right
+        // Изображение справа
         drawImage(
             image = imageBitmapDst,
             dstOffset = IntOffset((size.width / 2f).toInt(), 0),
@@ -453,10 +446,10 @@ private fun ImageFromBlendMode() {
 
 @Composable
 private fun ImageGraphicLayer() {
-
     val avatarBitmap1: Painter = painterResource(id = R.drawable.avatar_1_raster)
 
-    TutorialText2(text = "Rotate")
+    // Поворот (Rotate)
+    TutorialText2(text = "Поворот (Rotate)")
 
     FullWidthRow(
         modifier = Modifier.height(100.dp),
@@ -500,7 +493,8 @@ private fun ImageGraphicLayer() {
         )
     }
 
-    TutorialText2(text = "Scale, Translate, Camera Distance")
+    // Масштаб (Scale), Перемещение (Translate), Расстояние до "камеры" (Camera Distance)
+    TutorialText2(text = "Масштаб, Перемещение, Расстояние до камеры")
 
     FullWidthRow(
         modifier = Modifier.height(100.dp),
@@ -557,7 +551,6 @@ fun ImageDownloadWithGlideExample() {
 
     val glide = Glide.with(context)
 
-
     val target = object : CustomTarget<Bitmap>() {
         override fun onLoadCleared(placeholder: Drawable?) {
             imageBitmap = null
@@ -587,7 +580,7 @@ fun ImageDownloadWithGlideExample() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         imageBitmap?.let { imgBitmap ->
-            // Image is a pre-defined composable that lays out and draws a given [ImageBitmap].
+            // Image — это предопределённый composable, который размещает и рисует [ImageBitmap].
             Image(bitmap = imgBitmap, contentDescription = null)
         }
     }
@@ -617,10 +610,8 @@ fun ImageDownloadWithCoilExample() {
             ),
             contentDescription = null
         )
-
     }
 }
-
 
 @Composable
 private fun ImageContentScaleExample() {
@@ -629,7 +620,6 @@ private fun ImageContentScaleExample() {
         .fillMaxWidth()
         .aspectRatio(4 / 3f)
         .background(Color.LightGray)
-
 
     val imageModifier2 = Modifier
         .fillMaxHeight()
@@ -640,12 +630,12 @@ private fun ImageContentScaleExample() {
 
         val painter = painterResource(id = R.drawable.landscape10)
 
-        TutorialText2(text = "Original")
-
+        // Оригинал
+        TutorialText2(text = "Оригинал")
         Image(painter = painter, contentDescription = null)
 
+        // ContentScale.None
         TutorialText2(text = "ContentScale.None")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -653,8 +643,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Crop
         TutorialText2(text = "ContentScale.Crop")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -662,8 +652,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillBounds
         TutorialText2(text = "ContentScale.FillBounds")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -671,8 +661,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillHeight
         TutorialText2(text = "ContentScale.FillHeight")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -680,8 +670,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillWidth
         TutorialText2(text = "ContentScale.FillWidth")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -689,8 +679,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Fit
         TutorialText2(text = "ContentScale.Fit")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -698,8 +688,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Inside
         TutorialText2(text = "ContentScale.Inside")
-
         Image(
             modifier = imageModifier,
             painter = painter,
@@ -707,17 +697,16 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
-
         val painter2: Painter = painterResource(id = R.drawable.landscape5)
 
-        TutorialText2(text = "Original")
-
+        // Оригинал
+        TutorialText2(text = "Оригинал")
         Image(
             painter = painter2, contentDescription = null
         )
 
+        // ContentScale.None
         TutorialText2(text = "ContentScale.None")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -725,8 +714,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Crop
         TutorialText2(text = "ContentScale.Crop")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -734,8 +723,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillBounds
         TutorialText2(text = "ContentScale.FillBounds")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -743,8 +732,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillHeight
         TutorialText2(text = "ContentScale.FillHeight")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -752,8 +741,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.FillWidth
         TutorialText2(text = "ContentScale.FillWidth")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -761,8 +750,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Fit
         TutorialText2(text = "ContentScale.Fit")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -770,8 +759,8 @@ private fun ImageContentScaleExample() {
             contentDescription = null
         )
 
+        // ContentScale.Inside
         TutorialText2(text = "ContentScale.Inside")
-
         Image(
             modifier = imageModifier2,
             painter = painter2,
@@ -788,17 +777,13 @@ private val diamondShape = GenericShape { size: Size, layoutDirection: LayoutDir
     lineTo(0f, size.height / 2f)
 }
 
-
 private val triangleShape = GenericShape { size: Size, layoutDirection: LayoutDirection ->
     val path = Path()
     path.apply {
-
         moveTo(0f, 0f)
         lineTo(size.width, 0f)
         lineTo(0f, size.height)
         lineTo(0f, 0f)
     }
-
     addPath(path = path)
 }
-

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 val boldRegex = Regex("(?<!\\*)\\*\\*(?!\\*).*?(?<!\\*)\\*\\*(?!\\*)")
 
 @Composable
-fun TutorialHeader(text: String, modifier: Modifier = Modifier) {
+fun   TutorialHeader(text: String, modifier: Modifier = Modifier) {
 
     Text(
         modifier = modifier

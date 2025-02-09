@@ -29,6 +29,14 @@ import com.smarttoolfactory.tutorial1_1basics.ui.ReceivedQuoteColor
 import com.smarttoolfactory.tutorial1_1basics.ui.SentMessageColor
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
+/*
+    В этом примере мы иллюстрируем использование Modifier.layout(...) для контроля порядка
+    измерения (measure) и размещения (layout), а также Modifier.onPlaced {...} и Modifier.onGloballyPositioned {...},
+    чтобы увидеть, как и когда вызываются колбеки по размещению и глобальной позиции.
+
+    Мы создаём три вложенных бокса (OUTER, MIDDLE, INNER), задаём им смещения (offsetX),
+    чтобы проверить, как LayoutModifier работает на разных стадиях, и фиксируем логи.
+ */
 
 @Preview(showBackground = true)
 @Composable
@@ -44,13 +52,14 @@ private fun TutorialContent() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TutorialHeader(text = "Constraints and Layout")
+        TutorialHeader(text = "Constraints и Layout")
 
         val density = LocalDensity.current
         val containerWidth = with(density) {
             800f.toDp()
         }
 
+        // Для примера выбрана ширина «хвостика» = 50 пикселей в dp
         val arrowWidth = with(density) {
             50f.toDp()
         }
@@ -61,16 +70,15 @@ private fun TutorialContent() {
                 .width(containerWidth)
                 .fillMaxHeight()
                 .background(Color(0xffFBE9E7))
-
         ) {
+            var message by remember { mutableStateOf("Наберите текст, чтобы увидеть переполнение") }
 
-            var message by remember { mutableStateOf("Type to monitor overflow") }
             StyleableTutorialText(
-                text = "In this example **Constraints.offset**, " +
-                        "**Constraints.constrainWidth/Height**, and **Modifier.layout** is used " +
-                        "to create bubbles with arrows in different positions. " +
-                        "Comment, offset, constrain to see effects with or without these functions",
-                bullets = false
+                text = "В этом примере используются **Constraints.offset**, " +
+                        "**Constraints.constrainWidth/Height** и **Modifier.layout**, " +
+                        "чтобы создавать «пузырьки» (bubbles) с «хвостиками» (arrows) в разных позициях. " +
+                        "Закомментируйте или раскомментируйте offset, constrain, " +
+                        "чтобы увидеть их влияние."
             )
 
             OutlinedTextField(
@@ -78,8 +86,8 @@ private fun TutorialContent() {
                     .padding(8.dp)
                     .fillMaxWidth(),
                 value = message,
-                label = { Text("Message") },
-                placeholder = { Text("Set text to change main width") },
+                label = { Text("Сообщение") },
+                placeholder = { Text("Измените текст, чтобы изменить ширину контента") },
                 onValueChange = { newValue: String ->
                     message = newValue
                 }

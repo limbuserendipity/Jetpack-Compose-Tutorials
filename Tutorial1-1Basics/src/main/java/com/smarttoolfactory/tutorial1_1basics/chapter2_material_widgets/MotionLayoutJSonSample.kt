@@ -88,7 +88,6 @@ fun MotionLayoutSample1() {
         modifier = Modifier.fillMaxSize()
     ) {
 
-
         MotionLayout(
             modifier = Modifier.fillMaxWidth()
                 .background(Color.Yellow)
@@ -102,15 +101,14 @@ fun MotionLayoutSample1() {
             debugFlags = DebugFlags.All
         ) {
 
-
             Button(
-                onClick = { /* Do something */ },
+                onClick = { /* Выполнить действие */ },
                 modifier = Modifier.layoutId(buttonId)
             ) {
-                Text("Button")
+                Text("Кнопка")
             }
 
-            Text("Text", Modifier.layoutId(textId))
+            Text("Текст", Modifier.layoutId(textId))
         }
 
         Button(
@@ -118,59 +116,56 @@ fun MotionLayoutSample1() {
                 show = show.not()
             }
         ) {
-            Text("Show $show")
+            Text("Показать $show")
         }
     }
 }
 
-// on below line we are creating
-// a motion layout button method.
+// ниже мы создаём метод кнопки для MotionLayout
 
 @Preview(showBackground = true)
 @Composable
 private fun MotionLayoutButtonTest() {
-    // on below line we are creating a box
+    // ниже мы создаём контейнер Box
     Box(
-        // in this box we are specifying a modifier
-        // and specifying a max size
+        // в этом Box указываем модификатор
+        // и задаём максимальный размер
         modifier = Modifier
             .fillMaxSize(),
 
-        // on below line we are specifying center alignment
+        // ниже указываем выравнивание по центру
         contentAlignment = Alignment.Center,
     ) {
-        // on below line we are calling
-        // motion layout button method.
+        // ниже вызываем метод MotionLayoutButton
         MotionLayoutButton()
     }
 }
 
 @Composable
 fun MotionLayoutButton() {
-    // on below line we are specifying animate button method.
+    // ниже мы задаём метод для анимации кнопки
     var animateButton by remember { mutableStateOf(false) }
-    // on below line we are specifying button animation progress
+    // ниже указываем прогресс анимации кнопки
     val buttonAnimationProgress by animateFloatAsState(
 
-        // specifying target value on below line.
+        // указываем целевое значение ниже
         targetValue = if (animateButton) 1f else 0f,
 
-        // on below line we are specifying
-        // animation specific duration's 1 sec
+        // ниже указываем длительность анимации 1 секунда
         animationSpec = tween(1000),
         label = ""
     )
 
-    // on below line we are creating a motion layout.
+    // ниже создаём MotionLayout
     MotionLayout(
-        // in motion layout we are specifying 2 constraint
-        // set for two different positions of buttons.
-        // in first constraint set we are specifying width,
-        // height start, end and top position of buttons.
+        // в MotionLayout указываем два набора ограничений
+        // для двух различных положений кнопок.
+        // в первом наборе ограничений указываем ширину,
+        // высоту, начало, конец и верхнюю позицию кнопок.
         ConstraintSet(
             """ {
-                // on below line we are specifying width,height and margin 
-                // from start, top and end for button1 
+                // ниже мы указываем ширину, высоту и отступ
+                // от начала, верха и конца для button1
                 button1: { 
                   width: "spread",
                   height: 120,
@@ -178,8 +173,8 @@ fun MotionLayoutButton() {
                   end: ['parent', 'end', 16],
                   top: ['parent', 'top', 0]
                 },
-                // on below line we are specifying width,height 
-                // and margin from start, top and end for button2
+                // ниже мы указываем ширину, высоту
+                // и отступ от начала, верха и конца для button2
                 button2: { 
                   width: "spread",
                   height: 120,
@@ -190,20 +185,20 @@ fun MotionLayoutButton() {
             } """
         ),
 
-        // in second constraint set we are specifying width,
-        // height start, end and top position of buttons.
+        // во втором наборе ограничений указываем ширину,
+        // высоту, начало, конец и верхнюю позицию кнопок.
         ConstraintSet(
             """ {
-                // on below line we are specifying width,height and margin
-                // from start, top and end for button1
+                // ниже мы указываем ширину, высоту и отступ
+                // от начала, верха и конца для button1
                 button1: { 
                   width: 150,
                   height: 120,
                   start: ['parent', 'start', 30],
                   end: ['button2', 'start', 10]
                 },
-                // on below line we are specifying width,height
-                // and margin from start, top and end for button2
+                // ниже мы указываем ширину, высоту
+                // и отступ от начала, верха и конца для button2
                 button2: { 
                   width: 150,
                   height: 120,
@@ -212,62 +207,55 @@ fun MotionLayoutButton() {
                 }
             } """
         ),
-        // on below line we are specifying
-        // progress for button animation
+        // ниже указываем прогресс анимации кнопки
         progress = buttonAnimationProgress,
-        // on below line we are specifying modifier
-        // for filling max width and content height.
+        // ниже указываем модификатор для
+        // заполнения всей ширины и высоты по содержимому
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        // on below line we are creating  a button.
+        // ниже создаём первую кнопку
         Button(
-            // on below line we are adding on click.
+            // ниже добавляем обработчик нажатия
             onClick = {
-                // inside on click we are animating button
-                // by simply changing animateButton variable
+                // внутри onClick анимируем кнопку
+                // изменяя переменную animateButton
                 animateButton = !animateButton
             },
-            // on below line we are
-            // specifying id for our button 1
+            // ниже указываем ID для кнопки 1
             modifier = Modifier.layoutId("button1")
         ) {
-            // on below line we are adding content
-            // inside our button in the form of column.
+            // ниже добавляем содержимое кнопки в виде столбца
             Column(
-                // in this column we are specifying a
-                // modifier with padding from all sides.
+                // в этом столбце указываем
+                // модификатор с отступами со всех сторон
                 modifier = Modifier
                     .padding(3.dp)
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                // on below line we are specifying vertical
-                // and horizontal arrangement for our column
+                // ниже указываем вертикальное и горизонтальное
+                // выравнивание для нашего столбца
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // on the below line we are specifying an image inside our column
+                // ниже добавляем изображение в столбец
                 Image(
-                    // on below line we are specifying
-                    // the drawable image for our image.
+                    // указываем drawable для изображения
                     painter = painterResource(id = R.drawable.avatar_1_raster),
 
-                    // on below line we are specifying
-                    // content description for our image
+                    // указываем описание изображения
                     contentDescription = "Python",
 
-                    // on below line we are setting
-                    // height and width for our image.
+                    // задаём ширину и высоту изображения
                     modifier = Modifier
                         .height(60.dp)
                         .width(60.dp)
                 )
-                // on below line we are adding spacer/
+                // ниже добавляем разделитель
                 Spacer(modifier = Modifier.height(5.dp))
 
-                // below spacer we are adding a
-                // simple text for displaying a text
+                // ниже добавляем текст
                 Text(
                     text = "Python",
                     color = Color.White,
@@ -276,60 +264,39 @@ fun MotionLayoutButton() {
             }
         }
 
-        // on the below line we are creating a button.
+        // ниже создаём вторую кнопку
         Button(
             onClick = {
-                // inside on click we are animating button
-                // by simply changing animateButton variable
                 animateButton = !animateButton
             },
-            // on below line we are specifying id for our button 2
+            // указываем ID для кнопки 2
             modifier = Modifier.layoutId("button2")
         ) {
             Column(
-                // in this column we are specifying
-                // a modifier with padding from all sides.
                 modifier = Modifier
                     .padding(3.dp)
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                // on below line we are specifying vertical
-                // and horizontal arrangement for our column
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // on below line we are specifying image inside our column
                 Image(
-                    // on below line we are specifying
-                    // the drawable image for our image.
                     painter = painterResource(id = R.drawable.avatar_2_raster),
-
-                    // on below line we are specifying
-                    // content description for our image
-                    contentDescription = "Javascript",
-
-                    // on below line we are setting
-                    // height and width for our image.
+                    contentDescription = "JavaScript",
                     modifier = Modifier
                         .height(60.dp)
                         .width(60.dp)
                 )
-                // on below line we are adding spacer/
                 Spacer(modifier = Modifier.height(5.dp))
-
-                // below spacer we are adding a
-                // simple text for displaying a text
                 Text(
                     text = "JavaScript",
                     color = Color.White,
                     fontSize = TextUnit(value = 18F, type = TextUnitType.Sp)
                 )
-
             }
         }
     }
 }
-
 
 @Preview(group = "motion8", showBackground = true)
 @Composable
@@ -350,37 +317,36 @@ fun AttributesRotationXY() {
                 .background(Color.White),
             motionScene = MotionScene(
                 """{
-                ConstraintSets: {   // all ConstraintSets
-                  start: {          // constraint set id = "start"
-                    a: {            // Constraint for widget id='a'
+                ConstraintSets: {
+                  start: {
+                    a: {
                       width: 40,
                       height: 40,
                       start: ['parent', 'start', 16],
                       bottom: ['parent', 'bottom', 16]
                     }
                   },
-                  end: {         // constraint set id = "start"
+                  end: {
                     a: {
                       width: 40,
                       height: 40,
-                      //rotationZ: 390,
                       end: ['parent', 'end', 16],
                       top: ['parent', 'top', 16]
                     }
                   }
                 },
-                Transitions: {            // All Transitions in here 
-                  default: {              // transition named 'default'
-                    from: 'start',        // go from Transition "start"
-                    to: 'end',            // go to Transition "end"
-                    pathMotionArc: 'startHorizontal',  // move in arc 
-                    KeyFrames: {          // All keyframes go here
-                      KeyAttributes: [    // keyAttributes key frames go here
+                Transitions: {
+                  default: {
+                    from: 'start',
+                    to: 'end',
+                    pathMotionArc: 'startHorizontal',
+                    KeyFrames: {
+                      KeyAttributes: [
                         {
-                          target: ['a'],              // This keyAttributes group target id "a"
-                          frames: [25,50,75],         // 3 points on progress 25% , 50% and 75%
-                          rotationX: [0, 45, 60],     // the rotationX angles are a spline from 0,0,45,60,0
-                          rotationY: [60, 45, 0],     // the rotationX angles are a spline from 0,60,45,0,0
+                          target: ['a'],
+                          frames: [25,50,75],
+                          rotationX: [0, 45, 60],
+                          rotationY: [60, 45, 0],
                         }
                       ]
                     }
@@ -399,7 +365,7 @@ fun AttributesRotationXY() {
         }
 
         Button(onClick = { animateToEnd = !animateToEnd }) {
-            Text(text = "Run")
+            Text(text = "Запустить")
         }
     }
 }

@@ -52,14 +52,15 @@ import com.smarttoolfactory.tutorial1_1basics.ui.ComposeTutorialsTheme
 fun TextTabComponent() {
     var selectedIndex by remember { mutableStateOf(0) }
 
-    val list = listOf("Home", "Map Screen", "Settings")
+    val list = listOf("Домой", "Экран карты", "Настройки")
 
-    TabRow(selectedTabIndex = selectedIndex,
+    TabRow(
+        selectedTabIndex = selectedIndex,
         indicator = { tabPositions: List<TabPosition> ->
 
             tabPositions.forEachIndexed { index, tabPosition ->
                 println(
-                    "index: $index, " +
+                    "индекс: $index, " +
                             "left: ${tabPosition.left}, " +
                             "right: ${tabPosition.right}, " +
                             "width: ${tabPosition.width}"
@@ -71,10 +72,12 @@ fun TextTabComponent() {
                     .myTabIndicatorOffset(tabPositions[selectedIndex])
                     .height(4.dp)
                     .background(color = Color.Red)
-            ) {}
-        }) {
+            )
+        }
+    ) {
         list.forEachIndexed { index, text ->
-            Tab(selected = selectedIndex == index,
+            Tab(
+                selected = selectedIndex == index,
                 onClick = { selectedIndex = index },
                 text = { Text(text = text) }
             )
@@ -118,19 +121,13 @@ private fun TextTabComponentPreview() {
 
 @Composable
 fun IconTabComponent() {
-
     var selectedIndex by remember { mutableStateOf(0) }
     val icons = listOf(Icons.Filled.Home, Icons.Filled.Map, Icons.Filled.Settings)
+
     TabRow(
         selectedTabIndex = selectedIndex,
         backgroundColor = Color(0xff546E7A),
         contentColor = Color(0xffF06292),
-//            divider = {
-//                TabRowDefaults.Divider(
-//                    thickness = 5.dp,
-//                    color = Color(0xffE0E0E0)
-//                )
-//            },
         indicator = { tabPositions: List<TabPosition> ->
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedIndex]),
@@ -145,7 +142,8 @@ fun IconTabComponent() {
                 onClick = { selectedIndex = index },
                 icon = {
                     Icon(imageVector = imageVector, contentDescription = null)
-                })
+                }
+            )
         }
     }
 }
@@ -162,21 +160,22 @@ private fun IconTabComponentPreview() {
 
 @Composable
 fun CombinedTabComponent() {
-
     var selectedIndex by remember { mutableStateOf(0) }
     val tabContents = listOf(
-        "Home" to Icons.Filled.Home,
-        "Map" to Icons.Filled.Map,
-        "Settings" to Icons.Filled.Settings
+        "Домой" to Icons.Filled.Home,
+        "Карта" to Icons.Filled.Map,
+        "Настройки" to Icons.Filled.Settings
     )
 
     TabRow(
         selectedTabIndex = selectedIndex,
         backgroundColor = MaterialTheme.colors.surface,
-        contentColor = MaterialTheme.colors.onSurface,
+        contentColor = MaterialTheme.colors.onSurface
     ) {
         tabContents.forEachIndexed { index, pair: Pair<String, ImageVector> ->
-            Tab(selected = selectedIndex == index, onClick = { selectedIndex = index },
+            Tab(
+                selected = selectedIndex == index,
+                onClick = { selectedIndex = index },
                 text = { Text(text = pair.first) },
                 icon = { Icon(imageVector = pair.second, contentDescription = null) }
             )
@@ -196,24 +195,19 @@ private fun CombinedTabComponentPreview() {
 
 @Composable
 fun CombinedTabComponent2() {
-
     var selectedIndex by remember { mutableStateOf(0) }
     val tabContents = listOf(
-        "Home" to Icons.Filled.Home,
-        "Map" to Icons.Filled.Map,
-        "Settings" to Icons.Filled.Settings
+        "Домой" to Icons.Filled.Home,
+        "Карта" to Icons.Filled.Map,
+        "Настройки" to Icons.Filled.Settings
     )
 
     TabRow(
-        divider = {
-
-        },
+        divider = {},
         selectedTabIndex = selectedIndex,
         backgroundColor = MaterialTheme.colors.surface,
-        contentColor = MaterialTheme.colors.onSurface,
+        contentColor = MaterialTheme.colors.onSurface
     ) {
-
-
         tabContents.forEachIndexed { index, pair: Pair<String, ImageVector> ->
             CustomTab(pair.first, pair.second, {
                 selectedIndex = index
@@ -221,6 +215,7 @@ fun CombinedTabComponent2() {
         }
     }
 }
+
 
 @Preview
 @Preview("dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -231,7 +226,6 @@ private fun CombinedTab2ComponentPreview() {
         CombinedTabComponent2()
     }
 }
-
 
 @Composable
 private fun CustomTab(
@@ -262,7 +256,7 @@ private fun CustomTab(
 @Composable
 private fun CustomTabComponentPreview() {
     ComposeTutorialsTheme {
-        CustomTab("Home", Icons.Filled.Home, {})
+        CustomTab("Домой", Icons.Filled.Home, {})
     }
 }
 
@@ -270,14 +264,15 @@ private fun CustomTabComponentPreview() {
 fun ScrollableTextTabComponent() {
     var selectedIndex by remember { mutableStateOf(0) }
 
-    val list = listOf("Home", "Map", "Dashboard", "Favorites", "Explore", "Settings")
+    val list = listOf("Домой", "Карта", "Панель", "Избранное", "Обзор", "Настройки")
 
     ScrollableTabRow(
         edgePadding = 8.dp,
         selectedTabIndex = selectedIndex
     ) {
         list.forEachIndexed { index, text ->
-            Tab(selected = selectedIndex == index,
+            Tab(
+                selected = selectedIndex == index,
                 onClick = { selectedIndex = index },
                 text = { Text(text = text) }
             )
@@ -299,9 +294,10 @@ private fun ScrollableTextTabComponentPreview() {
 fun CustomTabs() {
     var selectedIndex by remember { mutableStateOf(0) }
 
-    val list = listOf("Active", "Completed")
+    val list = listOf("Активные", "Выполнено")
 
-    TabRow(selectedTabIndex = selectedIndex,
+    TabRow(
+        selectedTabIndex = selectedIndex,
         backgroundColor = Color(0xff1E76DA),
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
@@ -315,12 +311,15 @@ fun CustomTabs() {
         list.forEachIndexed { index, text ->
             val selected = selectedIndex == index
             Tab(
-                modifier = if (selected) Modifier
-                    .clip(RoundedCornerShape(50))
-                    .background(Color.White)
-                else Modifier
-                    .clip(RoundedCornerShape(50))
-                    .background(Color(0xff1E76DA)),
+                modifier = if (selected) {
+                    Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(Color.White)
+                } else {
+                    Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(Color(0xff1E76DA))
+                },
                 selected = selected,
                 onClick = { selectedIndex = index },
                 text = { Text(text = text, color = Color(0xff6FAAEE)) }

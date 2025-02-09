@@ -39,15 +39,16 @@ private fun TutorialContent() {
     Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
 
         StyleableTutorialText(
-            text = "The object of LazyListLayoutInfo calculated during the last layout pass. " +
-                    "For example, you can use it to calculate what items are currently visible.\n" +
-                    "Note that this property is observable and is updated after every scroll" +
-                    "or remeasure. If you use it in the composable function it will be recomposed " +
-                    "on every change causing potential performance issues including infinity " +
-                    "recomposition loop. " +
-                    "Therefore, avoid using it in the composition.\n" +
-                    "If you want to run some side effects like sending an analytics event " +
-                    "or updating a state based on this value consider using **snapshotFlow**",
+            text = "Объект LazyListLayoutInfo рассчитывается во время последнего прохода лейаута. " +
+                    "Например, вы можете использовать его, чтобы узнать, какие элементы сейчас видны.\n" +
+                    "Обратите внимание, что это свойство наблюдаемое и обновляется после каждого " +
+                    "прокрутки или пересчёта лейаута. Если вы используете его в составе функции, " +
+                    "она будет пересоздаваться при каждом изменении, что может привести к " +
+                    "проблемам с производительностью, включая бесконечный цикл пересоздания. " +
+                    "Поэтому избегайте его использования в композиции.\n" +
+                    "Если вам нужно выполнить побочные действия, например отправить событие " +
+                    "аналитики или обновить состояние на основе этого значения, " +
+                    "рассмотрите возможность использования **snapshotFlow**",
             bullets = false
         )
 
@@ -57,7 +58,6 @@ private fun TutorialContent() {
 
         val lazyRowWidthDp = LocalDensity.current.run { 1000f.toDp() }
 
-
         var contentPaddingStart by remember {
             mutableStateOf(0f)
         }
@@ -66,14 +66,14 @@ private fun TutorialContent() {
             mutableStateOf(0f)
         }
 
-        Text("Content Padding Start ${contentPaddingStart}dp")
+        Text("Начальный отступ содержимого ${contentPaddingStart}dp")
         Slider(
             value = contentPaddingStart,
             valueRange = 0f..50f,
             onValueChange = { contentPaddingStart = it }
         )
 
-        Text("Content Padding End ${contentPaddingEnd}dp")
+        Text("Конечный отступ содержимого ${contentPaddingEnd}dp")
         Slider(
             value = contentPaddingEnd,
             valueRange = 0f..50f,
@@ -100,7 +100,7 @@ private fun TutorialContent() {
 
                 val visibleItemSize = visibleItemsInfo.size
 
-                tempText += "visibleItemsInfo size: $visibleItemSize\n"
+                tempText += "размер visibleItemsInfo: $visibleItemSize\n"
 
                 visibleItemsInfo.forEach { lazyListItemInfo: LazyListItemInfo ->
 
@@ -108,7 +108,7 @@ private fun TutorialContent() {
                     val offset = lazyListItemInfo.offset
                     val size = lazyListItemInfo.size
 
-                    tempText += "index: $index, offset: $offset, size: $size\n"
+                    tempText += "индекс: $index, смещение: $offset, размер: $size\n"
                 }
 
                 tempText
@@ -127,7 +127,7 @@ private fun TutorialContent() {
         ) {
             items(10) {
                 Text(
-                    "ROW $it",
+                    "СТРОКА $it",
                     fontSize = 20.sp,
                     modifier = Modifier
                         .width(100.dp)

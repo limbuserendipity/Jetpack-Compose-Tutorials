@@ -36,7 +36,6 @@ import com.smarttoolfactory.tutorial1_1basics.ui.Pink400
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen6() {
@@ -45,9 +44,11 @@ fun Tutorial3_2Screen6() {
 
 @Composable
 private fun TutorialContent() {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(10.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
         ConstraintsAndSiblingsSample()
     }
 }
@@ -57,19 +58,18 @@ private fun ConstraintsAndSiblingsSample() {
 
     var layoutWidth by remember { mutableFloatStateOf(700f) }
 
-    TutorialHeader(text = "Sibling Constraints")
+    TutorialHeader(text = "Constraints между соседями (Siblings)")
 
     StyleableTutorialText(
-        text = "In this example we set layout width via slider but when **layoutWidth** " +
-                "is not in range of min-max width of **Constraints** coming " +
-                "from **Modifier** layout content(Orange) is placed as in previous" +
-                " tutorial. Orange content is measured in a range between 0-and min of layout " +
-                "width and Constraints.maxWidth.",
-        bullets = false
+        text = "В этом примере мы задаём ширину лейаута (layoutWidth) через слайдер, " +
+                "но если **layoutWidth** выходит за диапазон min-max ширины **Constraints**, " +
+                "приходящих, например, из **Modifier**, то содержимое (оранжевый блок) " +
+                "будет смещено (как в предыдущих уроках). " +
+                "Оранжевый контент измеряется в диапазоне от 0 до (min(layoutWidth, Constraints.maxWidth))."
     )
 
     TutorialText2(
-        text = "No size Modifier 0- parent width"
+        text = "Без модификатора размера (размер 0..ширина родителя)"
     )
     Row(modifier = Modifier.fillMaxWidth()) {
 
@@ -103,7 +103,7 @@ private fun ConstraintsAndSiblingsSample() {
     )
     Row(modifier = Modifier.fillMaxWidth()) {
 
-        // 🔥 When layoutWidth is not equal to pixel value of 200.dp content is moved
+        // 🔥 Когда layoutWidth не совпадает с 200.dp в пикселях, контент будет смещён
         CustomLayout(
             modifier = Modifier
                 .border(2.dp, Green400)
@@ -135,7 +135,7 @@ private fun ConstraintsAndSiblingsSample() {
     TutorialText2(
         text = "Modifier.widthIn(min = 100.dp, max = 200.dp)"
     )
-    // 🔥 When layoutWidth is not in range of pixel value of 100.dp and 200.dp content is moved
+    // 🔥 Когда layoutWidth выходит за диапазон 100..200dp, контент будет смещён
     Row(modifier = Modifier.fillMaxWidth()) {
 
         CustomLayout(
@@ -165,10 +165,9 @@ private fun ConstraintsAndSiblingsSample() {
     }
 
     TutorialText2(
-        text = "Width of the layout(width) of Composable. If it's not in bounds " +
-                "of original Constraints " +
-                "content is placed difference between " +
-                "layout width and (min/max) constraints width"
+        text = "Ширина Composable (layoutWidth). Если ширина выходит " +
+                "за исходные Constraints, контент будет смещён на разницу " +
+                "между layoutWidth и (minWidth или maxWidth) Constraints."
     )
 
     SliderWithLabel(
@@ -177,9 +176,7 @@ private fun ConstraintsAndSiblingsSample() {
     ) {
         layoutWidth = it
     }
-
 }
-
 
 @Composable
 private fun CustomLayout(
@@ -193,12 +190,12 @@ private fun CustomLayout(
         content = content
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-
         val placeables = measurables.map { measurable: Measurable ->
             measurable.measure(
                 constraints.copy(
                     minWidth = 0,
                     maxWidth = layoutWidth,
+                    // Для наглядности фиксируем высоту в 200px
                     minHeight = 200,
                     maxHeight = 200
                 )
@@ -207,10 +204,9 @@ private fun CustomLayout(
 
         val totalHeight = placeables.sumOf { it.height }
         var posY = 0
-        // 🔥🔥 Changing  width changes where this Composable is positioned if it's not
-        // in constraints range.
-        // For instance, if layoutWidth is 600px with Constraints maxWidth=550px content of
-        // this Composable is pushed 25px to left
+
+        // 🔥 Меняем ширину (layoutWidth) — если она выходит за Constraints, элемент смещается.
+        // Например, если layoutWidth=600, а maxWidth=550 => смещение на (550 - 600)/2 = -25px
         layout(width = layoutWidth, height = totalHeight) {
             placeables.forEach { placeable: Placeable ->
                 placeable.placeRelative(0, posY)

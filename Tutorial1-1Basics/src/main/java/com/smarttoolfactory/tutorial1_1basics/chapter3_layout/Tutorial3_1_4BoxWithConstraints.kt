@@ -48,12 +48,13 @@ private fun TutorialContent() {
 
         TutorialHeader(text = "BoxWithConstraints")
         StyleableTutorialText(
-            text = "1-) **BoxWithConstraints** is Composable that defines its own content according " +
-                    "to the available space, based on the incoming " +
-                    "constraints or the current LayoutDirection."
+            text = "1-) **BoxWithConstraints** — это Composable, который определяет " +
+                    "собственное содержимое в зависимости от доступного пространства, " +
+                    "исходя из входящих ограничений (constraints) или текущего " +
+                    "LayoutDirection."
         )
 
-        TutorialText2(text = "BoxWithConstraints to divide available space")
+        TutorialText2(text = "BoxWithConstraints для деления доступного пространства")
         BoxWithConstraintsExample(
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +69,7 @@ private fun TutorialContent() {
                 .height(200.dp)
         )
 
-        TutorialText2(text = "BoxWithConstraints to change layout based on height")
+        TutorialText2(text = "BoxWithConstraints для изменения лейаута в зависимости от высоты")
 
         BoxWithConstraintsSample2(
             modifier = Modifier
@@ -94,16 +95,15 @@ private fun BoxWithConstraintsExample(modifier: Modifier = Modifier) {
 
     BoxWithConstraints(modifier.background(Color.LightGray)) {
 
-        // The constraints given by the parent layout in pixels.
+        // Ограничения (constraints), которые приходят от родительского лейаута (в пикселях).
         val constraints = this.constraints
         val density: Density = LocalDensity.current
 
         val densityValue = density.density
 
-        // We can get dp value as
-//        val dpValue = maxHeight
-
-        // or like this either
+        // Можно получить значение в dp, например:
+        // val dpValue = maxHeight
+        // либо вот так
         val dpValue: Dp = with(density) {
             (constraints.maxHeight * 2 / 3f).toDp()
         }
@@ -119,10 +119,10 @@ private fun BoxWithConstraintsExample(modifier: Modifier = Modifier) {
                         "maxHeight: ${this@BoxWithConstraints.maxHeight}, " +
                         "densityValue: $densityValue\n" +
                         "hasBoundedHeight: ${constraints.hasBoundedHeight}, " +
-                        "hasBoundedHeight: ${constraints.hasBoundedWidth}, " +
+                        "hasBoundedWidth: ${constraints.hasBoundedWidth}, " +
                         "hasFixedWidth: ${constraints.hasFixedWidth}, " +
                         "hasFixedHeight: ${constraints.hasFixedHeight}, " +
-                        "\nCovers 2/3 of the available height"
+                        "\nПокрывает 2/3 доступной высоты"
             )
 
             val bottomHeight: Dp = with(density) {
@@ -130,7 +130,7 @@ private fun BoxWithConstraintsExample(modifier: Modifier = Modifier) {
             }
 
             Text(
-                text = "Covers 1/3 of the available height",
+                text = "Покрывает 1/3 доступной высоты",
                 modifier = Modifier
                     .background(Color(0xFFFFA000))
                     .fillMaxWidth()
@@ -144,7 +144,7 @@ private fun BoxWithConstraintsExample(modifier: Modifier = Modifier) {
 private fun BoxWithConstraintsSample2(modifier: Modifier = Modifier) {
     BoxWithConstraints(modifier.background(Color.LightGray)) {
 
-        // The constraints given by the parent layout in pixels.
+        // Ограничения (constraints), которые приходят от родительского лейаута (в пикселях).
         val constraints = this.constraints
         val density: Density = LocalDensity.current
 
@@ -160,7 +160,7 @@ private fun BoxWithConstraintsSample2(modifier: Modifier = Modifier) {
                 RadioButton(selected = selected, onClick = { selected = !selected })
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "This box Height is greater than 100.dp",
+                    text = "Высота этого Box больше 100.dp",
                     modifier = Modifier.background(Color(0xFF8BC34A))
                 )
             }
@@ -170,7 +170,7 @@ private fun BoxWithConstraintsSample2(modifier: Modifier = Modifier) {
                 Switch(checked = selected, onCheckedChange = { selected = !selected })
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "This box Height is smaller or equal to 100.dp",
+                    text = "Высота этого Box меньше или равна 100.dp",
                     modifier = Modifier.background(Color(0xFFFFA000))
                 )
             }

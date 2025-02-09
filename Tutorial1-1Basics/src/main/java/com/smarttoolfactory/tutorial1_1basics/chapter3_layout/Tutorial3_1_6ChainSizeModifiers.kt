@@ -38,27 +38,31 @@ private fun TutorialContent() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        TutorialHeader(text = "Chaining Size Modifiers")
+        TutorialHeader(text = "Цепочка модификаторов размера (Chaining Size Modifiers)")
 
-        // In this example only width modifiers are used for demonstration since
-        // vertical scroll changes maxHeight to Constraints.Infinity
+        // В этом примере используются только модификаторы ширины, так как
+        // вертикальный скролл меняет maxHeight на Constraints.Infinity
         StyleableTutorialText(
-            text = "1-) Size Modifiers return Constraints which contain min-max ranges " +
-                    "for measuring Composables. When chaining Modifiers you can narrow " +
-                    "range but it's not allowed to widen it. If first Modifier returns " +
-                    "Modifier.width(50.dp) which return min=50.dp, max=50.dp and because of " +
-                    "that second **Modifier.size** does not effect resulting Constraints."
+            text = "1-) Модификаторы размера возвращают Constraints, которые содержат " +
+                    "диапазон min-max, необходимый для измерения Composable. " +
+                    "При цепочке (chaining) модификаторов можно сужать " +
+                    "диапазон (narrow range), но нельзя его расширять. " +
+                    "Например, если первый модификатор это **Modifier.width(50.dp)**, " +
+                    "он устанавливает min=50.dp, max=50.dp, и следующий " +
+                    "**Modifier.size** уже не влияет на итоговые Constraints."
         )
 
         ChainSizeModifiersSample()
+
         StyleableTutorialText(
-            text = "3-) required modifiers can modify min or/and max Constraints coming from " +
-                    "top or Parent, they can widen the measurement range unlike size Modifiers. " +
-                    "If the content chooses a size that does not satisfy the " +
-                    "incoming Constraints, the parent layout will be reported a size coerced " +
-                    "in the Constraints, and the position of the content will be automatically " +
-                    "offset to be centered on the space assigned to the child by the parent " +
-                    "layout under the assumption that Constraints were respected."
+            text = "3-) Модификаторы **required** могут изменять min или/и max Constraints, " +
+                    "приходящие сверху или от родителя (Parent). " +
+                    "Таким образом они могут, например, расширить диапазон измерения " +
+                    "в отличие от обычных size-модификаторов. " +
+                    "Если контент выбрал размер, не удовлетворя incoming Constraints, " +
+                    "родительский лейаут всё равно принудительно будет учитывать " +
+                    "Constraints. При этом контент будет смещён (offset) по центру, " +
+                    "будто Constraints были соблюдены."
         )
         ChainRequiredSizeModifierSample()
     }
@@ -77,7 +81,7 @@ private fun ChainSizeModifiersSample() {
         Text(text = "minWidth: $minWidth, maxWidth: $maxWidth")
     }
 
-    TutorialText2(text = "❌width(200).width(50.dp)")
+    TutorialText2(text = "❌width(200.dp).width(50.dp)")
     BoxWithConstraints(
         modifier = Modifier
             .width(200.dp)
@@ -88,9 +92,9 @@ private fun ChainSizeModifiersSample() {
     }
 
     StyleableTutorialText(
-        text = "2-) **Modifier.width/height/sizeIn** describes a range " +
-                "between min and max values. It's allowed to narrow range but " +
-                "not allowed to widen it as can be seen examples below."
+        text = "2-) **Modifier.width/height/sizeIn** описывает диапазон " +
+                "между min и max значениями. Допустимо сужать диапазон, " +
+                "но нельзя его расширять, как показано в примерах ниже."
     )
 
     TutorialText2(text = "✅widthIn(min = 100.dp, max = 200.dp).width(150.dp)")
@@ -126,10 +130,9 @@ private fun ChainSizeModifiersSample() {
 
 @Composable
 private fun ChainRequiredSizeModifierSample() {
-    // In these examples requiredWidth constraints do not match the one comes from Modifier.size
-    // Because of that parent attempts to place them in center. When required is bigger
-    // it's placed at (parent.max-max) at left side. When required is smaller content is
-    // place at right side(centered in parent).
+    // В этих примерах requiredWidth не совпадает с Constraints от Modifier.size,
+    // поэтому родитель пытается расположить контент по центру. Если required больше,
+    // то элемент смещается к левой границе, если required меньше — к правой (по центру).
     Column(
         modifier = Modifier
             .fillMaxWidth()

@@ -82,30 +82,34 @@ private fun TutorialContent(initialModalBottomSheetValue: ModalBottomSheetValue 
     )
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(topBar = {
-        TopAppBar(elevation = 8.dp, title = {
-            Text("Modal BottomSheet")
-        },
-
-            actions = {
-                IconButton(onClick = {
-                    if (modalBottomSheetState.isVisible) {
-                        coroutineScope.launch { modalBottomSheetState.hide() }
-                    } else {
-                        coroutineScope.launch { modalBottomSheetState.show() }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                elevation = 8.dp,
+                title = {
+                    Text("Модальное BottomSheet")
+                },
+                actions = {
+                    IconButton(onClick = {
+                        if (modalBottomSheetState.isVisible) {
+                            coroutineScope.launch { modalBottomSheetState.hide() }
+                        } else {
+                            coroutineScope.launch { modalBottomSheetState.show() }
+                        }
+                    }) {
+                        Icon(imageVector = Icons.Filled.Expand, contentDescription = null)
                     }
-                }) {
-                    Icon(imageVector = Icons.Filled.Expand, contentDescription = null)
                 }
-            })
-    }) {
-
-        ModalBottomSheetLayout(sheetState = modalBottomSheetState,
+            )
+        }
+    ) {
+        ModalBottomSheetLayout(
+            sheetState = modalBottomSheetState,
             sheetElevation = 8.dp,
-//            scrimColor = Color(0xccAAABBB),
+            // scrimColor = Color(0xccAAABBB),
             sheetContent = {
-                // 🔥 Uncomment to see states on modal bottom sheet content
-//                MainContent(modalBottomSheetState, Color(0xff4CAF50))
+                // 🔥 Раскомментировать, чтобы увидеть состояние в контенте модального bottomSheet
+                // MainContent(modalBottomSheetState, Color(0xff4CAF50))
                 SheetContent()
             },
             content = {
@@ -118,26 +122,17 @@ private fun TutorialContent(initialModalBottomSheetValue: ModalBottomSheetValue 
 @ExperimentalMaterialApi
 @Composable
 private fun MainContent(
-    modalBottomSheetState: ModalBottomSheetState, color: Color = Color(0xffE91E63)
+    modalBottomSheetState: ModalBottomSheetState,
+    color: Color = Color(0xffE91E63)
 ) {
 
-
-    // 🔥🔥 Don't read from state in recomposition use derivedStateOf instead
-    // This is for demonstrating properties modalBottomSheetState
-    // Check Tutorial 4-5-2 for derivedStateOf
+    // 🔥🔥 Не следует напрямую считывать состояние при каждой перекомпозиции, используйте derivedStateOf
+    // Это сделано для демонстрации свойств modalBottomSheetState
+    // Подробности — в Tutorial 4-5-2 про derivedStateOf
     val currentValue: ModalBottomSheetValue = modalBottomSheetState.currentValue
     val targetValue: ModalBottomSheetValue = modalBottomSheetState.targetValue
 
     modalBottomSheetState.isVisible
-    // 🔥🔥 These values are removed as of 1.4.0-alpha04
-//    val direction = modalBottomSheetState.direction
-//    val overflow = modalBottomSheetState.overflow.value
-//    val offset = modalBottomSheetState.offset.value
-
-//    val progress = modalBottomSheetState.progress
-//    val fraction = progress.fraction
-//    val from = progress.from.name
-//    val to = progress.to.name
 
     Column(
         modifier = Modifier
@@ -145,46 +140,35 @@ private fun MainContent(
             .background(color)
             .padding(top = 16.dp)
     ) {
-//        Text(
-//            color = Color.White,
-//            text = "direction:$direction\n" + "isExpanded: ${modalBottomSheetState.isVisible}\n"
-//                    + "isAnimationRunning: ${modalBottomSheetState.isAnimationRunning}"
-//        )
-//
         Text(
             color = Color.White,
-            text = "currentValue: ${currentValue}\n" + "targetValue: ${targetValue}\n"
-                    + "isExpanded: ${modalBottomSheetState.isVisible}"
+            text = "currentValue: $currentValue\n" +
+                    "targetValue: $targetValue\n" +
+                    "isExpanded: ${modalBottomSheetState.isVisible}"
         )
-//
-//        Text(
-//            color = Color.White,
-//            text = "progress: $progress\n" + "fraction: ${fraction}\n"
-//                    + "from: ${from}\n" + "to: $to"
-//        )
     }
 }
-
 
 @ExperimentalMaterialApi
 @Composable
 private fun SheetContent() {
     Column {
-
         LazyColumn {
-
             items(userList) { item: String ->
-                ListItem(icon = {
-                    Image(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape),
-                        painter = painterResource(id = R.drawable.avatar_1_raster),
-                        contentDescription = null
-                    )
-                }, secondaryText = {
-                    Text(text = "Secondary text")
-                }) {
+                ListItem(
+                    icon = {
+                        Image(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape),
+                            painter = painterResource(id = R.drawable.avatar_1_raster),
+                            contentDescription = null
+                        )
+                    },
+                    secondaryText = {
+                        Text(text = "Вторичный текст")
+                    }
+                ) {
                     Text(text = item, fontSize = 18.sp)
                 }
             }

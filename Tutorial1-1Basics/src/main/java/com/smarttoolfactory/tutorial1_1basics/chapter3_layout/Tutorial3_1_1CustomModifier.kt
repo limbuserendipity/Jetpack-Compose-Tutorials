@@ -39,12 +39,13 @@ private fun TutorialContent() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        TutorialHeader(text = "Custom Modifier")
+        TutorialHeader(text = "Пользовательский Modifier")
         StyleableTutorialText(
-            text = "1-) To create custom modifier use layout extension function " +
-                    "of Modifier which returns a Modifier. " +
-                    "Get a placeable measuring with measurable, get width, height of placeable " +
-                    "and call generic layout function that returns **MeasureResult**."
+            text = "1-) Чтобы создать собственный modifier, используйте функцию расширения " +
+                    "layout у Modifier, которая возвращает Modifier. " +
+                    "С её помощью можно получить измеряемый (measurable), измерить " +
+                    "его (получить placeable), а затем определить ширину, высоту " +
+                    "и вызвать обобщённую функцию layout, которая возвращает **MeasureResult**."
         )
 
         TutorialText2(text = "customAlign Modifier")
@@ -86,20 +87,18 @@ private fun TutorialContent() {
                     .padding(top = 32.dp)
             )
 
-
             Text(
                 text = "Baseline 32dp",
                 modifier = Modifier
                     .background(Color(0xFF8BC34A))
                     .firstBaselineToTop(32.dp)
             )
-
         }
 
         StyleableTutorialText(
-            text = "2-) **LayoutModifier**  and it's **MeasureScope.measure** function can be " +
-                    "used to measure a measurable to get a placeable and place it to " +
-                    "add padding."
+            text = "2-) **LayoutModifier** и его функция **MeasureScope.measure** " +
+                    "могут использоваться для измерения (measurable), " +
+                    "получения placeable и размещения его (place) с добавлением отступа (padding)."
         )
         TutorialText2(text = "Custom Padding Modifier")
         Text(
@@ -110,13 +109,13 @@ private fun TutorialContent() {
         )
 
         StyleableTutorialText(
-            text = "3-) **Modifier.composed** allows modifier to have remember or SideEffects " +
-                    "to have memory or state for each element it has been used with."
+            text = "3-) **Modifier.composed** позволяет modifier иметь " +
+                    "remember или SideEffects, чтобы хранить в памяти или состояние " +
+                    "для каждого элемента, к которому он применяется."
         )
 
-
-        // 🔥 composedBackground uses remember to retain initial calculation of color by
-        // using a key with remember
+        // 🔥 composedBackground использует remember, чтобы сохранять первоначальный расчёт цвета,
+        // используя key вместе с remember
 
         Column(
             modifier = Modifier
@@ -129,7 +128,7 @@ private fun TutorialContent() {
                 onClick = { counter++ },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Increase $counter")
+                Text(text = "Увеличить $counter")
             }
 
             TutorialText2(text = "Modifier.composed")
@@ -143,7 +142,7 @@ private fun TutorialContent() {
                         .composedBackground(150.dp, 20.dp, 0)
                         .width(150.dp)
                 ) {
-                    Text(text = "Recomposed $counter")
+                    Text(text = "Пересоздано $counter")
                 }
 
                 Box(
@@ -151,11 +150,11 @@ private fun TutorialContent() {
                         .composedBackground(150.dp, 20.dp, 1)
                         .width(150.dp)
                 ) {
-                    Text(text = "Recomposed $counter")
+                    Text(text = "Пересоздано $counter")
                 }
             }
 
-            TutorialText2(text = "Modifier that is not composed")
+            TutorialText2(text = "Modifier без composed")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -166,7 +165,7 @@ private fun TutorialContent() {
                         .nonComposedBackground(150.dp, 20.dp)
                         .width(150.dp)
                 ) {
-                    Text(text = "Recomposed $counter")
+                    Text(text = "Пересоздано $counter")
                 }
 
                 Box(
@@ -174,7 +173,7 @@ private fun TutorialContent() {
                         .nonComposedBackground(150.dp, 20.dp)
                         .width(150.dp)
                 ) {
-                    Text(text = "Recomposed $counter")
+                    Text(text = "Пересоздано $counter")
                 }
             }
         }
@@ -182,14 +181,13 @@ private fun TutorialContent() {
 }
 
 /**
- * This is a fake modifier that adds space on both sides of [Measurable] with specified dp
- * and aligns this [Measurable] based on specified horizontal alignment
+ * Фиктивный modifier, который добавляет отступы по обе стороны [Measurable] на заданное количество dp
+ * и выравнивает [Measurable] по заданному горизонтальному выравниванию
  */
 fun Modifier.customAlign(
     space: Int = 60,
     align: HorizontalAlign = HorizontalAlign.CENTER
 ) = this.then(
-
     layout { measurable: Measurable, constraints: Constraints ->
 
         val placeable = measurable.measure(constraints)
@@ -218,10 +216,9 @@ enum class HorizontalAlign {
 }
 
 /**
- * Let's say you want to display a Text on the screen and control the distance from the top to
- * the baseline of the first line of texts. In order to do that, you'd need to manually place
- * the composable on the screen using the layout modifier.
- *
+ * Допустим, нужно отобразить Text на экране и управлять расстоянием от верха до
+ * базовой линии (baseline) первой строки. Чтобы это сделать, нужно вручную разместить
+ * composable с помощью layout модификатора.
  */
 fun Modifier.firstBaselineToTop(
     firstBaselineToTop: Dp
@@ -230,35 +227,31 @@ fun Modifier.firstBaselineToTop(
 
         val placeable = measurable.measure(constraints)
 
-        // Check the composable has a first baseline
+        // Проверяем, что composable имеет первую базовую линию
         check(placeable[FirstBaseline] != AlignmentLine.Unspecified)
         val firstBaseline = placeable[FirstBaseline]
 
-        // Height of the composable with padding - first baseline
+        // Высота composable с учётом отступа - первая базовая линия
         val placeableY = firstBaselineToTop.roundToPx() - firstBaseline
         val height = placeable.height + placeableY
         layout(placeable.width, height) {
-            // Where the composable gets placed
+            // Размещение composable
             placeable.placeRelative(0, placeableY)
         }
     }
 )
 
-// Creates stateful modifier with multiple arguments
+// Создаёт stateful modifier с несколькими аргументами
 fun Modifier.composedBackground(width: Dp, height: Dp, index: Int) = composed(
-    // pass inspector information for debug
+    // Передаём информацию для отладки
     inspectorInfo = debugInspectorInfo {
-        // name should match the name of the modifier
         name = "myModifier"
-        // add name and value of each argument
         properties["width"] = width
         properties["height"] = height
         properties["index"] = index
     },
-    // pass your modifier implementation that resolved per modified element
-
+    // Реализация модификатора, вычисляемая для каждого элемента
     factory = {
-
         val density = LocalDensity.current
 
         val color: Color = remember(index) {
@@ -270,7 +263,7 @@ fun Modifier.composedBackground(width: Dp, height: Dp, index: Int) = composed(
             )
         }
 
-        // 🔥 Without remember this color is created every time item using this modifier composed
+        // 🔥 Без remember этот цвет будет заново создаваться каждый раз, когда элемент с этим модификатором будет пересоздаваться
 //        val color: Color = Color(
 //            red = Random.nextInt(256),
 //            green = Random.nextInt(256),
@@ -278,9 +271,7 @@ fun Modifier.composedBackground(width: Dp, height: Dp, index: Int) = composed(
 //            alpha = 255
 //        )
 
-        // add your modifier implementation here
         Modifier.drawBehind {
-
             val widthInPx = with(density) { width.toPx() }
             val heightInPx = with(density) { height.toPx() }
 
@@ -290,11 +281,8 @@ fun Modifier.composedBackground(width: Dp, height: Dp, index: Int) = composed(
 )
 
 fun Modifier.nonComposedBackground(width: Dp, height: Dp) = this.then(
-
-    // add your modifier implementation here
     Modifier.drawBehind {
-
-        // 🔥 Without remember this color is created every time item using this modifier composed
+        // 🔥 Без remember этот цвет будет создаваться заново каждый раз, когда элемент с этим модификатором пересоздаётся
         val color: Color = Color(
             red = Random.nextInt(256),
             green = Random.nextInt(256),
@@ -310,7 +298,7 @@ fun Modifier.nonComposedBackground(width: Dp, height: Dp) = this.then(
 )
 
 /**
- * Modifier for applying blend mode(Porter Duff mode)
+ * Modifier для применения режима смешивания (Porter-Duff mode)
  */
 fun Modifier.drawOffscreen(): Modifier = this.drawWithContent {
     with(drawContext.canvas.nativeCanvas) {

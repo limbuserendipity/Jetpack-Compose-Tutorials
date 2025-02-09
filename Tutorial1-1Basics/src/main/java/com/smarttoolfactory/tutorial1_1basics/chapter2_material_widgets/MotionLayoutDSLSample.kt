@@ -22,33 +22,33 @@ import androidx.constraintlayout.compose.SwipeTouchUp
 private fun Test() {
     MotionLayout(
         MotionScene { // this: MotionSceneScope
-            val textRef = createRefFor("text")
+            val textRef = createRefFor("text") // Создаём ссылку для элемента "text"
             defaultTransition(
                 from = constraintSet { // this: ConstraintSetScope
                     constrain(textRef) { // this: ConstrainScope
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom) // Нижняя граница связана с нижней границей родителя
+                        start.linkTo(parent.start) // Левая граница связана с левой границей родителя
                     }
                 },
                 to = constraintSet { // this: ConstraintSetScope
                     constrain(textRef) { // this: ConstrainScope
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
+                        top.linkTo(parent.top) // Верхняя граница связана с верхней границей родителя
+                        end.linkTo(parent.end) // Правая граница связана с правой границей родителя
                     }
                 }
             ) { // this: TransitionScope
                 onSwipe = OnSwipe(
-                    anchor = textRef,
-                    side = SwipeSide.End,
-                    direction = SwipeDirection.End,
-                    mode = SwipeMode.Spring,
-                    onTouchUp = SwipeTouchUp.AutoComplete
+                    anchor = textRef, // Якорь для свайпа
+                    side = SwipeSide.End, // Сторона, с которой начинается свайп
+                    direction = SwipeDirection.End, // Направление свайпа
+                    mode = SwipeMode.Spring, // Режим анимации
+                    onTouchUp = SwipeTouchUp.AutoComplete // Автоматическое завершение свайпа
                 )
             }
         },
         progress = 0f,
         Modifier.fillMaxSize()
     ) {
-        Text("Hello, World", Modifier.layoutId("text"))
+        Text("Привет, Мир", Modifier.layoutId("text"))
     }
 }

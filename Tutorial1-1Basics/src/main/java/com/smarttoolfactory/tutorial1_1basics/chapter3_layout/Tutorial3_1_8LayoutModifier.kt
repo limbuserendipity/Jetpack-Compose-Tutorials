@@ -39,7 +39,6 @@ import com.smarttoolfactory.tutorial1_1basics.ui.Purple400
 import com.smarttoolfactory.tutorial1_1basics.ui.Red400
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_1Screen8() {
@@ -58,30 +57,29 @@ private fun TutorialContent() {
         TutorialHeader(text = "layout Modifier")
 
         StyleableTutorialText(
-            text = "**Modifier.layout{}** creates a LayoutModifier that allows " +
-                    "changing how the wrapped element is measured and laid out.",
+            text = "**Modifier.layout{}** создаёт LayoutModifier, позволяющий " +
+                    "изменять процесс измерения (measure) и размещения (layout) вложенного элемента.",
             bullets = false
         )
-        // In this example we measure a placeable with a different size Modifier
-        // to replicate Modifier.wrapContent
+        // В этом примере мы измеряем placeable с другим Modifier для размера,
+        // чтобы повторить поведение Modifier.wrapContent
         LayoutModifierSample()
 
         StyleableTutorialText(
-            text = "With **Modifier.layout{}** you can increase content size bigger than parent. " +
-                    "Red background contains three Boxes, second Box size is increased by " +
-                    "40.dp and it's position is offset to left by 20.dp",
+            text = "С помощью **Modifier.layout{}** можно увеличить размер контента больше, чем у родителя. " +
+                    "Красный фон содержит три Box, у второго Box размер увеличен " +
+                    "на 40.dp, а его позиция смещена влево на 20.dp",
             bullets = false
         )
         LayoutModifierSample2()
 
         StyleableTutorialText(
-            text = "layout order is from bottom to top but Constraints come from top to bottom " +
-                    "and disregarded or adjusted to min or max of existing Constraints " +
-                    "when it's not in bounds.",
+            text = "Порядок layout идёт снизу вверх, но Constraints передаются сверху вниз " +
+                    "и либо игнорируются, либо приводятся к min или max существующих Constraints " +
+                    "при выходе за их границы.",
             bullets = false
         )
         LayoutModifierOrderSample()
-
     }
 }
 
@@ -120,7 +118,6 @@ private fun LayoutModifierSample() {
                         text = "minWidth: $minWidth, maxWidth: $maxWidth",
                         modifier = Modifier.fillMaxSize()
                     )
-
                 }
             }
         }
@@ -140,8 +137,8 @@ private fun LayoutModifierSample() {
                     .background(Pink400)
                     .size(140.dp)
                     .layout { measurable, constraints ->
-                        // This is our Content content: @Composable BoxScope.() -> Unit
-                        // which is BoxWithConstraints below in this example
+                        // Здесь наш контент: @Composable BoxScope.() -> Unit
+                        // (BoxWithConstraints в этом примере)
                         val placeable = measurable.measure(
                             constraints.copy(minWidth = 0, minHeight = 0)
                         )
@@ -150,7 +147,7 @@ private fun LayoutModifierSample() {
                             val xPos = (constraints.maxWidth - placeable.width) / 2
                             val yPos = (constraints.maxHeight - placeable.height) / 2
 
-                            // Place to center of this parent Composable which is Box
+                            // Размещаем по центру этого родительского Composable (Box)
                             placeable.placeRelative(xPos, yPos)
                         }
                     }
@@ -193,7 +190,7 @@ private fun LayoutModifierSample2() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // We increase dimensions of content by 40.dp
+        // Увеличиваем размеры контента на 40.dp
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -235,25 +232,24 @@ private fun LayoutModifierSample2() {
 @Preview(showBackground = true)
 @Composable
 private fun LayoutModifierOrderSample() {
-    // Also change placement position to show it affects Modifiers or
-    // Constraints after Modifier.layout
+    // Также можно менять положение, чтобы увидеть, как это влияет на модификаторы
+    // или Constraints после Modifier.layout
 
     /*
-        Prints:
+        Вывод в лог:
         I  🍎 Bottom Measurement phase  minWidth: 180.0.dp, maxWidth: 180.0.dp, placeable width: 180.0.dp
         I  🍏 Middle Measurement phase minWidth: 100.0.dp, maxWidth: 300.0.dp, placeable width: 180.0.dp
         I  🌻Top Measurement phase minWidth: 0.0.dp, maxWidth: 392.72726.dp, placeable width: 300.0.dp
         I  🌻🌻 Top Placement Phase
         I  🍏🍏 Middle Placement Phase
         I  🍎🍎 Bottom Placement Phase
-
      */
     BoxWithConstraints(
         modifier = Modifier
             .height(300.dp)
             .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
             .background(Red400)
-            // This layout's Constraints come from parent (0-parent width, 0-parent height)
+            // Constraints для этого layout приходят от родителя (ширина = 0..parentWidth, высота = 0..parentHeight)
             .layout { measurable, constraints ->
 
                 val placeable = measurable.measure(constraints)
@@ -269,14 +265,14 @@ private fun LayoutModifierOrderSample() {
                     placeable.placeRelative(50, 0)
                 }
             }
-            // 🔥 This sizeIn range is passed to bottom Modifier.layout
+            // 🔥 Это sizeIn-range передаётся нижнему Modifier.layout
             .widthIn(min = 100.dp, max = 300.dp)
             .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
             .background(Green400)
             .layout { measurable, constraints ->
 
-                // 🔥Measuring this Measurable with this Constraints
-                // passes it to next LayoutModifier or LayoutModifierNode
+                // 🔥 Измеряем Measurable с этими Constraints
+                // чтобы передать их следующему LayoutModifier
                 val placeable = measurable.measure(
                     constraints
                         .copy(
@@ -299,15 +295,10 @@ private fun LayoutModifierOrderSample() {
                 }
             }
 
-            // Uncomment size modifiers to see how Constraints change
-            // 🔥🔥 This Constraints minWidth = 100.dp, maxWidth = 100.dp is not
-            // in bounds of Constraints that placeable measured above
-            // Because it's smaller than minWidth, minWidth and maxWidth
-            // is changed to 180.dp from layout above
+//             Раскомментируйте эти модификаторы size, чтобы посмотреть,
+//             как меняются Constraints
 //            .width(100.dp)
-            // This Constraints minWidth = 240.dp, maxWidth = 240.dp is valid
-            // for 180.dp-250.dp range
-//                .size(240.dp)
+//            .size(240.dp)
             .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
             .background(Orange400)
             .layout { measurable, constraints ->
@@ -326,8 +317,7 @@ private fun LayoutModifierOrderSample() {
             }
             .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
             .background(Purple400)
-        // 🔥 This width modifier also narrows range for the last
-        // Constraints passed from BoxWithConstraints to Text
+        // 🔥 Этот Modifier.width(...) тоже может сузить диапазон Constraints,
 //            .width(50.dp)
         ,
         contentAlignment = Alignment.Center

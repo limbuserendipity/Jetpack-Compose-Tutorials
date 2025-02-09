@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen7() {
@@ -31,15 +30,16 @@ private fun TutorialContent() {
             .fillMaxSize()
     ) {
 
-        TutorialHeader(text = "Infinite Constraints")
+        TutorialHeader(text = "Бесконечные Constraints (Infinite Constraints)")
 
         StyleableTutorialText(
-            text = "Infinite constraints or **Constraints.Infinity** " +
-                    "are passed when **Modifier.scroll** modifier is assigned or explicitly passed " +
-                    "from parent. There are some limits using infinite constraints. For, instance " +
-                    "any mathematical operation with **Constraints.Infinity** throws exception when " +
-                    "measuring a **Measurable**",
-            bullets = false
+            text = "Бесконечные Constraints, или **Constraints.Infinity**, возникают, " +
+                    "когда для лейаута используется **Modifier.scroll** или же, " +
+                    "когда родитель явно передаёт неограниченные размеры. " +
+                    "Однако при работе с **Constraints.Infinity** есть ограничения: " +
+                    "любые математические операции с **Constraints.Infinity** могут вызвать " +
+                    "исключение, если, например, нужно посчитать половину или сумму " +
+                    "бесконечного Constraints."
         )
 
         Column(
@@ -52,22 +52,25 @@ private fun TutorialContent() {
                 modifier = Modifier
                     .border(4.dp, Color.Red)
             ) {
-                Text("Hello World", modifier = Modifier.border(5.dp, Color.Blue))
+                Text("Привет, Мир!", modifier = Modifier.border(5.dp, Color.Blue))
             }
         }
 
-        // 🔥Intrinsic Modifier calls Layout twice, first with 0, Constraints.Infinity
-        // then the layout width from this measurement second time
+        // 🔥 Модификатор Intrinsic (например, height(IntrinsicSize.Min)) может вызвать
+        // дополнительный проход измерения (Layout), сначала с 0 и Constraints.Infinity,
+        // а затем повторно с вычисленной шириной.
 //        CustomLayout(
 //            modifier = Modifier
 //                .border(2.dp, Color.Green)
 //                .height(IntrinsicSize.Min)
 //        ) {
-//            Text("Hello World", modifier = Modifier.border(2.dp, Color.Blue))
-//            Box(modifier = Modifier
-//                .width(100.dp)
-//                .height(40.dp)
-//                .background(Color.Red))
+//            Text("Привет, Мир!", modifier = Modifier.border(2.dp, Color.Blue))
+//            Box(
+//                modifier = Modifier
+//                    .width(100.dp)
+//                    .height(40.dp)
+//                    .background(Color.Red)
+//            )
 //        }
     }
 }
@@ -82,53 +85,50 @@ private fun CustomLayout(
         content = content
     ) { measurables, constraints ->
 
+        // Пример модификации Constraints
         val wrappedConstraints = constraints.copy(
-            // 🔥🔥 1- minHeight cannot be greater than maxHeight
-            // and both minHeight and maxHeight cannot be Constraints.Infinity
-            // because a Placeable cannot have infinite size
+            // 🔥 1) minHeight не может быть больше maxHeight,
+            // и нельзя устанавливать их обоих в Constraints.Infinity
+            // поскольку Placeable не может иметь бесконечный размер
             /*
-               THROWS: Can't represent a size of 2147483647 in Constraints
+               Бросает исключение: "Can't represent a size of 2147483647 in Constraints"
              */
-            // Comment out to see behavior
+            // Для демонстрации. Если раскомментировать, увидим ошибку:
 //            minHeight = Constraints.Infinity,
 //            maxHeight = Constraints.Infinity
 
+            // 🔥 2) Математические операции с Constraints.Infinity недопустимы
+            // Если constraints.maxHeight равно Infinity, делить на 2 нельзя.
             /*
-              THROWS Can't represent a size of 1073741823 in Constraints
-           */
-            // 🔥🔥 2- Mathematical operations with Constraints.Infinity are not allowed
-            // If it's Constraints.Infinity check before doing operations
-            // Comment out to see behavior
-//            maxHeight = constraints.maxHeight/2
+              Бросает ошибку: "Can't represent a size of 1073741823 in Constraints"
+            */
+//            maxHeight = constraints.maxHeight / 2
         )
 
         val placeables = measurables.map {
+            // Измеряем каждый дочерний элемент
             it.measure(wrappedConstraints)
         }
 
         var y = 0
 
+        // Вычисляем ширину лейаута
         val layoutWidth = placeables.maxOf { it.width }
-        // 🔥🔥 3-) Having Constraints.Infinity with Intrinsic.Min/MaxHeight throws
-        // exception Can't represent a size of 2147483647 in Constraints
+
+        // 🔥 3) Если maxHeight = Constraints.Infinity и используется
+        // IntrinsicSize.Min или IntrinsicSize.Max, при измерении может быть исключение.
         val layoutHeight = constraints.maxHeight
 
-        // This is for not passing infinite min and max constraints on second Placement Scope
-        // Pass if we use Intrinsic height
-//        val layoutHeight = if (constraints.hasFixedHeight && constraints.hasBoundedHeight){
-//            constraints.maxHeight
-//        }else {
-//            placeables.sumOf { it.height }
-//        }
-
-        println("🍏 CustomLayout MeasureScope layoutHeight: $layoutHeight\n" +
-                "constraints(): $constraints\n" +
-                "wrappedConstraints: $wrappedConstraints")
+        println(
+            "🍏 CustomLayout MeasureScope layoutHeight: $layoutHeight\n" +
+                    "constraints(): $constraints\n" +
+                    "wrappedConstraints: $wrappedConstraints"
+        )
 
         layout(layoutWidth, layoutHeight) {
             println("🍏🍏 CustomLayout Placement Scope")
 
-            placeables.forEach { placeable: Placeable ->
+            placeables.forEach { placeable ->
                 placeable.placeRelative(0, y)
                 y += placeable.height
             }

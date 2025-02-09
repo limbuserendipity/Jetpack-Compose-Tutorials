@@ -55,12 +55,13 @@ private fun TutorialContent() {
 
     val textMeasurer = rememberTextMeasurer()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .drawWithContent {
-            drawContent()
-            drawHeightMarks(textMeasurer)
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .drawWithContent {
+                drawContent()
+                drawHeightMarks(textMeasurer)
+            }
     ) {
 
         Box(modifier = Modifier.height(150.dp)) {
@@ -68,8 +69,8 @@ private fun TutorialContent() {
                 TutorialHeader(text = "onGloballyPositioned Modifier")
 
                 StyleableTutorialText(
-                    text = "**onGloballyPositioned** Modifier returns position of the Composable " +
-                            "inside parent, root or window. Window adds **StatusBar** height to root.",
+                    text = "**onGloballyPositioned** Modifier возвращает позицию Composable " +
+                            "внутри родителя, корня или окна. Окно (Window) добавляет высоту **StatusBar** к корню.",
                     bullets = false
                 )
             }
@@ -81,7 +82,8 @@ private fun TutorialContent() {
                 .background(Color.Red)
         )
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .border(width = 4.dp, color = Color.Green, shape = RoundedCornerShape(8.dp))
         ) {
             Box(
@@ -100,46 +102,47 @@ private fun TutorialContent() {
 private fun MyComposable() {
 
     var text by remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .padding(horizontal = 20.dp)
-        .fillMaxWidth()
-        .height(300.dp)
-        .verticalScroll(rememberScrollState())
-        .border(2.dp, Color.Red)
-        .onGloballyPositioned {
-            val positionInParent: Offset = it.positionInParent()
-            val positionInRoot: Offset = it.positionInRoot()
-            val positionInWindow: Offset = it.positionInWindow()
-            val boundsInParent: Rect = it.boundsInParent()
-            val boundsInRoot: Rect = it.boundsInRoot()
-            val boundsInWindow: Rect = it.boundsInWindow()
-            val parentCoordinates = it.parentCoordinates
-            val parentLayoutCoordinates = it.parentLayoutCoordinates
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth()
+            .height(300.dp)
+            .verticalScroll(rememberScrollState())
+            .border(2.dp, Color.Red)
+            .onGloballyPositioned {
+                val positionInParent: Offset = it.positionInParent()
+                val positionInRoot: Offset = it.positionInRoot()
+                val positionInWindow: Offset = it.positionInWindow()
+                val boundsInParent: Rect = it.boundsInParent()
+                val boundsInRoot: Rect = it.boundsInRoot()
+                val boundsInWindow: Rect = it.boundsInWindow()
+                val parentCoordinates = it.parentCoordinates
+                val parentLayoutCoordinates = it.parentLayoutCoordinates
 
-            text =
-                "positionInParent: $positionInParent\n" +
-                        "positionInRoot: $positionInRoot\n" +
-                        "positionInWindow: $positionInWindow\n" +
-                        "boundsInParent: $boundsInParent\n" +
-                        "boundsInRoot: $boundsInRoot\n" +
-                        "boundsInWindow: $boundsInWindow\n"
+                text =
+                    "positionInParent: $positionInParent\n" +
+                            "positionInRoot: $positionInRoot\n" +
+                            "positionInWindow: $positionInWindow\n" +
+                            "boundsInParent: $boundsInParent\n" +
+                            "boundsInRoot: $boundsInRoot\n" +
+                            "boundsInWindow: $boundsInWindow\n"
 
-            parentCoordinates?.let { parent ->
-                text +=
-                    "parentCoordinates:\n" +
-                            "positionInParent: ${parent.positionInParent()}\n" +
-                            "positionInRoot: ${parent.positionInRoot()}\n" +
-                            "positionInWindow: ${parent.positionInWindow()}\n\n"
+                parentCoordinates?.let { parent ->
+                    text +=
+                        "parentCoordinates:\n" +
+                                "positionInParent: ${parent.positionInParent()}\n" +
+                                "positionInRoot: ${parent.positionInRoot()}\n" +
+                                "positionInWindow: ${parent.positionInWindow()}\n\n"
+                }
+
+                parentLayoutCoordinates?.let { parent ->
+                    text +=
+                        "parentLayoutCoordinates:\n" +
+                                "positionInParent: ${parent.positionInParent()}\n" +
+                                "positionInRoot: ${parent.positionInRoot()}\n" +
+                                "positionInWindow: ${parent.positionInWindow()}\n"
+                }
             }
-
-            parentLayoutCoordinates?.let { parent ->
-                text +=
-                    "parentLayoutCoordinates:\n" +
-                            "positionInParent: ${parent.positionInParent()}\n" +
-                            "positionInRoot: ${parent.positionInRoot()}\n" +
-                            "positionInWindow: ${parent.positionInWindow()}\n"
-            }
-        }
     ) {
         Text(text = text)
     }
@@ -149,8 +152,7 @@ private fun MyComposable() {
 @Composable
 private fun ParentLayoutCoordinatesSample() {
 
-
-    // This example shows the difference between parentCoordinates and parentLayoutCoordinates
+    // Этот пример демонстрирует разницу между parentCoordinates и parentLayoutCoordinates
     val positionModifier1 = Modifier.onGloballyPositioned { layoutCoordinates: LayoutCoordinates ->
 
         val parentCoordinates = layoutCoordinates.parentCoordinates
@@ -182,40 +184,6 @@ private fun ParentLayoutCoordinatesSample() {
                     "${parentLayoutCoordinates?.size}\n"
         )
     }
-    /*
-        prints :
-        I  😜 parentCoordinates
-        I  positionInRoot Offset(0.0, 200.0), positionInParent Offset(0.0, 200.0)
-        I  boundsInRoot Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0), boundsInParent Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0)
-
-        I  parentLayoutCoordinates
-        I  positionInRoot Offset(0.0, 200.0), positionInParent Offset(0.0, 200.0)
-        I  boundsInRoot Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0), boundsInParent Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0)
-
-        I  ✅ parentCoordinates == parentLayoutCoordinates true
-        I  🥹 ParentCoordinates 1080 x 1000, parentLayoutCoordinates: 1080 x 1000
-
-     */
-
-    // 🔥parentCoordinates returns coordinates after layout modifiers if any available
-    // 🔥parentLayoutCoordinates return parent layout coordinates
-
-    /*
-        prints:
-        🔥🔥Parent coordinates here are the coordinates of Modifier.height(parentHeight)
-
-        before positionModifier2
-
-        I  😜😜 parentCoordinates
-        I  positionInRoot Offset(0.0, 440.0), positionInParent Offset(0.0, 240.0)
-        I  boundsInRoot Rect.fromLTRB(0.0, 440.0, 394.0, 834.0), boundsInParent Rect.fromLTRB(0.0, 240.0, 394.0, 634.0)
-
-        I  parentLayoutCoordinates
-        I  positionInRoot Offset(0.0, 200.0), positionInParent Offset(0.0, 200.0)
-        I  boundsInRoot Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0), boundsInParent Rect.fromLTRB(0.0, 200.0, 1080.0, 1200.0)
-        I  ❌ parentCoordinates == parentLayoutCoordinates false
-        I  🥹🥹 ParentCoordinates 394 x 394, parentLayoutCoordinates: 1080 x 1000
-     */
 
     val positionModifier2 = Modifier.onGloballyPositioned { layoutCoordinates: LayoutCoordinates ->
         val parentCoordinates = layoutCoordinates.parentCoordinates
@@ -264,7 +232,6 @@ private fun ParentLayoutCoordinatesSample() {
     ) {
         Box(modifier = Modifier.fillMaxWidth().height(topSpace))
 
-        // 200px below root top
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -272,7 +239,7 @@ private fun ParentLayoutCoordinatesSample() {
                 .border(2.dp, Color.Red)
         ) {
             Box(modifier = Modifier.fillMaxWidth().height(topSpace2))
-            // 440px below root top
+
             Box(
                 modifier = Modifier
                     .then(positionModifier1)
@@ -290,17 +257,10 @@ private fun ParentLayoutCoordinatesSample2() {
 
     val positionModifier = Modifier.onGloballyPositioned { layoutCoordinates: LayoutCoordinates ->
 
-        val parent =
-            layoutCoordinates.parentLayoutCoordinates
-
-        val parent2 =
-            layoutCoordinates.parentCoordinates
-
-        val parent3 =
-            layoutCoordinates.parentCoordinates?.parentCoordinates
-
-        val parent4 =
-            layoutCoordinates.parentLayoutCoordinates?.parentLayoutCoordinates
+        val parent = layoutCoordinates.parentLayoutCoordinates
+        val parent2 = layoutCoordinates.parentCoordinates
+        val parent3 = layoutCoordinates.parentCoordinates?.parentCoordinates
+        val parent4 = layoutCoordinates.parentLayoutCoordinates?.parentLayoutCoordinates
 
         println(
             "🔥 ParentCoordinates: ${layoutCoordinates.parentCoordinates?.positionInRoot()}, " +
@@ -372,7 +332,6 @@ private fun ParentLayoutCoordinatesSample2() {
 
             Box(modifier = Modifier.fillMaxWidth().height(topSpace))
 
-            // This is 400px below root top, 1000px height
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -383,14 +342,12 @@ private fun ParentLayoutCoordinatesSample2() {
 
                 Box(modifier = Modifier.fillMaxWidth().height(topSpace2))
 
-                // This is 600px below root top, 394px height
                 Box(
                     modifier = Modifier
                         .size(contentHeight)
                         .background(Color.Green)
                         .then(positionModifier)
                 )
-
             }
         }
     }
@@ -402,17 +359,10 @@ private fun ParentLayoutCoordinatesSample3() {
 
     val positionModifier = Modifier.onGloballyPositioned { layoutCoordinates: LayoutCoordinates ->
 
-        val parent =
-            layoutCoordinates.parentLayoutCoordinates
-
-        val parent2 =
-            layoutCoordinates.parentCoordinates
-
-        val parent3 =
-            layoutCoordinates.parentCoordinates?.parentCoordinates
-
-        val parent4 =
-            layoutCoordinates.parentLayoutCoordinates?.parentLayoutCoordinates
+        val parent = layoutCoordinates.parentLayoutCoordinates
+        val parent2 = layoutCoordinates.parentCoordinates
+        val parent3 = layoutCoordinates.parentCoordinates?.parentCoordinates
+        val parent4 = layoutCoordinates.parentLayoutCoordinates?.parentLayoutCoordinates
 
         println(
             "🔥 ParentCoordinates: ${layoutCoordinates.parentCoordinates?.positionInRoot()}, " +
@@ -500,12 +450,13 @@ private fun ParentLayoutCoordinatesSample3() {
                                 .background(Color.Green)
                                 .then(positionModifier)
                         )
-
                     } else {
                         Text(
                             text = "Row $index",
                             fontSize = 24.sp,
-                            modifier = Modifier.fillMaxWidth().padding(8.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
                         )
                     }
                 }
@@ -519,7 +470,7 @@ private fun DrawScope.drawHeightMarks(
 ) {
     val height = size.height.toInt()
 
-    // This is for marking every 100px on screen
+    // Это для отметок каждых 100px на экране
     for (i in 0..height step 100) {
         if (i != 0) {
             drawLine(

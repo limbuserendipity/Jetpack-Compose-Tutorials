@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.getRandomColor
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen0() {
@@ -33,28 +32,29 @@ fun Tutorial3_2Screen0() {
 private fun TutorialContent() {
     Column(modifier = Modifier.fillMaxSize()) {
 
-        TutorialHeader(text = "Layout Basics")
+        TutorialHeader(text = "Основы Layout")
 
         StyleableTutorialText(
-            text = "A custom layout is created using **Layout** Composable. A **MeasurePolicy** " +
-                    "is assigned to define the measure and layout behavior of a Layout.\n" +
-                    "Layout and MeasurePolicy are the way\n" +
-                    "Compose layouts (such as `Box`, `Column`, etc.) are built,\n" +
-                    "and they can also be used to achieve custom layouts.\n\n" +
-                    "During the Layout phase, the tree is traversed using the following 3 step algorithm:\n" +
+            text = "Пользовательский лейаут создаётся при помощи **Layout**. " +
+                    "Для него назначается **MeasurePolicy**, который определяет " +
+                    "логику измерения (measure) и лейаута (layout) Layout-компонента.\n" +
+                    "Именно с помощью Layout и MeasurePolicy " +
+                    "построены базовые компоненты Compose (такие, как `Box`, `Column`, и т.д.), " +
+                    "и также их можно использовать для создания своих собственных лейаутов.\n\n" +
+                    "Во время фазы Layout дерево обрабатывается с помощью следующего алгоритма из 3 шагов:\n" +
                     "\n" +
-                    "1-) Measure children: A node measures its children, if any.\n" +
-                    "2-) Decide own size: Based on those measurements, a node decides on its own size.\n" +
-                    "3-) Place children: Each child node is placed relative to a node’s own position.",
+                    "1) Измерить детей (Measure children): если у узла есть дочерние элементы, он их измеряет.\n" +
+                    "2) Решить собственный размер (Decide own size): на основании результатов измерений узел определяет свой размер.\n" +
+                    "3) Разместить детей (Place children): каждый дочерний узел размещается относительно позиции самого узла.",
             bullets = false
         )
 
         CustomLayoutSample1()
 
         StyleableTutorialText(
-            text = "In this example in with which Constraints content is measured is overridden." +
-                    "And Composable out of bound of min=150.dp, max=300.dp is measured in min or " +
-                    "max values of this range.",
+            text = "В этом примере переопределяются Constraints, с которыми измеряется контент. " +
+                    "Composable, выходящий за границы min=150.dp, max=300.dp, " +
+                    "измеряется в рамках min или max из этого диапазона.",
             bullets = false
         )
         CustomLayoutSample2()
@@ -66,7 +66,7 @@ private fun TutorialContent() {
 private fun CustomLayoutSample1() {
 
     /*
-        Prints:
+        Вывод в лог (примерное содержание):
         🔥🔥 Depth-First Tree Traversal
 
         // COMPOSITION Phase
@@ -101,8 +101,7 @@ private fun CustomLayoutSample1() {
         I  🍏🍏 Child2 Inner PlacementScope
      */
 
-    // label is for logging, they are not part of real custom
-    // layouts
+    // label используется для логгирования, не часть реального пользовательского лейаута
     MyLayout(
         modifier = Modifier
             .shadow(4.dp, shape = RoundedCornerShape(8.dp))
@@ -121,8 +120,8 @@ private fun CustomLayoutSample1() {
         ) {
             println("Child1 Scope")
 
-            // This Box is measured in range of min=50.dp, max=50.dp
-            // because of parent size
+            // Этот Box измеряется с min=50.dp, max=50.dp
+            // из-за родительской size(50.dp)
             Box(
                 modifier = Modifier
                     .shadow(4.dp, shape = RoundedCornerShape(8.dp))
@@ -160,7 +159,7 @@ private fun CustomLayoutSample1() {
 @Composable
 private fun CustomLayoutSample2() {
     /*
-        Prints:
+        Вывод в лог (примерное содержание):
         I  CustomConstrainLayout Scope
         I  Top BoxWithConstraints Scope
         I  Middle BoxWithConstraints Scope
@@ -205,60 +204,47 @@ private fun CustomLayoutSample2() {
     }
 }
 
+/**
+ * Пример пользовательского лейаута.
+ * Выводит вложенный контент, измеряя его с Constraints, но при этом
+ * ставит minWidth=0, minHeight=0, чтобы контент мог занять свой "естественный" размер.
+ *
+ * label используется для целей логирования.
+ */
 @Composable
 private fun MyLayout(
     modifier: Modifier = Modifier,
     label: String,
     content: @Composable () -> Unit
 ) {
-
-    // A custom layout is created using Layout Composable
-    /*
-       MeasurePolicy defines the measure and layout behavior of a [Layout].
-       [Layout] and [MeasurePolicy] are the way
-       Compose layouts (such as `Box`, `Column`, etc.) are built,
-       and they can also be used to achieve custom layouts.
-     */
+    // Создаём пользовательский лейаут при помощи Layout
     Layout(
         modifier = modifier,
         content = content
     ) { measurables, constraints ->
 
         /*
-            During the Layout phase, the tree is traversed using the following 3 step algorithm:
+            Во время фазы Layout дерево обрабатывается так:
 
-            1-) Measure children: A node measures its children, if any.
-            2-) Decide own size: Based on those measurements, a node decides on its own size.
-            3-) Place children: Each child node is placed relative to a node’s own position.
+            1) Измерение детей (Measure children): если у узла есть дочерние элементы, он их измеряет.
+            2) Определение собственного размера (Decide own size): на основании измерений узел решает, какой у него будет размер.
+            3) Размещение детей (Place children): каждый дочерний узел размещается относительно позиции самого узла.
          */
 
-        // 🔥 1-) We measure Measurables Contents inside content lambda
-        // with Constraints
-        // ⚠️ Constraints are the range we measure them with depending on which
-        // Size Modifier or Scroll Modifier this Layout Composable assigned with.
-        // You can check out this answer to see which Size modifier returns which
-        // Constraints
-        // https://stackoverflow.com/questions/65779226/android-jetpack-compose-width-height-size-modifier-vs-requiredwidth-requir/73316247#73316247
+        // 1) Измеряем Measurables (вложенный контент) с учётом Constraints
         val placeables = measurables.map { measurable ->
             measurable.measure(
-                // 🔥 This is for changing range min to 0, for example Modifier.width(100)
-                // returns minWidth= 100.dp, maxWidth = 100.dp
-                // while our content Composables(Text,Image, etc) might have
-                // smaller content sizes due to their own measurements or contents.
+                // Изменяем минимальные Constraints на 0
                 constraints.copy(minWidth = 0, minHeight = 0)
             )
         }
 
-        // 2-) After measuring each child we decide how big this Layout/Composable should be
-        // Let's say we want to make a Column we need to set width to max of content Composables
-        // while sum of content Composables
+        // 2) Определяем размер нашего Layout
+        // Допустим, мы хотим расположить контент в колонку, высота = сумма высот, ширина = макс. ширина
         val contentWidth = placeables.maxOf { it.width }
         val contentHeight = placeables.sumOf { it.height }
 
-        // 🔥🔥 We calculated total content size however in some situations with Modifiers such as
-        // Modifier.fillMaxSize we need to set Layout dimensions to match parent not
-        // total dimensions of Content
-
+        // Если есть Constraints типа fillMaxSize, берём макс. значения
         val layoutWidth = if (constraints.hasBoundedWidth && constraints.hasFixedWidth) {
             constraints.maxWidth
         } else {
@@ -281,13 +267,10 @@ private fun MyLayout(
                     "layoutHeight: ${layoutHeight.toDp()}\n"
         )
 
-        // 🔥 Layout dimensions should be in Constraints range we get from parent
-        // otherwise this Layout is placed incorrectly
+        // 3) Layout-габариты должны попадать в Constraints
         layout(layoutWidth, layoutHeight) {
 
-            // 3-) 🔥🔥 Place placeables or Composables inside content lambda accordingly
-            // In this example we place like a Column vertically
-
+            // Размещаем дочерние Placeable (например, в виде колонки)
             var y = 0
 
             println("🍏🍏 $label PlacementScope")
@@ -300,6 +283,11 @@ private fun MyLayout(
     }
 }
 
+/**
+ * Пользовательский лейаут с частично переопределёнными Constraints:
+ * minWidth=150.dp, maxWidth=300.dp,
+ * контент, выходящий за эти границы, приводится к min/max.
+ */
 @Composable
 private fun CustomConstrainLayout(
     modifier: Modifier = Modifier,
@@ -312,8 +300,7 @@ private fun CustomConstrainLayout(
 
         val placeables = measurables.map { measurable ->
             measurable.measure(
-
-                // 🔥🔥 We override how Composables inside this content will be measured
+                // Переопределяем Constraints для дочерних Composables
                 constraints.copy(
                     minWidth = 150.dp.roundToPx(),
                     maxWidth = 300.dp.roundToPx(),

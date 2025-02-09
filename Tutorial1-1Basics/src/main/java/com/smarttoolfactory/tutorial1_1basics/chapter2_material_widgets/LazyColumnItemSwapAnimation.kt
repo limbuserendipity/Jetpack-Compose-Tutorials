@@ -53,10 +53,9 @@ import kotlinx.coroutines.launch
 import java.util.Collections.swap
 import java.util.UUID
 import kotlin.math.abs
-
 private class MyData(val uuid: String, val value: String)
 
-// TODO Fix increasing swap animations
+// TODO Исправить увеличение анимации при обмене
 @Preview
 @Composable
 private fun AnimatedList() {
@@ -72,7 +71,7 @@ private fun AnimatedList() {
 
         val lazyListState = rememberLazyListState()
 
-        val duration = 300
+        val duration = 300 // Продолжительность анимации в миллисекундах
 
         LazyColumn(
             modifier = Modifier
@@ -85,14 +84,13 @@ private fun AnimatedList() {
             items(
                 items = items,
                 key = {
-                    it.uuid
+                    it.uuid // Используем UUID для обеспечения уникальности элементов
                 }
             ) {
                 Row(
                     modifier = Modifier
-
                         .animateItem(
-                            tween(durationMillis = duration)
+                            tween(durationMillis = duration) // Анимация элементов списка
                         )
                         .shadow(1.dp, RoundedCornerShape(8.dp))
                         .background(Color.White)
@@ -104,7 +102,7 @@ private fun AnimatedList() {
                         modifier = Modifier
                             .clip(RoundedCornerShape(10.dp))
                             .size(50.dp),
-                        painter = painterResource(id = R.drawable.landscape1),
+                        painter = painterResource(id = R.drawable.landscape1), // Загружаем ресурс изображения
                         contentScale = ContentScale.FillBounds,
                         contentDescription = null
                     )
@@ -115,19 +113,18 @@ private fun AnimatedList() {
         }
 
         var fromString by remember {
-            mutableStateOf("17")
+            mutableStateOf("17") // Индекс начального элемента для обмена
         }
 
         var toString by remember {
-            mutableStateOf("0")
+            mutableStateOf("0") // Индекс конечного элемента для обмена
         }
 
         var animate by remember { mutableStateOf(false) }
 
         if (animate) {
-
             val from = try {
-                Integer.parseInt(fromString)
+                Integer.parseInt(fromString) // Преобразуем строку в число
             } catch (e: Exception) {
                 0
             }
@@ -145,7 +142,7 @@ private fun AnimatedList() {
                 to = to,
                 duration = duration
             ) {
-                animate = false
+                animate = false // Завершаем анимацию
             }
         }
 
@@ -154,7 +151,7 @@ private fun AnimatedList() {
             TextField(
                 value = fromString,
                 onValueChange = {
-                    fromString = it
+                    fromString = it // Изменение начального индекса
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -162,11 +159,10 @@ private fun AnimatedList() {
             TextField(
                 value = toString,
                 onValueChange = {
-                    toString = it
+                    toString = it // Изменение конечного индекса
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-
         }
 
         Button(
@@ -174,55 +170,11 @@ private fun AnimatedList() {
                 .padding(8.dp)
                 .fillMaxWidth(),
             onClick = {
-                animate = true
+                animate = true // Запуск анимации
             }
         ) {
-            Text("Swap")
+            Text("Swap") // Кнопка для обмена элементов
         }
-    }
-}
-
-private fun alternativeAnimate(
-    from: Int,
-    to: Int,
-    coroutineScope: CoroutineScope,
-    lazyListState: LazyListState,
-    animatable: Animatable<Int, AnimationVector1D>,
-    items: SnapshotStateList<MyData>,
-) {
-
-    val difference = from - to
-    var currentValue: Int = from
-
-    println("🔥 Alternative from: $from, to: $to, difference: $difference, currentValue: $currentValue")
-
-    coroutineScope.launch {
-        animatable.snapTo(from)
-
-        animatable.animateTo(to,
-            tween(350 * abs(difference), easing = LinearEasing),
-            block = {
-                val nextValue = this.value
-                if (abs(currentValue - nextValue) == 1) {
-                    coroutineScope.launch {
-
-                        val visibleItems =
-                            lazyListState.layoutInfo.visibleItemsInfo.map { it.index }
-
-                        println("Visible items: $visibleItems, next: $nextValue")
-
-//                        if (nextValue == 0 || visibleItems.contains(nextValue).not()) {
-//                            lazyListState.scrollToItem(nextValue)
-//                        }
-
-                        swap(items, currentValue, nextValue)
-                        currentValue = nextValue
-
-
-                    }
-                }
-            }
-        )
     }
 }
 
@@ -235,7 +187,7 @@ private fun AnimatedSwap(
     duration: Int,
     onFinish: () -> Unit,
 ) {
-
+    // Визуальные элементы, которые в данный момент отображаются
     val visibleItems by remember {
         derivedStateOf {
             lazyListState.layoutInfo.visibleItemsInfo
@@ -243,23 +195,21 @@ private fun AnimatedSwap(
     }
 
     LaunchedEffect(key1 = Unit) {
-
-        val difference = from - to
-        val increasing = difference < 0
+        val difference = from - to // Разница между индексами
+        val increasing = difference < 0 // Направление движения
 
         var currentValue: Int = from
 
         var visibleItemIndices = visibleItems.map { it.index }
 
-        // If current item is not in viewPort animate to it first before starting scrolling
+        // Если текущий элемент не отображается, скроллим к нему
         if (visibleItemIndices.contains(currentValue).not()) {
-            // Depending on direction add or subtract one to set item at the bottom
             val offset = if (increasing) 0 else +1
             val scrollIndex = (currentValue - visibleItemIndices.size + offset).coerceIn(
                 0, items.lastIndex
             )
             lazyListState.animateScrollToItem(scrollIndex)
-            delay(100)
+            delay(100) // Задержка перед началом анимации
         }
 
         repeat(abs(difference)) {
@@ -273,34 +223,23 @@ private fun AnimatedSwap(
 
             visibleItemIndices = visibleItems.map { it.index }
 
-
             if (!increasing && currentValue == 0) {
-                swap(items, temp, currentValue)
+                swap(items, temp, currentValue) // Обмен элементов
                 val firstItemHeight = visibleItems.firstOrNull()?.size ?: 0
-                // sometimes it doesn't exactly scroll to 0 position with this multiplier
-                // make sure that we always scroll to top position of LazyColumn
                 lazyListState.animateScrollBy((-firstItemHeight * 1.05f), tween(duration))
                 delay(duration.toLong())
-
             } else if (it != 0 && visibleItemIndices.contains(currentValue - 2).not()) {
-                // Depending on direction add or subtract one to set item at the bottom
                 val offset = if (increasing) 0 else 0
                 val scrollIndex = (currentValue - visibleItemIndices.size + offset).coerceIn(
                     0, items.lastIndex
                 )
-
-                println("REPLACING currentValue: $currentValue, visibleItemIndices: $visibleItemIndices")
                 swap(items, temp, currentValue)
                 delay(duration.toLong())
                 lazyListState.animateScrollToItem(scrollIndex)
-
             } else {
                 swap(items, temp, currentValue)
                 delay(duration.toLong())
             }
-
-            println("END")
-
         }
         onFinish()
     }

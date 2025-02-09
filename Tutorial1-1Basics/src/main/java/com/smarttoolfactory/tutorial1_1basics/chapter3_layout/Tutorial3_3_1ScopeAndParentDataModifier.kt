@@ -37,14 +37,14 @@ private fun TutorialContent() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        TutorialHeader(text = "Scope and ParentDataModifier")
+        TutorialHeader(text = "Scope и ParentDataModifier")
         StyleableTutorialText(
-            text = "1-) Using a scope for a Composable it's possible to add Modifier " +
-                    "only available in that scope. **Modifier.horizontalAlign** " +
-                    "is only available in **CustomColumnScope**."
+            text = "1) Использование собственного scope для Composable даёт возможность " +
+                    "добавлять в нём Modifier, доступный только в этом scope. Например, " +
+                    "**Modifier.horizontalAlign** доступен только внутри **CustomColumnScope**."
         )
 
-        TutorialText2(text = "Custom Column with Scope")
+        TutorialText2(text = "Пользовательская Column со Scope")
 
         CustomColumnWithScope(
             modifier = Modifier
@@ -121,7 +121,7 @@ private fun TutorialContent() {
             )
         }
 
-        TutorialText2(text = "Custom Row with Scope")
+        TutorialText2(text = "Пользовательская Row со Scope")
 
         CustomRowWithScope(
             modifier = Modifier
@@ -155,19 +155,21 @@ private fun TutorialContent() {
     }
 }
 
+// ------------------------------------------------------------------------------------------
+
 /*
-    ***** Custom Column *****
+    ***** Пользовательская Column *****
  */
 
 /*
-1- Create a enum for setting horizontal alignment options
+1) Создаём enum для задания горизонтального выравнивания
  */
 enum class HorizontalAlignment {
     Start, Center, End
 }
 
 /*
-2- Create a class that implements ParentDataModifier and implement functions
+2) Создаём класс, реализующий ParentDataModifier
  */
 private class CustomColumnData(
     val alignment: HorizontalAlignment
@@ -175,9 +177,7 @@ private class CustomColumnData(
 
     override fun Density.modifyParentData(parentData: Any?) = this@CustomColumnData
 
-
     override fun equals(other: Any?): Boolean {
-
         if (this === other) return true
         val otherModifier = other as? CustomColumnData ?: return false
         return alignment == otherModifier.alignment
@@ -192,8 +192,8 @@ private class CustomColumnData(
 }
 
 /*
-3- Create a interface for Scope that has an extension function that returns a class
-that implements ParentDataModifier interface
+3) Интерфейс для Scope, где создаём функцию-расширение
+   для добавления ParentDataModifier
  */
 interface CustomColumnScope {
 
@@ -206,14 +206,14 @@ interface CustomColumnScope {
 }
 
 /*
-4- Create extension functions to set this ParentDataModifier in custom Layout using measurable
+4) В Custom Layout внутри measurePolicy считываем ParentData
+   и используем для размещения дочерних элементов.
  */
 private val Measurable.childData: CustomColumnData?
     get() = parentData as? CustomColumnData
 
 private val Measurable.alignment: HorizontalAlignment
     get() = childData?.alignment ?: HorizontalAlignment.Start
-
 
 @Composable
 fun CustomColumnWithScope(
@@ -226,30 +226,25 @@ fun CustomColumnWithScope(
         content = { CustomColumnScope.content() },
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-        // We need to set minWidth to zero to wrap only placeable width
+        // Устанавливаем minWidth=0, чтобы Composable имели фактическую ширину контента
         val looseConstraints = constraints.copy(
             minWidth = 0,
             minHeight = 0
         )
 
-        // Don't constrain child views further, measure them with given constraints
-        // List of measured children
+        // Измеряем детей
         val placeables = measurables.map { measurable ->
-            // Measure each child
             measurable.measure(looseConstraints)
         }
 
-        // 🔥 We will use this alignment to set position of our composables
         val measurableAlignment: List<HorizontalAlignment> = measurables.map { measurable ->
             measurable.alignment
         }
 
-        // Track the y co-ord we have placed children up to
         var yPosition = 0
 
         val totalHeight: Int = placeables.sumOf { it.height }
             .coerceAtLeast(constraints.minHeight)
-
         val maxWidth = constraints.maxWidth
 
         println(
@@ -260,40 +255,38 @@ fun CustomColumnWithScope(
                     "totalHeight: $totalHeight"
         )
 
-        // Set the size of the layout as big as it can
+        // Задаём размеры лейаута
         layout(maxWidth, totalHeight) {
-            // Place children in the parent layout
+            // Размещаем дочерние элементы
             placeables.forEachIndexed { index, placeable ->
-
                 val x = when (measurableAlignment[index]) {
                     HorizontalAlignment.Start -> 0
                     HorizontalAlignment.Center -> (maxWidth - placeable.width) / 2
                     HorizontalAlignment.End -> maxWidth - placeable.width
                 }
 
-                // Position item on the screen
                 placeable.placeRelative(x = x, y = yPosition)
-
-                // Record the y co-ord placed up to
                 yPosition += placeable.height
             }
         }
     }
 }
 
+// ------------------------------------------------------------------------------------------
+
 /*
-    ***** Custom Row *****
+    ***** Пользовательская Row *****
  */
 
 /*
-1- Create a enum for setting horizontal alignment options
+1) Создаём enum для вертикального выравнивания
  */
 enum class VerticalAlignment {
     Top, Center, Bottom
 }
 
 /*
-2- Create a class that implements ParentDataModifier and implement functions
+2) Создаём класс, реализующий ParentDataModifier
  */
 private class CustomRowData(
     val alignment: VerticalAlignment
@@ -302,7 +295,6 @@ private class CustomRowData(
     override fun Density.modifyParentData(parentData: Any?) = this@CustomRowData
 
     override fun equals(other: Any?): Boolean {
-
         if (this === other) return true
         val otherModifier = other as? CustomRowData ?: return false
         return alignment == otherModifier.alignment
@@ -317,8 +309,8 @@ private class CustomRowData(
 }
 
 /*
-3- Create a interface for Scope that has an extension function that returns a class
-that implements ParentDataModifier interface
+3) Интерфейс для Scope, где создаём функцию-расширение
+   для добавления ParentDataModifier
  */
 interface CustomRowScope {
 
@@ -331,15 +323,13 @@ interface CustomRowScope {
 }
 
 /*
-4- Create extension functions to set this ParentDataModifier in custom Layout using measurable
+4) Считываем ParentData в Custom Layout при размещении
  */
-
 private val Measurable.data: CustomRowData?
     get() = parentData as? CustomRowData
 
 private val Measurable.verticalAlignment: VerticalAlignment
     get() = data?.alignment ?: VerticalAlignment.Center
-
 
 @Composable
 fun CustomRowWithScope(
@@ -352,20 +342,15 @@ fun CustomRowWithScope(
         content = { CustomRowScope.content() },
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-        // We need to set minWidth to zero to wrap only placeable width
         val looseConstraints = constraints.copy(
             minWidth = 0,
             minHeight = 0
         )
 
-        // Don't constrain child views further, measure them with given constraints
-        // List of measured children
         val placeables = measurables.map { measurable ->
-            // Measure each child
             measurable.measure(looseConstraints)
         }
 
-        // 🔥 We will use this alignment to set position of our Composables
         val measurableAlignment: List<VerticalAlignment> = measurables.map { measurable ->
             measurable.verticalAlignment
         }
@@ -385,25 +370,16 @@ fun CustomRowWithScope(
                     "height: $maxHeight"
         )
 
-
-        // Track the x co-ord we have placed children up to
         var xPosition = 0
 
-        // Set the size of the layout as big as it can
         layout(totalWidth, maxHeight) {
-            // Place children in the parent layout
             placeables.forEachIndexed { index, placeable ->
-
                 val y = when (measurableAlignment[index]) {
                     VerticalAlignment.Top -> 0
                     VerticalAlignment.Center -> (maxHeight - placeable.height) / 2
                     VerticalAlignment.Bottom -> maxHeight - placeable.height
                 }
-
-                // Position item on the screen
                 placeable.placeRelative(x = xPosition, y = y)
-
-                // Record the y co-ord placed up to
                 xPosition += placeable.width
             }
         }

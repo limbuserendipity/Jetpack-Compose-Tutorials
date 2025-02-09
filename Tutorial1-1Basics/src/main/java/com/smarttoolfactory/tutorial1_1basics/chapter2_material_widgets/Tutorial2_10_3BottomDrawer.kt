@@ -72,7 +72,7 @@ private fun TutorialContent(initialBottomDrawerValue: BottomDrawerValue = Bottom
                 )
         ) {
             Checkbox(gesturesEnabled, null)
-            Text(text = if (gesturesEnabled) "Gestures Enabled" else "Gestures Disabled")
+            Text(text = if (gesturesEnabled) "Жесты включены" else "Жесты отключены")
         }
         val drawerState = rememberBottomDrawerState(
             initialValue = initialBottomDrawerValue,
@@ -84,9 +84,8 @@ private fun TutorialContent(initialBottomDrawerValue: BottomDrawerValue = Bottom
         BottomDrawer(
             gesturesEnabled = gesturesEnabled,
             drawerState = drawerState,
-            // scrimColor color of the scrim that obscures content when the drawer is open. If the
-            // color passed is [androidx.compose.ui.graphics.Color.Unspecified],
-            // then a scrim will no longer be applied and the bottom
+            // scrimColor — цвет затемнения, который скрывает контент, когда панель открыта.
+            // Если указать Color.Unspecified, затемнение применяться не будет.
 //            scrimColor = Color.Unspecified,
             drawerContent = {
                 Button(
@@ -94,16 +93,16 @@ private fun TutorialContent(initialBottomDrawerValue: BottomDrawerValue = Bottom
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 16.dp),
                     onClick = { scope.launch { drawerState.close() } },
-                    content = { Text("Close Drawer") }
+                    content = { Text("Закрыть выдвижную панель") }
                 )
                 LazyColumn {
                     items(25) {
                         ListItem(
-                            text = { Text("Item $it") },
+                            text = { Text("Элемент $it") },
                             icon = {
                                 Icon(
                                     Icons.Default.Favorite,
-                                    contentDescription = "Localized description"
+                                    contentDescription = "Локализованное описание"
                                 )
                             }
                         )
@@ -117,18 +116,18 @@ private fun TutorialContent(initialBottomDrawerValue: BottomDrawerValue = Bottom
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val openText = if (gesturesEnabled) "▲▲▲ Pull up ▲▲▲" else "Click the button!"
-                    Text(text = if (drawerState.isClosed) openText else "▼▼▼ Drag down ▼▼▼")
+                    val openText = if (gesturesEnabled) "▲▲▲ Потяните вверх ▲▲▲" else "Нажмите на кнопку!"
+                    Text(text = if (drawerState.isClosed) openText else "▼▼▼ Потяните вниз ▼▼▼")
                     Spacer(Modifier.height(20.dp))
                     Button(onClick = {
                         scope.launch {
                             drawerState.open()
-                            // Expands full height
+                            // Расширяет на всю высоту
 //                            drawerState.expand()
                         }
                     }
                     ) {
-                        Text("Click to open")
+                        Text("Нажмите для открытия")
                     }
                 }
             }

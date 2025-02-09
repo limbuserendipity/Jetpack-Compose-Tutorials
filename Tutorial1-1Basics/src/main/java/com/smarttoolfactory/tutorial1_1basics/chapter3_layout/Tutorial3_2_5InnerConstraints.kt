@@ -27,7 +27,6 @@ import com.smarttoolfactory.tutorial1_1basics.ui.Red400
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen5() {
@@ -43,19 +42,21 @@ private fun TutorialContent() {
             .padding(10.dp)
     ) {
 
-        TutorialHeader(text = "Inner Constraints")
+        TutorialHeader(text = "Внутренние Constraints (Inner Constraints)")
 
         StyleableTutorialText(
-            text = "When Constraints of a Composable change in measurement that Constraints is " +
-                    "passed to child and might override the one comes from size Modifier. " +
-                    "In this example Constraints of BoxWithConstraints is overridden.",
+            text = "Когда Constraints (ограничения) для Composable меняются во время измерения, " +
+                    "эти Constraints передаются дочерним элементам и могут переопределить те, " +
+                    "которые приходят, например, из модификаторов размера. " +
+                    "В этом примере Constraints для BoxWithConstraints переопределяются.",
             bullets = false
         )
 
         InnerConstraintsSample1()
         StyleableTutorialText(
-            text = "In this example Modifier.layout also exist to show " +
-                    "how Custom Layout layout, MeasureScope and Modifier.layout are executed.",
+            text = "В следующем примере есть ещё и Modifier.layout, чтобы показать, " +
+                    "как работают пользовательский лейаут (Custom Layout), MeasureScope " +
+                    "и Modifier.layout вместе.",
             bullets = false
         )
         InnerConstraintsSample2()
@@ -72,9 +73,9 @@ private fun InnerConstraintsSample1() {
     ) {
         BoxWithConstraints(
             modifier = Modifier
-                // 🔥🔥 Since we pass minWidth=120.dp, max=180 in InnerCustomLayout
-                // it's limited to 120.dp since Modifier.size calls
-                // 100.dp.coerceIn(120.dp, 180.dp) in its implementation
+                // 🔥🔥 Поскольку во внутреннем лейауте minWidth=120.dp и maxWidth=180.dp,
+                // здесь размер в 100.dp пройдёт через coerceIn(120.dp, 180.dp) и в итоге
+                // будет 120.dp
                 .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
                 .background(Purple400)
                 .size(100.dp)
@@ -88,7 +89,8 @@ private fun InnerConstraintsSample1() {
 private fun InnerConstraintsSample2() {
 
     /*
-        Prints:
+        Примерные логи:
+
         I  🍎 InnerCustomLayout MeasureScope
         I  constraints: minWidth: 200.0.dp, maxWidth: 200.0.dp
         I  wrappedConstraints minWidth: 120.0.dp, maxWidth: 180.0.dp
@@ -99,7 +101,6 @@ private fun InnerConstraintsSample2() {
         I  minWidth: 280.0.dp, maxWidth: 280.0.dp, contentWidth: 200.0.dp, layoutWidth: 280.0.dp
         I  🍏🍏 OuterCustomLayout Placement Scope
         I  🍎🍎 Placement Scope
-
      */
     OuterCustomLayout(
         modifier = Modifier
@@ -137,9 +138,8 @@ private fun InnerConstraintsSample2() {
         ) {
             BoxWithConstraints(
                 modifier = Modifier
-                    // 🔥🔥 Since we pass minWidth=120.dp, max=180 in InnerCustomLayout
-                    // it's limited to 120.dp since Modifier.size calls
-                    // 100.dp.coerceIn(120.dp, 180.dp) in its implementation
+                    // 🔥🔥 Поскольку во внутреннем лейауте minWidth=120.dp и maxWidth=180.dp,
+                    // здесь размер в 100.dp пройдёт через coerceIn(120.dp, 180.dp)
                     .shadow(4.dp, shape = RoundedCornerShape(8.dp), clip = false)
                     .background(Purple400)
                     .size(100.dp)
@@ -150,6 +150,10 @@ private fun InnerConstraintsSample2() {
     }
 }
 
+/**
+ * Внешний лейаут (OuterCustomLayout),
+ * измеряет детей, меняя Constraints или оставляя как есть, а затем размещает их.
+ */
 @Composable
 private fun OuterCustomLayout(
     modifier: Modifier = Modifier,
@@ -164,8 +168,7 @@ private fun OuterCustomLayout(
 
 
             val placeables = measurables.map { measurable ->
-                // 🔥This is to be able to measure between 0.dp and max of size Modifier
-                // of InnerCustomLayout
+                // 🔥 Измеряем дочерние элементы с более "мягкими" ограничениями (minWidth=0)
                 measurable.measure(constraints.copy(minWidth = 0, minHeight = 0))
             }
 
@@ -208,6 +211,10 @@ private fun OuterCustomLayout(
     )
 }
 
+/**
+ * Внутренний лейаут (InnerCustomLayout),
+ * который задаёт minWidth=120.dp, maxWidth=180.dp
+ */
 @Composable
 private fun InnerCustomLayout(
     modifier: Modifier = Modifier,

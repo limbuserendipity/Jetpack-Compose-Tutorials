@@ -133,7 +133,8 @@ private fun BottomDrawerComponent(
     bottomAppBarPadding: Dp,
     drawerState: BottomDrawerState,
     openDrawer: () -> Unit,
-    selectedIndex: Int, onSelected: (Int) -> Unit
+    selectedIndex: Int,
+    onSelected: (Int) -> Unit
 ) {
 
     var selectedUser by remember { mutableStateOf(userList.first()) }
@@ -144,26 +145,22 @@ private fun BottomDrawerComponent(
     BottomDrawer(
         gesturesEnabled = drawerState.isOpen,
         drawerState = drawerState,
-        // scrimColor color of the scrim that obscures content when the drawer is open. If the
-        // color passed is [androidx.compose.ui.graphics.Color.Unspecified],
-        // then a scrim will no longer be applied and the bottom
 //        scrimColor = Color.Unspecified,
         drawerContent = {
             DrawerContentBottom(
-                selectedUser,
+                selectedUser = selectedUser,
                 selectedIndex = selectedIndex,
                 onSelected = onSelected
             )
         },
         content = {
-            // Select user from list in main screen and send it to BottomDrawer via this lambda
             DrawerContent(bottomAppBarPadding, onUserSelected, openDrawer)
         }
     )
 }
 
 /**
- * Main content for [BottomDrawer]
+ * Основной контент для [BottomDrawer]
  */
 @ExperimentalMaterialApi
 @Composable
@@ -200,7 +197,7 @@ private fun DrawerContent(
                         )
                     },
                     secondaryText = {
-                        Text(text = "Secondary text")
+                        Text(text = "Вторичный текст")
                     }
                 ) {
                     Text(text = item, fontSize = 18.sp)
@@ -211,7 +208,7 @@ private fun DrawerContent(
 }
 
 /**
- * Drawer content for [BottomDrawer]
+ * Контент панели [BottomDrawer]
  */
 @Composable
 fun DrawerContentBottom(
@@ -223,16 +220,13 @@ fun DrawerContentBottom(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 100.dp, max = 600.dp)
-//            .height(500.dp)
-//            .fillMaxSize()
             .padding(8.dp)
     ) {
 
         Column(modifier = Modifier.padding(8.dp)) {
-            Text("Mail", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text("Почта", fontWeight = FontWeight.Bold, fontSize = 20.sp)
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(text = "$selectedUser@abc.com")
-
             }
         }
 
@@ -260,22 +254,18 @@ private fun BottomAppBarComponent(toggleDrawer: () -> Unit) {
         cutoutShape = CircleShape
     ) {
 
-        // Leading icons should typically have a high content alpha
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
             IconButton(
                 onClick = toggleDrawer
             ) {
                 Icon(Icons.Filled.Menu, contentDescription = null)
             }
-
         }
-        // The actions should be at the end of the BottomAppBar. They use the default medium
-        // content alpha provided by BottomAppBar
+
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = { }) {
             Icon(Icons.Filled.Search, contentDescription = null)
         }
-
         IconButton(onClick = { }) {
             Icon(Icons.Filled.MoreVert, contentDescription = null)
         }
@@ -283,9 +273,9 @@ private fun BottomAppBarComponent(toggleDrawer: () -> Unit) {
 }
 
 val bottomDrawerList = listOf(
-    Pair("Inbox", Icons.Filled.Inbox),
-    Pair("Outbox", Icons.Filled.Outbox),
-    Pair("Favorites", Icons.Filled.Favorite),
-    Pair("Archive", Icons.Filled.Archive),
-    Pair("Trash", Icons.Filled.Delete),
+    Pair("Входящие", Icons.Filled.Inbox),
+    Pair("Исходящие", Icons.Filled.Outbox),
+    Pair("Избранное", Icons.Filled.Favorite),
+    Pair("Архив", Icons.Filled.Archive),
+    Pair("Корзина", Icons.Filled.Delete),
 )

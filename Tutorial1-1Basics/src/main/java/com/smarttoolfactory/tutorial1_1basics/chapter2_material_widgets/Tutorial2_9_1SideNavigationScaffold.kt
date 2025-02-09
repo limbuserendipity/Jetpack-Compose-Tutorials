@@ -77,7 +77,7 @@ private fun PreviewTutorialContent(
     )
 }
 
-class DrawerStateProvider: PreviewParameterProvider<DrawerValue> {
+class DrawerStateProvider : PreviewParameterProvider<DrawerValue> {
     override val values: Sequence<DrawerValue>
         get() = sequenceOf(
             DrawerValue.Closed,
@@ -117,9 +117,7 @@ private fun TutorialContent(scaffoldState: ScaffoldState = rememberScaffoldState
         },
         topBar = {
             TopAppBar(
-                title = {
-                    Text("Side Navigation")
-                },
+                title = { Text("Боковая навигация") },
                 navigationIcon = {
                     IconButton(onClick = openDrawer) {
                         Icon(
@@ -130,9 +128,8 @@ private fun TutorialContent(scaffoldState: ScaffoldState = rememberScaffoldState
                 },
                 actions = {
                     IconButton(onClick = {
-                        // show snackbar as a suspend function
                         coroutineScope.launch {
-                            scaffoldState.snackbarHostState.showSnackbar("Snackbar")
+                            scaffoldState.snackbarHostState.showSnackbar("Снэкбар")
                         }
                     }) {
                         Icon(
@@ -145,9 +142,11 @@ private fun TutorialContent(scaffoldState: ScaffoldState = rememberScaffoldState
         },
         snackbarHost = {
             SnackbarHost(hostState = it) { snackbarData ->
-                Snackbar(modifier = Modifier.padding(4.dp),
+                Snackbar(
+                    modifier = Modifier.padding(4.dp),
                     action = {
-                        Text(text = "Action",
+                        Text(
+                            text = "Действие",
                             modifier = Modifier
                                 .clickable {
                                     if (!isInPreview) {
@@ -158,7 +157,8 @@ private fun TutorialContent(scaffoldState: ScaffoldState = rememberScaffoldState
                                 }
                                 .padding(4.dp)
                         )
-                    }) {
+                    }
+                ) {
                     Text(snackbarData.message)
                 }
             }
@@ -181,7 +181,7 @@ private fun TutorialContent(scaffoldState: ScaffoldState = rememberScaffoldState
 }
 
 /**
- * Content of side navigation
+ * Содержимое боковой навигации
  */
 @Composable
 fun AppDrawer(
@@ -190,12 +190,11 @@ fun AppDrawer(
     navigateToSettings: () -> Unit,
     closeDrawer: () -> Unit
 ) {
-
     Column(modifier = Modifier.fillMaxSize()) {
         DrawerHeader()
         DrawerButton(
             icon = Icons.Filled.Home,
-            label = "Home",
+            label = "Домой",
             isSelected = currentRoute == Routes.HOME_ROUTE,
             action = {
                 if (currentRoute != Routes.HOME_ROUTE) {
@@ -207,7 +206,7 @@ fun AppDrawer(
 
         DrawerButton(
             icon = Icons.Filled.Settings,
-            label = "Settings",
+            label = "Настройки",
             isSelected = currentRoute == Routes.SETTINGS_ROUTE,
             action = {
                 if (currentRoute != Routes.SETTINGS_ROUTE) {
@@ -236,8 +235,10 @@ private fun AppDrawerPreview() {
 
 @Composable
 private fun DrawerHeader() {
-
-    Box(contentAlignment = Alignment.BottomStart, modifier = Modifier.background(Color.Green)) {
+    Box(
+        contentAlignment = Alignment.BottomStart,
+        modifier = Modifier.background(Color.Green)
+    ) {
         Image(
             contentScale = ContentScale.Crop,
             modifier = Modifier.height(160.dp),
@@ -272,7 +273,6 @@ private fun DrawerHeaderPreview() {
     }
 }
 
-
 @Preview
 @Preview("dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(device = Devices.PIXEL_C)
@@ -281,11 +281,9 @@ private fun DrawerButtonPreview() {
     ComposeTutorialsTheme {
         DrawerButton(
             icon = Icons.Filled.Home,
-            label = "Home",
+            label = "Домой",
             isSelected = true,
-            action = {
-
-            }
+            action = {}
         )
     }
 }
@@ -298,7 +296,12 @@ fun HomeComponent() {
             .fillMaxSize()
             .background(Color(0xff6D4C41))
     ) {
-        Text(color = Color.White, text = "Home", fontSize = 50.sp, fontWeight = FontWeight.Bold)
+        Text(
+            color = Color.White,
+            text = "Домой",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -320,7 +323,12 @@ fun SettingsComponent() {
             .fillMaxSize()
             .background(Color(0xffFF6F00))
     ) {
-        Text(color = Color.White, text = "Settings", fontSize = 50.sp, fontWeight = FontWeight.Bold)
+        Text(
+            color = Color.White,
+            text = "Настройки",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 

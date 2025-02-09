@@ -55,26 +55,26 @@ import kotlinx.coroutines.launch
 
 
 /*
-    Material Design backdrop. This component provides an API to put together
-    several material components to construct your screen.
+    Material Design Backdrop. Этот компонент предоставляет API для
+    объединения нескольких компонентов Material, чтобы построить интерфейс экрана.
 
-    For a similar component which
-    implements the basic material design layout strategy with app bars,
-    floating action buttons and navigation drawers, use the standard Scaffold.
+    Похожий компонент, который
+    реализует базовую структуру Material Design с AppBar, плавающими
+    кнопками действия (FAB) и Navigation Drawer, — это стандартный Scaffold.
 
-    For similar component that uses a bottom sheet as the centerpiece of the screen,
-    use BottomSheetScaffold.
+    Похожий компонент, который использует нижний лист (Bottom Sheet) в качестве
+    центрального элемента экрана, — это BottomSheetScaffold.
  */
 /**
  * [Backdrop](https://material.io/components/backdrop#behavior)
  *
+ * ```backdropScaffoldState.conceal()``` — используется, чтобы скрыть,
+ * а ```backdropScaffoldState.reveal()``` — чтобы показать нижний контент,
+ * который является **frontLayerContent**.
  *
- * ```backdropScaffoldState.conceal()``` is used to hide, and
- * ```backdropScaffoldState.reveal()``` to reveal bottom content which is **frontLayerContent**.
- *
- * ```headerHeight``` can be used to set **front layer content height** while it's concealed
- * ```peekHeight``` sets **total height for back layer starting from bottom of appBar**.
- *
+ * ```headerHeight``` можно использовать для задания **высоты контента фронт-слоя**,
+ * пока он скрыт. ```peekHeight``` задаёт **общую высоту для back layer**, начиная
+ * от нижней части appBar.
  */
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -134,19 +134,19 @@ private fun TutorialContent(initialBackdropValue: BackdropValue = BackdropValue.
             )
         },
         scaffoldState = backdropScaffoldState,
-        // Back layer properties
+        // Свойства back layer
         peekHeight = BackdropScaffoldDefaults.PeekHeight,
         persistentAppBar = true,
 //        backLayerBackgroundColor = MaterialTheme.colors.primary,
         backLayerContent = {
             BackLayerContent()
         },
-        // Front layer properties
+        // Свойства front layer
         stickyFrontLayer = true,
         headerHeight = BackdropScaffoldDefaults.HeaderHeight,
         frontLayerShape = BackdropScaffoldDefaults.frontLayerShape,
         frontLayerElevation = BackdropScaffoldDefaults.FrontLayerElevation,
-        // 🔥 Removes transparent white color when backdropScaffoldState in concealed
+        // 🔥 Удаляет полупрозрачный белый цвет при состоянии backdropScaffoldState = concealed
         frontLayerScrimColor = Color.Unspecified,
         frontLayerContent = {
             FrontLayerContent()
@@ -162,11 +162,11 @@ private fun BackLayerContent() {
             .fillMaxWidth()
     ) {
         Spacer(Modifier.height(16.dp))
-        BackLayerTextField("Search", "Search dummy...", Icons.Default.Search)
+        BackLayerTextField("Поиск", "Поиск...", Icons.Default.Search)
         Spacer(Modifier.height(16.dp))
-        BackLayerTextField("Date", "Date dummy...", Icons.Default.DateRange)
+        BackLayerTextField("Дата", "Дата...", Icons.Default.DateRange)
         Spacer(Modifier.height(16.dp))
-        BackLayerTextField("Place", "Place dummy...", Icons.Default.Place)
+        BackLayerTextField("Место", "Место...", Icons.Default.Place)
         Spacer(Modifier.height(8.dp))
     }
 }
@@ -176,7 +176,7 @@ private fun FrontLayerContent() {
     Column {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
-                text = "SubHeader",
+                text = "Подзаголовок",
                 modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp, bottom = 8.dp)
             )
         }

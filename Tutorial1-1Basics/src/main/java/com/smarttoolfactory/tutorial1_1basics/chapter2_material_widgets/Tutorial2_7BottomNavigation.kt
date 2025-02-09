@@ -48,7 +48,7 @@ private fun TutorialContent() {
 
             item {
                 StyleableTutorialText(
-                    text = "1-) BottomNavigation only with Text"
+                    text = "1-) BottomNavigation только с текстом"
                 )
             }
 
@@ -58,9 +58,8 @@ private fun TutorialContent() {
 
             item {
                 StyleableTutorialText(
-                    text = "2-) BottomNavigation only with Icon and content color on " +
-                            "BottomNavigation, and selected and unselected colors with " +
-                            "BottomNavigationItem"
+                    text = "2-) BottomNavigation только с иконкой и цветами содержимого в BottomNavigation, " +
+                            "а также выбранными и невыбранными цветами в BottomNavigationItem"
                 )
             }
 
@@ -70,7 +69,7 @@ private fun TutorialContent() {
 
             item {
                 StyleableTutorialText(
-                    text = "3-) BottomNavigation with Icon and Text"
+                    text = "3-) BottomNavigation с иконкой и текстом"
                 )
             }
 
@@ -83,9 +82,8 @@ private fun TutorialContent() {
 
 @Composable
 fun TextBottomNavigationComponent() {
-
     var selectedIndex by remember { mutableStateOf(0) }
-    val list = listOf("Home", "Map", "Settings")
+    val list = listOf("Главная", "Карта", "Настройки")
 
     BottomNavigation(
         elevation = 2.dp,
@@ -118,7 +116,6 @@ private fun TextBottomNavigationComponentPreview() {
 
 @Composable
 fun IconBottomNavigationComponent() {
-
     var selectedIndex by remember { mutableStateOf(0) }
     val icons = listOf(Icons.Filled.Home, Icons.Filled.Map, Icons.Filled.Settings)
 
@@ -152,14 +149,13 @@ private fun IconBottomNavigationComponentPreview() {
     }
 }
 
-
 @Composable
 fun BottomNavigationComponent() {
     var selectedIndex by remember { mutableStateOf(0) }
     val tabContents = listOf(
-        "Home" to Icons.Filled.Home,
-        "Map" to Icons.Filled.Map,
-        "Settings" to Icons.Filled.Settings
+        "Главная" to Icons.Filled.Home,
+        "Карта" to Icons.Filled.Map,
+        "Настройки" to Icons.Filled.Settings
     )
 
     BottomNavigation(
@@ -172,7 +168,7 @@ fun BottomNavigationComponent() {
                 icon = { Icon(pair.second, contentDescription = null) },
                 label = { Text(pair.first) },
                 selected = selectedIndex == index,
-                alwaysShowLabel = false, // Hides the title for the unselected items
+                alwaysShowLabel = false, // Скрывает метку для невыбранных элементов
                 onClick = {
                     selectedIndex = index
                 }
@@ -190,3 +186,4 @@ private fun BottomNavigationComponentPreview() {
         BottomNavigationComponent()
     }
 }
+

@@ -57,20 +57,20 @@ private fun TutorialContent() {
     LazyColumn(Modifier.fillMaxSize()) {
 
         item {
-            TutorialHeader(text = "Text")
+            TutorialHeader(text = "Текст")
 
-            TutorialText2(text = "Font Color")
+            TutorialText2(text = "Цвет шрифта")
             TextSampleRow {
-                CustomText(text = "Red 700", color = Color(0xffd32f2f))
-                CustomText(text = "Purple 700", color = Color(0xff7B1FA2))
-                CustomText(text = "Green 700", color = Color(0xff1976D2))
-                CustomText(text = "Teal 700", color = Color(0xff00796B))
+                CustomText(text = "Красный 700", color = Color(0xffd32f2f))
+                CustomText(text = "Фиолетовый 700", color = Color(0xff7B1FA2))
+                CustomText(text = "Зелёный 700", color = Color(0xff1976D2))
+                CustomText(text = "Бирюзовый 700", color = Color(0xff00796B))
             }
 
-            // Examples about font related properties
+            // Примеры свойств, связанных с шрифтом
             TextFontExample()
 
-            TutorialText2(text = "Letter Spacing")
+            TutorialText2(text = "Межбуквенное расстояние")
             TextSampleRow {
                 CustomText(text = " LS:0.4sp", letterSpacing = 0.4.sp)
                 CustomText(text = "LS:1sp", letterSpacing = 1.sp)
@@ -78,12 +78,12 @@ private fun TutorialContent() {
                 CustomText(text = "LS:4sp", letterSpacing = 4.sp)
             }
 
-            TutorialText2(text = "Text Decoration")
+            TutorialText2(text = "Украшение текста")
             TextSampleRow {
-                CustomText(text = "Underline", textDecoration = TextDecoration.Underline)
-                CustomText(text = "LineThrough", textDecoration = TextDecoration.LineThrough)
+                CustomText(text = "Подчёркнутый", textDecoration = TextDecoration.Underline)
+                CustomText(text = "Зачёркнутый", textDecoration = TextDecoration.LineThrough)
                 CustomText(
-                    text = "Underline+LineThrough", textDecoration = TextDecoration.combine(
+                    text = "Подчёркнутый+Зачёркнутый", textDecoration = TextDecoration.combine(
                         listOf(
                             TextDecoration.Underline,
                             TextDecoration.LineThrough
@@ -92,68 +92,67 @@ private fun TutorialContent() {
                 )
             }
 
-            TutorialText2(text = "Line Height")
+            TutorialText2(text = "Высота строки")
             CustomText(
-                text = "This text has line height of 15 sp. Line height for the Paragraph in TextUnit unit, e.g. SP or EM.",
+                text = "Этот текст имеет высоту строки 15 sp. Высота строки задаётся в единицах TextUnit, например SP или EM.",
                 lineHeight = 15.sp
             )
 
             Divider(modifier = Modifier.padding(4.dp))
             CustomText(
-                text = "This text has line height of 20 sp. Line height for the Paragraph in TextUnit unit, e.g. SP or EM.",
+                text = "Этот текст имеет высоту строки 20 sp. Высота строки задаётся в единицах TextUnit, например SP или EM.",
                 lineHeight = 20.sp
             )
             Divider(modifier = Modifier.padding(4.dp))
             CustomText(
-                text = "This text has line height of 25 sp. Line height for the Paragraph in TextUnit unit, e.g. SP or EM.",
+                text = "Этот текст имеет высоту строки 25 sp. Высота строки задаётся в единицах TextUnit, например SP или EM.",
                 lineHeight = 25.sp
             )
             Divider(modifier = Modifier.padding(4.dp))
             CustomText(
-                text = "This text has line height of 30 sp. Line height for the Paragraph in TextUnit unit, e.g. SP or EM.",
+                text = "Этот текст имеет высоту строки 30 sp. Высота строки задаётся в единицах TextUnit, например SP или EM.",
                 lineHeight = 30.sp
             )
             Divider(modifier = Modifier.padding(4.dp))
 
-            TutorialText2(text = "Overflow")
+            TutorialText2(text = "Переполнение")
             CustomText(
-                text = "Clip the overflowing text to fix its container. " +
-                        "If the text exceeds the given number of lines, it will be truncated according to " +
-                        " overflow and softWrap.",
+                text = "Обрезать текст, выходящий за пределы контейнера. " +
+                        "Если текст превышает указанное количество строк, он будет усечён в соответствии с " +
+                        " overflow и softWrap.",
                 overflow = TextOverflow.Clip,
                 maxLines = 1
             )
             CustomText(
-                text = "Use an ellipsis to indicate that the text has overflowed. " +
-                        "If the text exceeds the given number of lines, it will be truncated according to " +
-                        " overflow and softWrap.",
+                text = "Использовать троеточие для обозначения переполнения текста. " +
+                        "Если текст превышает указанное количество строк, он будет усечён в соответствии с " +
+                        " overflow и softWrap.",
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
             )
 
-            // Draw background and border examples
+            // Примеры с фоном и рамкой текста
             TextBackgroundAndBorderExample()
 
-            // Draw text shadow
+            // Пример тени текста
             TextShadowExample()
 
-            // Draw Spannable example
+            // Пример Spannable текста
             SpannableTextExample()
 
-            // Draw Subscript and SuperScript text
+            // Пример подстрочного и надстрочного текста
             SubscriptSuperscriptTextExample()
 
             SelectableTextExample()
             Spacer(modifier = Modifier.padding(bottom = 32.dp))
-
-
         }
     }
 }
 
+// Пример настройки шрифта текста
 @Composable
 private fun TextFontExample() {
-    TutorialText2(text = "Font Size")
+    TutorialText2(text = "Размер шрифта")
     TextSampleRow {
         CustomText(text = "14sp", fontSize = 14.sp)
         CustomText(text = "18sp", fontSize = 18.sp)
@@ -161,43 +160,43 @@ private fun TextFontExample() {
         CustomText(text = "40sp", fontSize = 40.sp)
     }
 
-    TutorialText2(text = "Font Style")
+    TutorialText2(text = "Стиль шрифта")
     TextSampleRow {
-        CustomText(text = "Normal", fontStyle = FontStyle.Normal)
-        CustomText(text = "Italic", fontStyle = FontStyle.Italic)
+        CustomText(text = "Обычный", fontStyle = FontStyle.Normal)
+        CustomText(text = "Курсив", fontStyle = FontStyle.Italic)
     }
 
-    TutorialText2(text = "Font Weight")
+    TutorialText2(text = "Толщина шрифта")
     TextSampleRow {
-        CustomText(text = "Thin", fontWeight = FontWeight.Thin)
-        CustomText(text = "ExtraLight", fontWeight = FontWeight.ExtraLight)
-        CustomText(text = "Light", fontWeight = FontWeight.Light)
-        CustomText(text = "Normal", fontWeight = FontWeight.Normal)
-        CustomText(text = "Medium", fontWeight = FontWeight.Medium)
+        CustomText(text = "Тонкий", fontWeight = FontWeight.Thin)
+        CustomText(text = "Очень лёгкий", fontWeight = FontWeight.ExtraLight)
+        CustomText(text = "Лёгкий", fontWeight = FontWeight.Light)
+        CustomText(text = "Нормальный", fontWeight = FontWeight.Normal)
+        CustomText(text = "Средний", fontWeight = FontWeight.Medium)
     }
     TextSampleRow {
-        CustomText(text = "SemiBold", fontWeight = FontWeight.SemiBold)
-        CustomText(text = "Bold", fontWeight = FontWeight.Bold)
-        CustomText(text = "ExtraBold", fontWeight = FontWeight.ExtraBold)
-        CustomText(text = "Black", fontWeight = FontWeight.Black)
+        CustomText(text = "Полужирный", fontWeight = FontWeight.SemiBold)
+        CustomText(text = "Жирный", fontWeight = FontWeight.Bold)
+        CustomText(text = "Очень жирный", fontWeight = FontWeight.ExtraBold)
+        CustomText(text = "Чёрный", fontWeight = FontWeight.Black)
     }
 
-    TutorialText2(text = "Font Family")
+    TutorialText2(text = "Семейство шрифтов")
     TextSampleRow {
-        CustomText(text = "Default", fontFamily = FontFamily.Default)
-        CustomText(text = "Cursive", fontFamily = FontFamily.Cursive)
-        CustomText(text = "Monospace", fontFamily = FontFamily.Monospace)
-        CustomText(text = "SansSerif", fontFamily = FontFamily.SansSerif)
-        CustomText(text = "Serif", fontFamily = FontFamily.Serif)
+        CustomText(text = "По умолчанию", fontFamily = FontFamily.Default)
+        CustomText(text = "Курсив", fontFamily = FontFamily.Cursive)
+        CustomText(text = "Моноширинный", fontFamily = FontFamily.Monospace)
+        CustomText(text = "Без засечек", fontFamily = FontFamily.SansSerif)
+        CustomText(text = "С засечками", fontFamily = FontFamily.Serif)
     }
 }
 
 /**
- * Draw [Text]s with background or border with solid or gradient colors
+ * Отображение [Text] с фоном или рамкой, выполненными сплошным или градиентным цветом
  */
 @Composable
 private fun TextBackgroundAndBorderExample() {
-    TutorialText2(text = "Background")
+    TutorialText2(text = "Фон")
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -216,7 +215,7 @@ private fun TextBackgroundAndBorderExample() {
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
-            text = "Orange 500",
+            text = "Оранжевый 500",
             modifier = Modifier
                 .background(Color(0xffFF9800), shape = RoundedCornerShape(20.dp))
                 .padding(20.dp)
@@ -225,7 +224,7 @@ private fun TextBackgroundAndBorderExample() {
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
-            text = "Cyan 500",
+            text = "Бирюзовый 500",
             modifier = Modifier
                 .background(Color(0xff00BCD4), shape = CutCornerShape(topStartPercent = 25))
                 .padding(20.dp)
@@ -233,14 +232,14 @@ private fun TextBackgroundAndBorderExample() {
         CustomText(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            text = "Gradient",
+            text = "Градиент",
             modifier = Modifier
                 .background(brush = horizontalGradientBrush)
                 .padding(20.dp)
         )
     }
 
-    TutorialText2(text = "Border")
+    TutorialText2(text = "Рамка")
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -258,7 +257,7 @@ private fun TextBackgroundAndBorderExample() {
         CustomText(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            text = "Orange 500",
+            text = "Оранжевый 500",
             modifier = Modifier
                 .border(width = 4.dp, Color(0xffFF9800), shape = RoundedCornerShape(20.dp))
                 .padding(20.dp)
@@ -266,7 +265,7 @@ private fun TextBackgroundAndBorderExample() {
         CustomText(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            text = "Cyan 500",
+            text = "Бирюзовый 500",
             modifier = Modifier
                 .border(
                     width = 4.dp,
@@ -278,7 +277,7 @@ private fun TextBackgroundAndBorderExample() {
         CustomText(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            text = "Gradient",
+            text = "Градиент",
             modifier = Modifier
                 .border(width = 4.dp, brush = verticalGradientBrush, shape = RectangleShape)
                 .padding(20.dp)
@@ -289,14 +288,14 @@ private fun TextBackgroundAndBorderExample() {
 @Composable
 private fun TextShadowExample() {
 
-    TutorialText2(text = "Shadow")
+    TutorialText2(text = "Тень")
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
         Text(
-            text = "Shadow1",
+            text = "Тень1",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
@@ -307,7 +306,7 @@ private fun TextShadowExample() {
             )
         )
         Text(
-            text = "Shadow2",
+            text = "Тень2",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
@@ -318,7 +317,7 @@ private fun TextShadowExample() {
             )
         )
         Text(
-            text = "Shadow3",
+            text = "Тень3",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
@@ -334,17 +333,17 @@ private fun TextShadowExample() {
 @Composable
 private fun SpannableTextExample(modifier: Modifier = Modifier) {
 
-    TutorialText2(text = "Spannable Text")
+    TutorialText2(text = "Многоцветный текст")
 
     val annotatedColorString = buildAnnotatedString {
-        append("RedGreenBlue")
-        addStyle(style = SpanStyle(color = Color.Red, fontSize = 24.sp), start = 0, end = 3)
+        append("КрасныйЗелёныйСиний")
+        addStyle(style = SpanStyle(color = Color.Red, fontSize = 24.sp), start = 0, end = 7)
         addStyle(
             style = SpanStyle(
                 color = Color.Green,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
-            ), start = 3, end = 8
+            ), start = 7, end = 14
         )
         addStyle(
             style = SpanStyle(
@@ -352,7 +351,7 @@ private fun SpannableTextExample(modifier: Modifier = Modifier) {
                 fontSize = 26.sp,
                 textDecoration = TextDecoration.Underline
             ),
-            start = 8,
+            start = 14,
             end = this.length
         )
     }
@@ -364,13 +363,13 @@ private fun SpannableTextExample(modifier: Modifier = Modifier) {
         text = annotatedColorString
     )
 
-    TutorialText2(text = "ClickableText")
+    TutorialText2(text = "Кликабельный текст")
 
     val annotatedLinkString: AnnotatedString = buildAnnotatedString {
 
-        val str = "Click this link to go to web site"
-        val startIndex = str.indexOf("link")
-        val endIndex = startIndex + 4
+        val str = "Нажмите на эту ссылку, чтобы перейти на сайт"
+        val startIndex = str.indexOf("ссылку")
+        val endIndex = startIndex + 6
         append(str)
 
         addStyle(
@@ -381,7 +380,7 @@ private fun SpannableTextExample(modifier: Modifier = Modifier) {
             ), start = startIndex, end = endIndex
         )
 
-        // attach a string annotation that stores a URL to the text "Jetpack Compose".
+        // Привязать аннотацию URL к тексту "ссылка".
         addStringAnnotation(
             tag = "URL",
             annotation = "https://github.com/SmartToolFactory",
@@ -391,10 +390,10 @@ private fun SpannableTextExample(modifier: Modifier = Modifier) {
 
     }
 
-    // UriHandler parse and opens URI inside AnnotatedString Item in Browse
+    // UriHandler парсит и открывает URI внутри AnnotatedString
     val uriHandler: UriHandler = LocalUriHandler.current
 
-    // 🔥 Clickable text returns position of text that is clicked in onClick callback
+    // 🔥 Кликабельный текст возвращает позицию, на которую кликнули, в обратном вызове onClick
     ClickableText(
         modifier = modifier
             .padding(16.dp)
@@ -404,43 +403,41 @@ private fun SpannableTextExample(modifier: Modifier = Modifier) {
             annotatedLinkString
                 .getStringAnnotations(it, it)
                 .firstOrNull()?.let { stringAnnotation ->
-                    println("🔥 Clicked: $it, item: ${stringAnnotation.item}")
+                    println("🔥 Кликнули: $it, элемент: ${stringAnnotation.item}")
                     uriHandler.openUri(stringAnnotation.item)
                 }
         }
     )
 }
-
 @Composable
 private fun SubscriptSuperscriptTextExample() {
 
-    TutorialText2(text = "Subscript and Superscript")
-    // create a variable superScript
-    // enter the baselineShift to
-    // BaselineShift.Superscript for superscript
+    TutorialText2(text = "Подстрочный и надстрочный текст")
+    // создаём переменную superScript
+    // задаём baselineShift как
+    // BaselineShift.Superscript для надстрочного текста
     val superscript = SpanStyle(
         baselineShift = BaselineShift.Superscript,
-        fontSize = 14.sp, // font size of superscript
-        color = Color.Red // color
+        fontSize = 14.sp, // размер шрифта для надстрочного текста
+        color = Color.Red // цвет текста
     )
 
-    // create a variable subScript
-    // enter the baselineShift to
-    // BaselineShift.Subscript for subscript
+    // создаём переменную subScript
+    // задаём baselineShift как
+    // BaselineShift.Subscript для подстрочного текста
     val subscript = SpanStyle(
         baselineShift = BaselineShift.Subscript,
-        fontSize = 14.sp, // font size of subscript
-        color = Color.Blue // color
+        fontSize = 14.sp, // размер шрифта для подстрочного текста
+        color = Color.Blue // цвет текста
     )
 
-    // create first text
+    // создаём первый текст
     Text(
         modifier = Modifier.padding(16.dp),
         fontSize = 20.sp,
         text = buildAnnotatedString {
-            // instead of directly passing
-            // string value to text
-            // use append
+            // вместо прямой передачи строкового значения
+            // используем метод append
             append("E = mc")
             withStyle(superscript) {
                 append("2")
@@ -448,14 +445,13 @@ private fun SubscriptSuperscriptTextExample() {
         }
     )
 
-    // Create second text
+    // создаём второй текст
     Text(
         modifier = Modifier.padding(16.dp),
         fontSize = 20.sp,
         text = buildAnnotatedString {
-            // instead of directly passing
-            // string value to text
-            // use append
+            // вместо прямой передачи строкового значения
+            // используем метод append
             append("CH")
             withStyle(subscript) {
                 append("4")
@@ -474,18 +470,17 @@ private fun SubscriptSuperscriptTextExample() {
 
 @Composable
 private fun SelectableTextExample() {
-    TutorialText2(text = "Selectable Text")
+    TutorialText2(text = "Выделяемый текст")
     SelectionContainer {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
-                    "when an unknown printer took a galley of type and scrambled " +
-                    "it to make a type specimen book."
+            text = "Lorem Ipsum — это текст-рыба, который используется в печати и веб-дизайне. " +
+                    "Этот текст стал стандартной \"рыбой\" ещё в XVI веке, " +
+                    "когда неизвестный печатник взял шрифтовую гранку и составил из неё " +
+                    "образец шрифта."
         )
     }
 }
-
 
 @Composable
 private fun CustomText(
@@ -526,7 +521,7 @@ private fun CustomText(
 }
 
 /**
- * Sample Row to display [Text] components with different features side by side
+ * Пример строки для отображения компонентов [Text] с различными функциями рядом
  */
 @Composable
 fun TextSampleRow(content: @Composable () -> Unit) {

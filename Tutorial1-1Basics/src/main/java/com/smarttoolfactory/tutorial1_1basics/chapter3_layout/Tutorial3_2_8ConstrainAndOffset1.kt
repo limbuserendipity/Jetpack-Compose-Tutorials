@@ -29,15 +29,14 @@ import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialTex
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
 
-
 val composableBackgroundColor = Color(0xffFF9800)
 val textBackgroundColor = Color(0xff2196F3)
 
 /**
- * This tutorial shows when and how to use [Constraints.offset] or [Constraints.constrainWidth].
+ * Этот туториал показывает, когда и как использовать [Constraints.offset] или [Constraints.constrainWidth].
  *
- * Setting padding with or without these functions and how they effect layout
- * especially when our Composable dimensions are at same size of or bigger than its Parent.
+ * Рассмотрим, как задание отступов (padding) с/без этих функций влияет на лейаут,
+ * особенно когда наш Composable по размеру равен или больше родителя.
  *
  */
 @Preview(showBackground = true)
@@ -46,9 +45,10 @@ fun Tutorial3_2Screen8() {
     TutorialContent()
 }
 
+@Preview(showBackground = true)
 @Composable
 private fun TutorialContent() {
-    var message by remember { mutableStateOf("Type to monitor overflow") }
+    var message by remember { mutableStateOf("Попробуйте набрать текст, чтобы увидеть переполнение") }
 
     Column(
         modifier = Modifier
@@ -57,7 +57,7 @@ private fun TutorialContent() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TutorialHeader(text = "Constraints and Offset")
+        TutorialHeader(text = "Constraints и Offset (Смещение)")
 
         val density = LocalDensity.current
         val containerWidth = with(density) {
@@ -74,10 +74,10 @@ private fun TutorialContent() {
         ) {
 
             StyleableTutorialText(
-                text = "Custom padding modifiers use **Constraints.offset** and/or " +
-                        "**Constraints.constrainWidth** to set usable area by any Composable. " +
-                        "When offset or constraints are not used Composable " +
-                        "can overflow from its parent.",
+                text = "Пользовательские модификаторы отступов используют **Constraints.offset** и/или " +
+                        "**Constraints.constrainWidth**, чтобы задать доступную область для Composable. " +
+                        "Когда offset или constraints не используются, Composable " +
+                        "может «вылезать» за рамки своего родителя.",
                 bullets = false
             )
             CustomPaddingSamples(message)
@@ -88,8 +88,8 @@ private fun TutorialContent() {
                 .padding(8.dp)
                 .fillMaxWidth(),
             value = message,
-            label = { Text("Main") },
-            placeholder = { Text("Set text to change main width") },
+            label = { Text("Основной ввод") },
+            placeholder = { Text("Впишите текст для изменения ширины контента") },
             onValueChange = { newValue: String ->
                 message = newValue
             }
@@ -106,8 +106,10 @@ private fun CustomPaddingSamples(message: String) {
     }
 
     SideEffect {
-        println("🍎 CustomPaddingSamples() composing\n" +
-                "message: $message")
+        println(
+            "🍎 CustomPaddingSamples() составление\n" +
+                    "message: $message"
+        )
     }
 
     TutorialText2(text = "paddingNoOffsetNoConstrain")

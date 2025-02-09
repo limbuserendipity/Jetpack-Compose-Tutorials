@@ -49,7 +49,7 @@ private fun TutorialContent() {
             .verticalScroll(rememberScrollState())
     ) {
 
-        TutorialHeader(text = "Custom Layouts 1")
+        TutorialHeader(text = "Пользовательские лейауты 1")
 
         ChipStaggeredGrid(
             modifier = Modifier
@@ -95,40 +95,37 @@ private fun CustomColumn(
         content = content
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-        // 🔥 We need to set minWidth to zero to wrap only placeable width
-        // If we use Default constrains each Composable gets measured with current minWidth
-        // which is equal to maxWidth when we set fillMaxWidth/Size
+        // 🔥 Устанавливаем minWidth в 0, чтобы ширина соответствовала только ширине placeable.
+        // Иначе, при Modifier.fillMaxWidth/Size каждый Composable получит
+        // minWidth = maxWidth.
         val looseConstraints = constraints.copy(minWidth = 0)
 
-        //
         val placeables = measurables.map { measurable ->
-            // Measure each child
+            // Измеряем каждый дочерний элемент
             measurable.measure(looseConstraints)
         }
 
-        // Track the y co-ord we have placed children up to
+        // Координата по оси Y, до которой мы расположили элементы
         var yPosition = 0
 
         val totalHeight: Int = placeables.sumOf {
             it.height
         }
 
-
-        // Set the size of the layout as big as it can
+        // Размер лейаута будет настолько большим, насколько он может
         layout(constraints.maxWidth, totalHeight) {
-            // Place children in the parent layout
+            // Размещаем дочерние элементы внутри родительского лейаута
             placeables.forEach { placeable ->
 
-                // Position item on the screen
+                // Размещаем элемент на экране
                 placeable.placeRelative(x = 0, y = yPosition)
 
-                // Record the y co-ord placed up to
+                // Запоминаем координату Y, до которой мы расположили элемент
                 yPosition += placeable.height
             }
         }
     }
 }
-
 
 @Composable
 private fun Chip(modifier: Modifier = Modifier, text: String) {
@@ -137,7 +134,6 @@ private fun Chip(modifier: Modifier = Modifier, text: String) {
         border = BorderStroke(color = Color.Black, width = Dp.Hairline),
         shape = RoundedCornerShape(8.dp)
     ) {
-
         val size = Random.nextInt(10, 40)
 
         Row(
@@ -156,8 +152,8 @@ private fun Chip(modifier: Modifier = Modifier, text: String) {
 }
 
 /**
- * This layout is a staggered grid which aligns the chip in next row based on maximum
- * height of Chip on previous row
+ * Этот лейаут создаёт "зависимую" (staggered) сетку, где каждая «фишка» (Chip) в новой строке
+ * основывается на максимальной высоте фишки в предыдущей строке.
  */
 @Composable
 fun ChipStaggeredGrid(
@@ -188,7 +184,7 @@ fun ChipStaggeredGrid(
 
         val placeables: List<Placeable> = measurables.mapIndexed { index, measurable ->
 
-            // Measure each child
+            // Измеряем каждый дочерний элемент
             val placeable =
                 measurable.measure(
                     constraints.copy(
@@ -201,32 +197,32 @@ fun ChipStaggeredGrid(
             val placeableWidth = placeable.width
             val placeableHeight = placeable.height
 
-            // It's the same row as previous Composable if sum of current width of row and width of
-            // this placeable is smaller then constraintMaxWidth(Parent width)
+            // Будем ли мы продолжать ту же строку?
+            // Если сумма текущей ширины строки и ширины этого элемента
+            // меньше чем constraintMaxWidth (то есть вписывается в ширину лейаута)
             val isSameRow = (currentWidthOfRow + placeableWidth <= constraintMaxWidth)
 
             if (isSameRow) {
-
                 xPos = currentWidthOfRow
                 yPos = totalHeightOfRows
 
-                // Current width or row is now existing length and new item's length
+                // Теперь ширина строки — это существующая длина плюс ширина нового элемента
                 currentWidthOfRow += placeableWidth
 
-                // Get the maximum item height in each row
+                // Получаем максимальную высоту элемента в строке
                 maxPlaceableHeight = maxPlaceableHeight.coerceAtLeast(placeableHeight)
 
-                // After adding each item check if it's the longest row
+                // Проверяем, не самая ли это длинная строка
                 maxRowWidth = maxRowWidth.coerceAtLeast(currentWidthOfRow)
 
                 lastRowHeight = maxPlaceableHeight
 
-
             } else {
-
+                // Начинаем новую строку
                 currentWidthOfRow = placeableWidth
                 maxPlaceableHeight = maxPlaceableHeight.coerceAtLeast(placeableHeight)
 
+                // Добавляем высоту предыдущей строки к общей высоте
                 totalHeightOfRows += maxPlaceableHeight
 
                 xPos = 0
@@ -242,11 +238,12 @@ fun ChipStaggeredGrid(
             placeable
         }
 
+        // Высота лейаута будет суммой высоты всех строк плюс высота последней строки
         val finalHeight = (rowHeights.sumOf { it } + lastRowHeight)
             .coerceIn(constraints.minHeight.rangeTo(constraints.maxHeight))
 
-        // Constraints can be bigger or smaller than max width
-        // Limit max width of layout in Constraints' min-max range
+        // Контейнер может быть больше или меньше, чем maxWidth,
+        // поэтому ограничиваем итоговую ширину в min..max
         if (constraints.hasFixedWidth && constraints.hasBoundedWidth) {
             maxRowWidth =
                 maxRowWidth.coerceIn(
@@ -255,12 +252,10 @@ fun ChipStaggeredGrid(
                 )
         }
 
-        // Set the size of the layout as big as it can
+        // Устанавливаем размер лейаута
         layout(maxRowWidth, finalHeight) {
-            // Place children in the parent layout
+            // Размещаем дочерние элементы внутри родительского лейаута
             placeables.forEachIndexed { index, placeable ->
-                // Position item on the screen
-
                 val point = placeableMap[index]
                 point?.let {
                     placeable.placeRelative(x = point.x, y = point.y)
@@ -270,6 +265,7 @@ fun ChipStaggeredGrid(
     }
 }
 
+// Список текстовых тем (слова)
 private val topics = listOf(
     "Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
     "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",

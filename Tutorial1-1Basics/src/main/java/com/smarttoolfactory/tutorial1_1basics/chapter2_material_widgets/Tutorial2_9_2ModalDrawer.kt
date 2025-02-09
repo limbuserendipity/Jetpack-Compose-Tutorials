@@ -93,9 +93,7 @@ private fun ModalDrawerComponent(drawerValue: DrawerValue = DrawerValue.Closed) 
             Divider()
             ModelDrawerContentBody(
                 selectedIndex,
-                onSelected = {
-                    selectedIndex = it
-                },
+                onSelected = { selectedIndex = it },
                 closeDrawer = closeDrawer
             )
         },
@@ -112,7 +110,7 @@ private fun ModalDrawerComponent(drawerValue: DrawerValue = DrawerValue.Closed) 
 fun ModalDrawerTopAppBar(openDrawer: () -> Unit) {
     TopAppBar(
         title = {
-            Text("ModalDrawer")
+            Text("Модальное меню")
         },
         navigationIcon = {
             IconButton(onClick = openDrawer) {
@@ -155,7 +153,6 @@ fun ModalDrawerContentHeader() {
     }
 }
 
-
 @Composable
 fun ModelDrawerContentBody(
     selectedIndex: Int,
@@ -164,7 +161,6 @@ fun ModelDrawerContentBody(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         modalDrawerList.forEachIndexed { index, pair ->
-
             val label = pair.first
             val imageVector = pair.second
             DrawerButton(
@@ -199,7 +195,7 @@ fun ModalContent(openDrawer: () -> Unit) {
                     )
                 },
                 secondaryText = {
-                    Text(text = "Secondary text")
+                    Text(text = "Вторичный текст")
                 }
             ) {
                 Text(text = item, fontSize = 18.sp)
@@ -209,11 +205,11 @@ fun ModalContent(openDrawer: () -> Unit) {
 }
 
 val modalDrawerList = listOf(
-    Pair("My Files", Icons.Filled.Folder),
-    Pair("Shared with Me", Icons.Filled.People),
-    Pair("Starred", Icons.Filled.Star),
-    Pair("Recent", Icons.Filled.AccessTime),
-    Pair("Offline", Icons.Filled.OfflineShare),
-    Pair("Uploads", Icons.Filled.Upload),
-    Pair("Backups", Icons.Filled.CloudUpload),
+    Pair("Мои файлы", Icons.Filled.Folder),
+    Pair("Совместный доступ", Icons.Filled.People),
+    Pair("В избранном", Icons.Filled.Star),
+    Pair("Недавние", Icons.Filled.AccessTime),
+    Pair("Не в сети", Icons.Filled.OfflineShare),
+    Pair("Загрузки", Icons.Filled.Upload),
+    Pair("Резервные копии", Icons.Filled.CloudUpload),
 )

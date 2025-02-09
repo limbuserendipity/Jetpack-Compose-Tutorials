@@ -69,42 +69,44 @@ private fun TutorialContent() {
         TutorialHeader(text = "graphicsLayer Modifier")
 
         StyleableTutorialText(
-            text = "1-) Modifier.Element that makes content draw into a draw layer. " +
-                    "The draw layer can be\n" +
-                    " invalidated separately from parents. A **graphicsLayer** should be " +
-                    "used when the content\n" +
-                    " updates independently from anything above it to minimize the " +
-                    "invalidated content.\n\n" +
-                    " **graphicsLayer** can be used to apply effects to content, " +
-                    "such as scaling, rotation, opacity,\n" +
-                    "  shadow, and clipping."
+            text = "1-) Modifier.Element, который заставляет контент рисоваться в отдельном слое (draw layer). " +
+                    "Этот слой может\n" +
+                    " инвалидироваться отдельно от родителя. **graphicsLayer** следует использовать, " +
+                    "когда контент\n" +
+                    " обновляется независимо от верхних элементов, чтобы минимизировать область " +
+                    "перерисовки.\n\n" +
+                    " С помощью **graphicsLayer** можно применять эффекты к контенту, такие как " +
+                    "масштаб (scale), поворот (rotation), прозрачность (opacity),\n" +
+                    " тень (shadow) и обрезка (clipping)."
         )
-        TutorialText2(text = "Offset and Translate")
+        TutorialText2(text = "Смещение (Offset) и Перемещение (Translate)")
         OffsetAndTranslationExample()
         StyleableTutorialText(
-            text = "2-) Changing scale via **Modifier.graphicsLayer{}** doesn't change " +
-                    "size and bounds of a Composable but it's **position in parent** " +
-                    "might change based on where it's translated with scale."
+            text = "2-) Изменение масштаба (scale) через **Modifier.graphicsLayer{}** не изменяет " +
+                    "размер и границы (bounds) Composable, однако может меняться " +
+                    "**положение** (positionInParent) с учётом того, где находится точка начала " +
+                    "масштабирования (translate)."
         )
         GraphicsLayerExample()
         Spacer(modifier = Modifier.height(20.dp))
         StyleableTutorialText(
-            text = "3-) When width is changed Composable's bounds also change."
+            text = "3-) При изменении ширины (width) границы Composable тоже изменяются."
         )
         WidthChangeExample()
         StyleableTutorialText(
-            text = "4-) Scale changes are originated from center. To have same appearance as " +
-                    "width change we can translate and make changes look originated start or " +
-                    "end of a Composable."
+            text = "4-) Изменения масштаба (scale) происходят относительно центра. Чтобы добиться " +
+                    "такого же эффекта, как при изменении ширины, можно добавить " +
+                    "перемещение (translate) и добиться того, чтобы преобразования " +
+                    "выглядели начатым со **start** или **end** Composable."
         )
-        TutorialText2(text = "Scale in end direction of Composable")
+        TutorialText2(text = "Масштабирование (Scale) в сторону End Composable")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
             ScaledAndTranslateEndExample()
         }
-        TutorialText2(text = "Scale in start direction of Composable")
+        TutorialText2(text = "Масштабирование (Scale) в сторону Start Composable")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.End
@@ -113,8 +115,9 @@ private fun TutorialContent() {
         }
 
         StyleableTutorialText(
-            text = "5-) rotation variables of **Modifier.graphicsLayer{}** can be used to rotate" +
-                    "a composable in respective axis."
+            text = "5-) Параметры rotation (rotationX, rotationY, rotationZ) " +
+                    "в **Modifier.graphicsLayer{}** позволяют вращать Composable " +
+                    "по соответствующим осям."
         )
 
         Column(
@@ -125,8 +128,9 @@ private fun TutorialContent() {
         }
 
         StyleableTutorialText(
-            text = "6-) **TransformOrigin** determines which position transformation events" +
-                    "such as scale or translate should be applied at."
+            text = "6-) **TransformOrigin** определяет, относительно какой точки " +
+                    "(координаты pivotFractionX, pivotFractionY) применять " +
+                    "преобразования, такие как масштабирование (scale) или перемещение (translate)."
         )
         TransformOriginExample()
     }
@@ -138,7 +142,6 @@ private fun OffsetAndTranslationExample() {
 
     var value by remember { mutableStateOf(0f) }
 
-
     Row(modifier = Modifier.border(2.dp, Color.Red)) {
         Box(
             modifier = Modifier
@@ -147,7 +150,7 @@ private fun OffsetAndTranslationExample() {
                 }
                 .clickable {
                     Toast
-                        .makeText(context, "One with offset is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат элемент с offset", Toast.LENGTH_SHORT)
                         .show()
                 }
                 .zIndex(2f)
@@ -163,7 +166,7 @@ private fun OffsetAndTranslationExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Static composable is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат статичный элемент", Toast.LENGTH_SHORT)
                         .show()
                 }
         )
@@ -179,7 +182,7 @@ private fun OffsetAndTranslationExample() {
                 }
                 .clickable {
                     Toast
-                        .makeText(context, "One with offset is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат элемент с graphicsLayer translation", Toast.LENGTH_SHORT)
                         .show()
                 }
                 .zIndex(2f)
@@ -195,7 +198,7 @@ private fun OffsetAndTranslationExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Static composable is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат статичный элемент", Toast.LENGTH_SHORT)
                         .show()
                 }
         )
@@ -232,15 +235,14 @@ private fun GraphicsLayerExample() {
                 .border(2.dp, Color.Green)
                 .zIndex(2f)
                 .size(120.dp)
-                // Order of clickable respect to graphicsLayer matters, in which
-                // position clickable is and how it's dimensions are calculated
-                // no matter what scale is touch position is corresponds to same value
-                // end of image always returns same value as offset for instance
+                // Порядок clickable относительно graphicsLayer важен: то,
+                // на каком этапе применяется clickable, и как рассчитываются размеры.
+                // независимо от масштабирования точка нажатия остаётся прежней.
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = {
                             Toast
-                                .makeText(context, "Clicked position: $it", Toast.LENGTH_SHORT)
+                                .makeText(context, "Клик по позиции: $it", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     )
@@ -265,7 +267,7 @@ private fun GraphicsLayerExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Static composable is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат статичный элемент", Toast.LENGTH_SHORT)
                         .show()
                 }
         )
@@ -282,7 +284,6 @@ private fun GraphicsLayerExample() {
         },
         valueRange = 0f..1000f
     )
-
 
     Text("scaleX: ${sclX.round2Digits()}")
     Slider(
@@ -313,7 +314,7 @@ private fun WidthChangeExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Image is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Клик по изображению", Toast.LENGTH_SHORT)
                         .show()
                 },
             painter = painterResource(id = R.drawable.landscape1),
@@ -328,7 +329,7 @@ private fun WidthChangeExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Static composable is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажат статичный элемент", Toast.LENGTH_SHORT)
                         .show()
                 }
         )
@@ -343,7 +344,6 @@ private fun WidthChangeExample() {
         },
         valueRange = 0f..1000f
     )
-
 
     Text("width: ${width.round2Digits()}dp")
     Slider(
@@ -366,6 +366,8 @@ private fun ScaledAndTranslateEndExample() {
         Image(
             modifier = Modifier
                 .graphicsLayer {
+                    // смещение элемента вправо пропорционально изменениям масштаба
+                    // (width * sclX - width) / 2
                     translationX = (width * sclX - width) / 2
                     scaleX = sclX
                 }
@@ -376,7 +378,7 @@ private fun ScaledAndTranslateEndExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Image is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Клик по изображению", Toast.LENGTH_SHORT)
                         .show()
                 },
             painter = painterResource(id = R.drawable.landscape1),
@@ -403,12 +405,12 @@ private fun ScaledAndTranslateStartExample() {
     var sclX by remember { mutableStateOf(1f) }
     var width by remember { mutableStateOf(0f) }
 
-
-
     Row(modifier = Modifier.border(2.dp, Color.Red)) {
         Image(
             modifier = Modifier
                 .graphicsLayer {
+                    // смещение элемента влево пропорционально изменениям масштаба
+                    // (width - width * sclX) / 2
                     translationX = (width - width * sclX) / 2
                     scaleX = sclX
                 }
@@ -419,7 +421,7 @@ private fun ScaledAndTranslateStartExample() {
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Image is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Клик по изображению", Toast.LENGTH_SHORT)
                         .show()
                 },
             painter = painterResource(id = R.drawable.landscape1),
@@ -448,7 +450,6 @@ private fun RotationExample() {
 
     var camDistance by remember { mutableStateOf(5f) }
 
-
     Row(modifier = Modifier.border(2.dp, Color.Red)) {
         Image(
             modifier = Modifier
@@ -458,11 +459,10 @@ private fun RotationExample() {
                     rotationZ = angleZ
                     cameraDistance = camDistance
                 }
-
                 .size(120.dp)
                 .clickable {
                     Toast
-                        .makeText(context, "Image is clicked", Toast.LENGTH_SHORT)
+                        .makeText(context, "Клик по изображению", Toast.LENGTH_SHORT)
                         .show()
                 },
             painter = painterResource(id = R.drawable.landscape1),
@@ -538,7 +538,7 @@ private fun TransformOriginExample() {
                     detectTapGestures(
                         onTap = {
                             Toast
-                                .makeText(context, "Clicked position: $it", Toast.LENGTH_SHORT)
+                                .makeText(context, "Клик по позиции: $it", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     )
@@ -605,4 +605,3 @@ private fun TransformOriginExample() {
 }
 
 private fun Float.round2Digits() = (this * 100).roundToInt() / 100f
-

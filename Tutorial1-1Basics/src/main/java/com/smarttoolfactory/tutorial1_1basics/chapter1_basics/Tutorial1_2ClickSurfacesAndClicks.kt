@@ -38,32 +38,37 @@ private fun TutorialContent() {
     LazyColumn(Modifier.fillMaxSize()) {
 
         item {
-            TutorialHeader(text = "Clickable")
+            TutorialHeader(text = "Нажатия (Clickable)")
             StyleableTutorialText(
-                text = "1-) Adding clickable to Modifier makes a component clickable." +
-                        "\nPadding before clickable makes " +
-                        "**clickable area smaller than component's total area**."
+                text = "1-) Добавление свойства clickable к Modifier делает компонент кликабельным." +
+                        "\nPadding перед clickable делает **зону клика меньше общей области компонента**."
             )
             ClickableModifierExample()
         }
         item {
-            TutorialHeader(text = "Surface")
-            StyleableTutorialText(text = "2-) Surface can clips it's children to selected shape.")
+            TutorialHeader(text = "Surface (поверхность)")
+            StyleableTutorialText(
+                text = "2-) Surface позволяет обрезать дочерние элементы в соответствии с выбранной формой."
+            )
             SurfaceShapeExample()
         }
 
         item {
-            StyleableTutorialText(text = "3-) Surface can set Z index and border of it's children.")
+            StyleableTutorialText(
+                text = "3-) Surface позволяет задать Z-индекс и рамку для дочерних элементов."
+            )
             SurfaceZIndexExample()
         }
         item {
-            StyleableTutorialText(text = "4-) Surface can set content color for Text and Image.")
+            StyleableTutorialText(
+                text = "4-) Surface позволяет задать цвет содержимого для текста и изображений."
+            )
             SurfaceContentColorExample()
         }
         item {
             StyleableTutorialText(
-                text = "5-) Components can have offset in both x and y axes. Surface inside" +
-                        " another surface gets clipped when it overflows from it's parent."
+                text = "5-) Компоненты могут быть смещены по осям x и y. Surface внутри другой Surface " +
+                        "будет обрезан, если выходит за пределы родителя."
             )
             SurfaceClickPropagationExample()
         }
@@ -72,22 +77,21 @@ private fun TutorialContent() {
 
 
 /**
- * Add **clickable** modifier to components.
+ * Добавление модификатора **clickable** к компонентам.
  *
- * *Modifier in weight for [Row] determines how much space that child will take.
- * This is same as layout weights in **LinearLayout**.
+ * * Модификатор weight для [Row] определяет, сколько места займёт дочерний элемент.
+ * Это аналогично весу (weight) в **LinearLayout**.
  *
- * * **Padding** after clickable removes padded area from clickable zone. Click blue
- * rectangle to see the zone.
+ * * **Padding** после clickable убирает зону padding из кликабельной области. Нажмите на синий
+ * прямоугольник, чтобы увидеть зону клика.
  */
 @Composable
 fun ClickableModifierExample() {
 
-    // Provides a Context that can be used by Android applications
+    // Предоставляет контекст для работы в Android
     val context = LocalContext.current
 
-    // Weight in Row acts as Weight in LinearLayout with horizontal orientation
-
+    // Weight в Row работает как вес в LinearLayout с горизонтальной ориентацией
     Row(Modifier.height(120.dp)) {
 
         Column(
@@ -97,7 +101,7 @@ fun ClickableModifierExample() {
                 .background(Color(0xFF388E3C))
                 .clickable(onClick = {
                     Toast
-                        .makeText(context, "Clicked me", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажато", Toast.LENGTH_SHORT)
                         .show()
                 }),
             verticalArrangement = Arrangement.Center,
@@ -108,7 +112,7 @@ fun ClickableModifierExample() {
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                text = "Click Me"
+                text = "Нажми на меня"
             )
         }
 
@@ -120,7 +124,7 @@ fun ClickableModifierExample() {
                 .padding(15.dp)
                 .clickable(onClick = {
                     Toast
-                        .makeText(context, "Clicked me", Toast.LENGTH_SHORT)
+                        .makeText(context, "Нажато", Toast.LENGTH_SHORT)
                         .show()
                 }),
             verticalArrangement = Arrangement.Center,
@@ -131,7 +135,7 @@ fun ClickableModifierExample() {
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                text = "Click Me"
+                text = "Нажми на меня"
             )
         }
     }
@@ -139,69 +143,62 @@ fun ClickableModifierExample() {
 
 
 /**
- * Surface
+ * Surface (поверхность)
  *
- * Material surface is the central metaphor in material design. Each surface exists at a given
- * elevation, which influences how that piece of surface visually relates to other surfaces and
- * how that surface casts shadows.
+ * Материальная поверхность является центральным элементом в Material Design. Каждая поверхность имеет
+ * определённую высоту, которая влияет на её визуальное восприятие относительно других поверхностей и
+ * на то, как она отбрасывает тени.
  *
- * The [Surface] is responsible for:
+ * [Surface] отвечает за:
  *
- * 1) Clipping: Surface clips its children to the shape specified by [shape]
+ * 1) Обрезку: Surface обрезает дочерние элементы в соответствии с формой, заданной параметром [shape].
  *
- * 2) Elevation: Surface elevates its children on the Z axis by [elevation] pixels,
- * and draws the appropriate shadow.
+ * 2) Высоту (Elevation): Surface поднимает дочерние элементы по оси Z на заданное количество пикселей [elevation],
+ * и отрисовывает соответствующую тень.
  *
- * 3) Borders: If [shape] has a border, then it will also be drawn.
+ * 3) Рамки: Если у формы [shape] есть рамка, она также будет отрисована.
  *
- * 4) Background: Surface fills the shape specified by [shape] with the [color]. If [color] is
- * [Colors.surface], the [ElevationOverlay] from [LocalElevationOverlay] will be used to apply
- * an overlay - by default this will only occur in dark theme. The color of the overlay depends
- * on the [elevation] of this Surface, and the [LocalAbsoluteElevation] set by any parent
- * surfaces. This ensures that a Surface never appears to have a lower elevation overlay than its
- * ancestors, by summing the elevation of all previous Surfaces.
+ * 4) Фон: Surface заполняет форму, заданную параметром [shape], цветом [color]. Если [color] равен [Colors.surface],
+ * то в тёмной теме будет применено наложение [ElevationOverlay]. Это наложение зависит от [elevation] данной
+ * поверхности и [LocalAbsoluteElevation], заданной любыми родительскими поверхностями.
  *
- * 5) Content color: Surface uses [contentColor] to specify a preferred color for the content of
- * this surface - this is used by the [Text] and [Icon] components as a default color.
+ * 5) Цвет содержимого: Surface использует [contentColor] для задания предпочтительного цвета содержимого
+ * данной поверхности — это используется компонентами [Text] и [Icon] в качестве цвета по умолчанию.
  */
 @Composable
 fun SurfaceShapeExample() {
 
     Row {
 
-        // Set Aspect ratio to 1:1 to have same width and height
+        // Устанавливаем соотношение сторон 1:1, чтобы ширина и высота были равны
         val modifier = Modifier
             .aspectRatio(1f)
-            // Weight makes sure that we use the width - total padding space
-            // evenly between composables
+            // Weight распределяет ширину между элементами, за исключением области, отведённой под отступы
             .weight(1f)
             .padding(12.dp)
 
-
-        // Rectangle Shape
+        // Прямоугольная форма
         Surface(
             shape = RectangleShape,
             modifier = modifier,
             color = (Color(0xFFFDD835))
-        ) {
+        ) {}
 
-        }
-
-        // Rounder Corner Shape
+        // Форма с закруглёнными углами
         Surface(
             shape = RoundedCornerShape(5.dp),
             modifier = modifier,
             color = (Color(0xFFF4511E))
         ) {}
 
-        // Circle Shape
+        // Круглая форма
         Surface(
             shape = CircleShape,
             modifier = modifier,
             color = (Color(0xFF26C6DA))
         ) {}
 
-        //
+        // Форма с обрезанными углами
         Surface(
             shape = CutCornerShape(10.dp),
             modifier = modifier,
@@ -215,15 +212,14 @@ fun SurfaceZIndexExample() {
 
     Row {
 
-        // Set Aspect ratio to 1:1 to have same width and height
+        // Устанавливаем соотношение сторон 1:1, чтобы ширина и высота были равны
         val modifier = Modifier
             .aspectRatio(1f)
-            // Weight makes sure that we use the width - total padding space
-            // evenly between composables
+            // Weight распределяет ширину между элементами, за исключением области, отведённой под отступы
             .weight(1f)
             .padding(12.dp)
 
-        // Rectangle Shape
+        // Прямоугольная форма
         Surface(
             shape = RectangleShape,
             modifier = modifier,
@@ -232,7 +228,7 @@ fun SurfaceZIndexExample() {
             border = BorderStroke(5.dp, color = Color(0xFFFF6F00))
         ) {}
 
-        // Rounder Corner Shape
+        // Форма с закруглёнными углами
         Surface(
             shape = RoundedCornerShape(5.dp),
             modifier = modifier,
@@ -241,7 +237,7 @@ fun SurfaceZIndexExample() {
             border = BorderStroke(3.dp, color = Color(0xFF6D4C41))
         ) {}
 
-        // Circle Shape
+        // Круглая форма
         Surface(
             shape = CircleShape,
             modifier = modifier,
@@ -250,7 +246,7 @@ fun SurfaceZIndexExample() {
             border = BorderStroke(2.dp, color = Color(0xFF004D40))
         ) {}
 
-        // Rectangle with cut corner on top left
+        // Прямоугольная форма с обрезанным верхним левым углом
         Surface(
             shape = CutCornerShape(topStartPercent = 20),
             modifier = modifier,
@@ -263,8 +259,7 @@ fun SurfaceZIndexExample() {
 
 @Composable
 fun SurfaceContentColorExample() {
-    // Padding on Surface is padding for background and Text. Padding on Text is padding
-    // between font and Surface
+    // Padding на Surface — это отступ для фона и текста. Padding для Text — это отступ между текстом и Surface
     Surface(
         modifier = Modifier.padding(12.dp),
         shape = RoundedCornerShape(10.dp),
@@ -272,7 +267,7 @@ fun SurfaceContentColorExample() {
         contentColor = (Color(0xFF26C6DA))
     ) {
         Text(
-            text = "Text inside Surface uses Surface's content color as a default color.",
+            text = "Текст внутри Surface использует цвет содержимого Surface по умолчанию.",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(8.dp)
         )
@@ -282,18 +277,18 @@ fun SurfaceContentColorExample() {
 @Composable
 fun SurfaceClickPropagationExample() {
 
-    // Provides a Context that can be used by Android applications
+    // Предоставляет контекст для использования в Android
     val context = LocalContext.current
 
-    // 🔥 Offset moves a component in x and y axes which can be either positive or negative
-    // 🔥🔥 When a component inside surface is offset from original position it gets clipped.
+    // 🔥 Смещение перемещает компонент по осям x и y, значения могут быть положительными или отрицательными
+    // 🔥🔥 Если компонент внутри Surface смещён, он будет обрезан.
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .clickable(onClick = {
                 Toast
-                    .makeText(context, "Box Clicked", Toast.LENGTH_SHORT)
+                    .makeText(context, "Нажат Box", Toast.LENGTH_SHORT)
                     .show()
             })
     ) {
@@ -309,7 +304,7 @@ fun SurfaceClickPropagationExample() {
                     Toast
                         .makeText(
                             context,
-                            "Surface(Left) inside Box is clicked!",
+                            "Нажат Surface (слева) внутри Box!",
                             Toast.LENGTH_SHORT
                         )
                         .show()
@@ -325,7 +320,7 @@ fun SurfaceClickPropagationExample() {
                         Toast
                             .makeText(
                                 context,
-                                "Surface inside Surface is clicked!",
+                                "Нажат Surface внутри Surface!",
                                 Toast.LENGTH_SHORT
                             )
                             .show()
@@ -346,11 +341,10 @@ fun SurfaceClickPropagationExample() {
                     Toast
                         .makeText(
                             context,
-                            "Surface(Right) inside Box is clicked!",
+                            "Нажат Surface (справа) внутри Box!",
                             Toast.LENGTH_SHORT
                         )
                         .show()
-
                 }),
             color = (Color(0xFFF4511E)),
             elevation = 8.dp

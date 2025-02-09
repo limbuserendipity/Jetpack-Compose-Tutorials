@@ -24,6 +24,10 @@ import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialTex
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
 
+/*
+    Подробнее по теме см. по ссылке:
+    https://stackoverflow.com/a/73316247/5457853
+ */
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_1Screen7() {
@@ -43,62 +47,61 @@ private fun TutorialContent() {
         TutorialHeader(text = "wrapContentSize Modifier")
 
         /**
-         * Modifier.wrapContent allow the content to measure at its desired size without
-         * regard for the incoming measurement
-         * [minimum width][Constraints.minWidth]
-         * or [minimum height][Constraints.minHeight] constraints,
-         * and, if [unbounded] is true, also without regard for the incoming maximum constraints.
+         * Modifier.wrapContentSize позволяет контенту измеряться в соответствии
+         * с его желаемым размером, игнорируя входящие минимальные размеры
+         * (Constraints.minWidth, Constraints.minHeight).
+         * Если [unbounded] = true, игнорируются также и максимальные ограничения.
          *
-         *  If the content's measured size is smaller than the minimum size constraint, [align] it
-         * within that minimum sized space.
-         *
-         * If the content's measured size is larger than the maximum
-         * size constraint (only possible when [unbounded] is true),
-         * [align] within the maximum space.
-         *
+         * Если измеренный размер контента меньше минимального,
+         * то [align] выравнивает внутри минимально заданного пространства.
+         * Если измеренный размер больше максимального (возможен при [unbounded] = true),
+         * то контент тоже выравнивается (align) в пределах максимального пространства.
          */
         StyleableTutorialText(
-            text = "1-) **Modifier.wrapContentSize** can be used to override minimum constraints" +
-                    " coming from parent. In this example **MinimumConstrainedLayout** forces " +
-                    "min width and height 500px. In second example **Modifier.wrapContentSize** " +
-                    "forces measurement with size comes from child Composable."
+            text = "1-) **Modifier.wrapContentSize** может переопределять минимальные " +
+                    "ограничения, приходящие от родителя. " +
+                    "В примере **MinimumConstrainedLayout** задаёт " +
+                    "минимальную ширину и высоту 500 пикселей. Во втором примере " +
+                    "**Modifier.wrapContentSize** заставляет измерять Composable, " +
+                    "исходя из размера ребёнка."
         )
 
         WrapContentSizeSample()
 
         StyleableTutorialText(
-            text = "2-) Surface forces minimum Constraints to direct descendant. With " +
-                    "**Modifier.wrapContentSize** minimum constraints can be used"
+            text = "2-) **Surface** навязывает минимальные Constraints " +
+                    "своему прямому потомку. С помощью **Modifier.wrapContentSize** " +
+                    "можно задать желаемые размеры."
         )
 
         WrapWidthInsideSurfaceSample()
+
         StyleableTutorialText(
-            text = "3-) **Modifier.wrapContentSize(unBounded = true)** forces maximum constraints " +
-                    "from child Composable. In second example **Image** is measured with its own " +
-                    "max width constraint."
+            text = "3-) **Modifier.wrapContentSize(unBounded = true)** заставляет " +
+                    "учитывать максимальные Constraints по размеру дочернего Composable. " +
+                    "Во втором примере **Image** измеряется собственным макс. ограничением."
         )
-        // 🔥 Unbounded content doesn't change position or dimensions of parent. This can
-        // lead to wrong placement when other sibling composables are to be considered
-        // Parent Composable is placed based on its constraints not Unbounded content constraints
+
+        // 🔥 Unbounded-контент не изменяет позицию или размеры родителя.
+        // Это может привести к некорректному позиционированию, если есть соседние Composable.
+        // Родительский Composable размещается, основываясь на своих Constraints, а не на unbounded контенте.
         UnboundedWrapContentSample()
+
         StyleableTutorialText(
-            text = "4-) **Modifier.wrapContentSize(unBounded = true)** can be used to draw images " +
-                    "to fit inside a content that is smaller than image bounds while not scaling" +
-                    " image down to fit content"
+            text = "4-) **Modifier.wrapContentSize(unBounded = true)** можно использовать, " +
+                    "чтобы отрисовать изображение целиком, если родитель меньше " +
+                    "самого изображения, и при этом не масштабировать (не подгонять) " +
+                    "изображение под размер родителя."
         )
 
-        // 🔥 Unbounded content doesn't change position or dimensions of parent. This can
-        // lead to wrong placement when other sibling composables are to be considered
-        // Parent Composable is placed based on its constraints not Unbounded content constraints
         UnBoundedWrapContentImageSample()
-
     }
 }
 
 @Composable
 private fun WrapContentSizeSample() {
 
-    TutorialText2(text = "No wrap Modifier")
+    TutorialText2(text = "Без wrap Modifier")
 
     MinimumConstrainedLayout(
         Modifier.border(2.dp, Color.Green)
@@ -137,7 +140,6 @@ private fun WrapContentSizeSample() {
         ) {
             Box(
                 modifier = Modifier
-
                     .wrapContentSize(align = Alignment.BottomStart)
                     .background(Color.Red)
             ) {
@@ -150,7 +152,6 @@ private fun WrapContentSizeSample() {
         ) {
             Box(
                 modifier = Modifier
-
                     .wrapContentSize(align = Alignment.BottomEnd)
                     .background(Color.Red)
             ) {
@@ -158,7 +159,6 @@ private fun WrapContentSizeSample() {
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -168,9 +168,12 @@ private fun WrapWidthInsideSurfaceSample() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Surface(modifier = Modifier
-            .size(100.dp)
-            .border(2.dp, Color.Yellow), onClick = {}) {
+        Surface(
+            modifier = Modifier
+                .size(100.dp)
+                .border(2.dp, Color.Yellow),
+            onClick = {}
+        ) {
             Column(
                 modifier = Modifier
                     .size(50.dp)
@@ -181,12 +184,14 @@ private fun WrapWidthInsideSurfaceSample() {
                         .size(50.dp)
                         .background(Color.Green, RoundedCornerShape(6.dp))
                 )
-
             }
         }
-        Surface(modifier = Modifier
-            .size(100.dp)
-            .border(2.dp, Color.Yellow), onClick = {}) {
+        Surface(
+            modifier = Modifier
+                .size(100.dp)
+                .border(2.dp, Color.Yellow),
+            onClick = {}
+        ) {
             Column(
                 modifier = Modifier
                     .wrapContentWidth(Alignment.End)
@@ -197,14 +202,15 @@ private fun WrapWidthInsideSurfaceSample() {
                         .size(50.dp)
                         .background(Color.Green, RoundedCornerShape(6.dp))
                 )
-
             }
         }
 
-
-        Surface(modifier = Modifier
-            .size(100.dp)
-            .border(2.dp, Color.Yellow), onClick = {}) {
+        Surface(
+            modifier = Modifier
+                .size(100.dp)
+                .border(2.dp, Color.Yellow),
+            onClick = {}
+        ) {
             Column(
                 modifier = Modifier
                     .wrapContentHeight(Alignment.Top)
@@ -215,7 +221,6 @@ private fun WrapWidthInsideSurfaceSample() {
                         .size(50.dp)
                         .background(Color.Green, RoundedCornerShape(6.dp))
                 )
-
             }
         }
     }
@@ -240,11 +245,14 @@ private fun UnboundedWrapContentSample() {
                 text = "Hello world text",
                 modifier = Modifier.background(Pink400),
                 color = Color.White
-            )        }
+            )
+        }
     }
-    TutorialText2(text = "Modifier\n" +
-            ".wrapContentSize(unbounded = true)\n" +
-            ".size(150.dp)"
+
+    TutorialText2(
+        text = "Modifier\n" +
+                ".wrapContentSize(unbounded = true)\n" +
+                ".size(150.dp)"
     )
     Box(
         modifier = Modifier
@@ -268,9 +276,11 @@ private fun UnboundedWrapContentSample() {
         }
     }
 
-    TutorialText2(text = "Modifier\n" +
-            ".size(150.dp)\n" +
-            ".wrapContentSize(unbounded = true)")
+    TutorialText2(
+        text = "Modifier\n" +
+                ".size(150.dp)\n" +
+                ".wrapContentSize(unbounded = true)"
+    )
     Box(
         modifier = Modifier
             .size(80.dp)
@@ -312,9 +322,11 @@ private fun UnBoundedWrapContentImageSample() {
             contentDescription = null
         )
     }
-    TutorialText2(text = "Modifier\n" +
-            ".wrapContentSize(unbounded = true)\n" +
-            ".size(250.dp)")
+    TutorialText2(
+        text = "Modifier\n" +
+                ".wrapContentSize(unbounded = true)\n" +
+                ".size(250.dp)"
+    )
     Box(
         modifier = Modifier
             .size(100.dp)
@@ -331,9 +343,11 @@ private fun UnBoundedWrapContentImageSample() {
         )
     }
 
-    TutorialText2(text = "Modifier\n" +
-            ".size(250.dp)\n" +
-            ".wrapContentSize(unbounded = true)")
+    TutorialText2(
+        text = "Modifier\n" +
+                ".size(250.dp)\n" +
+                ".wrapContentSize(unbounded = true)"
+    )
     Box(
         modifier = Modifier
             .size(100.dp)

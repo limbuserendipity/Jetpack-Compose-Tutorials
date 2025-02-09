@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import kotlinx.coroutines.launch
-
 @Preview
 @Composable
 fun Tutorial2_16Screen2() {
@@ -53,26 +52,28 @@ private fun TutorialContent() {
             TutorialHeader(text = "HorizontalPager2")
 
             StyleableTutorialText(
-                text = "Horizontal pager with partially visible page",
+                text = "Горизонтальный пейджер с частично видимой страницей",
                 bullets = false
             )
 
-            val pagerState = rememberPagerState {
-                5
-            }
+            val pagerState = rememberPagerState(
+                pageCount = {
+                    5
+                }
+            )
 
             val coroutineScope = rememberCoroutineScope()
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Current page: ${pagerState.currentPage}\n" +
-                        "settled Page: ${pagerState.settledPage}\n" +
-                        "target Page: ${pagerState.targetPage}\n" +
-                        "currentPageOffsetFraction: ${pagerState.currentPageOffsetFraction}\n" +
-                        "isScrollInProgress: ${pagerState.isScrollInProgress}\n" +
-                        "canScrollForward: ${pagerState.canScrollForward}\n" +
-                        "canScrollBackward: ${pagerState.canScrollBackward}\n" +
-                        "lastScrolledForward: ${pagerState.lastScrolledForward}\n" +
-                        "lastScrolledBackward: ${pagerState.lastScrolledBackward}\n",
+                text = "Текущая страница: ${pagerState.currentPage}\n" +
+                        "Завершённая страница (settledPage): ${pagerState.settledPage}\n" +
+                        "Целевая страница (targetPage): ${pagerState.targetPage}\n" +
+                        "Текущий сдвиг страницы (currentPageOffsetFraction): ${pagerState.currentPageOffsetFraction}\n" +
+                        "Скролл в процессе (isScrollInProgress): ${pagerState.isScrollInProgress}\n" +
+                        "Можно скроллить вперёд (canScrollForward): ${pagerState.canScrollForward}\n" +
+                        "Можно скроллить назад (canScrollBackward): ${pagerState.canScrollBackward}\n" +
+                        "Последний скролл вперёд (lastScrolledForward): ${pagerState.lastScrolledForward}\n" +
+                        "Последний скролл назад (lastScrolledBackward): ${pagerState.lastScrolledBackward}\n",
                 fontSize = 18.sp
             )
 
@@ -91,7 +92,7 @@ private fun TutorialContent() {
                     }
                 }
             ) {
-                Text("Animate to last item")
+                Text("Анимировать к последнему элементу")
             }
 
             Spacer(Modifier.height(16.dp))
@@ -109,7 +110,7 @@ private fun TutorialContent() {
                     }
                 }
             ) {
-                Text("Animate to first item")
+                Text("Анимировать к первому элементу")
             }
             Spacer(Modifier.height(16.dp))
 
@@ -127,7 +128,7 @@ private fun TutorialContent() {
                     modifier = Modifier
                         .clip(RoundedCornerShape(16.dp))
                         .clickable {
-                            Toast.makeText(context, "Clicked $it", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Нажата страница $it", Toast.LENGTH_SHORT).show()
                         }
                         .fillMaxWidth()
                         .height(200.dp)
@@ -137,14 +138,12 @@ private fun TutorialContent() {
                 ) {
                     Column {
                         Text(
-                            text = "Page $it",
+                            text = "Страница $it",
                             fontSize = 28.sp
                         )
-
                     }
                 }
             }
         }
     }
-
 }

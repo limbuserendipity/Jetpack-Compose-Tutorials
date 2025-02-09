@@ -27,20 +27,19 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.layoutId
 
-
 @Preview(showBackground = true)
 @Composable
 fun DecoupledConstraintLayout() {
     BoxWithConstraints {
         val constraints = if (minWidth < 600.dp) {
-            decoupledConstraints(margin = 16.dp) // Portrait constraints
+            decoupledConstraints(margin = 16.dp) // Ограничения для портретной ориентации
         } else {
-            decoupledConstraints(margin = 32.dp) // Landscape constraints
+            decoupledConstraints(margin = 32.dp) // Ограничения для ландшафтной ориентации
         }
 
         ConstraintLayout(constraints) {
             Button(
-                onClick = { /* Do something */ },
+                onClick = { /* Выполнить действие */ },
                 modifier = Modifier.layoutId("button")
             ) {
                 Text("Button")
@@ -69,22 +68,24 @@ private fun decoupledConstraints(margin: Dp): ConstraintSet {
 @Composable
 private fun ConstraintLayoutGuidlineSample() {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize().border(2.dp, Color.Red)
+        modifier = Modifier
+            .fillMaxSize()
+            .border(2.dp, Color.Red)
     ) {
-        // Create guideline from the start of the parent at 10% the width of the Composable
+        // Создаём направляющую от начала родителя на 40% ширины
         val startGuideline = createGuidelineFromStart(0.4f)
-        // Create guideline from the end of the parent at 10% the width of the Composable
+        // Создаём направляющую от конца родителя на 10% ширины
         val endGuideline = createGuidelineFromEnd(0.1f)
-        //  Create guideline from 16 dp from the top of the parent
+        // Создаём направляющую от верхней части родителя на 16 dp
         val topGuideline = createGuidelineFromTop(16.dp)
-        //  Create guideline from 16 dp from the bottom of the parent
+        // Создаём направляющую от нижней части родителя на 16 dp
         val bottomGuideline = createGuidelineFromBottom(16.dp)
 
         val button = createRef()
         val text = createRef()
 
         Button(
-            onClick = { /* Do something */ },
+            onClick = { /* Выполнить действие */ },
             modifier = Modifier
                 .constrainAs(button) {
                     start.linkTo(startGuideline)
@@ -148,10 +149,10 @@ fun ConstraintLayoutDemo() {
 private fun ConstraintLayoutAnimationTest() {
 
     /*
-        height = Dimension.value(10.dp)
-        width = Dimension.ratio("4:1")    // The width will be 40dp
-        width = Dimension.wrapContent
-        height = Dimension.ratio("1:0.25")   // The height will be a fourth of the resulting wrapContent width
+        height = Dimension.value(10.dp) // Высота фиксирована на 10 dp
+        width = Dimension.ratio("4:1") // Ширина будет в 4 раза больше высоты
+        width = Dimension.wrapContent // Ширина подстраивается под содержимое
+        height = Dimension.ratio("1:0.25") // Высота составляет четверть ширины
      */
 
     val buttonId = "Button"
@@ -181,7 +182,7 @@ private fun ConstraintLayoutAnimationTest() {
                 start.linkTo(parent.start)
             }
             constrain(text) {
-                // change width
+                // Изменяем ширину
                 width = Dimension.value(100.dp)
                 start.linkTo(button.end)
                 top.linkTo(parent.top)
@@ -198,7 +199,8 @@ private fun ConstraintLayoutAnimationTest() {
     ) {
 
         ConstraintLayout(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .background(Color.Yellow)
                 .animateContentSize()
                 .then(
@@ -209,7 +211,7 @@ private fun ConstraintLayoutAnimationTest() {
         ) {
 
             Button(
-                onClick = { /* Do something */ },
+                onClick = { /* Выполнить действие */ },
                 modifier = Modifier.layoutId(buttonId)
             ) {
                 Text("Button")

@@ -37,25 +37,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
-
 /**
- * Green rectangle is the total area of our Composable. Red
- * rectangle is the **imaginary space** we set for drawing a
- * chat bubble's nip for instance.
- * While the Composable covers content + nip area(this is how it's laid out relative to siblings),
- * only area available to our content is the one right side of the nip like chat messages.
- * This is the inner area after we remove nip's dimensions and padding dimensions like in padding
- * example in first section.
+ * Зелёный прямоугольник — вся область нашего Composable. Красный —
+ * это **воображаемое пространство**, которое можно зарезервировать, например,
+ * под «хвостик» диалогового сообщения (bubble nip).
+ * Хотя Composable покрывает и контент, и «хвостик» (так он воспринимается
+ * относительно соседей),
+ * реальная область для контента располагается справа от «хвостика».
+ * То есть это внутренняя область после вычитания зоны «хвостика» и отступов.
  */
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen9() {
-    TutorialContent()
+    TutorialContent2()
 }
 
 @Composable
-private fun TutorialContent() {
-    var message by remember { mutableStateOf("Type to monitor overflow") }
+private fun TutorialContent2() {
+    var message by remember { mutableStateOf("Попробуйте набрать текст, чтобы увидеть переполнение") }
 
     Column(
         modifier = Modifier
@@ -64,7 +63,7 @@ private fun TutorialContent() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TutorialHeader(text = "Constraints and Offset 2")
+        TutorialHeader(text = "Constraints и Offset 2")
 
         val density = LocalDensity.current
         val containerWidth = with(density) {
@@ -81,39 +80,36 @@ private fun TutorialContent() {
         ) {
 
             StyleableTutorialText(
-                text = "Green rectangle is the total area " +
-                        "of Composable. Red  rectangle is the **imaginary space** we set for drawing a " +
-                        "chat bubble's nip for instance.\n" +
-                        " While our Composable covers content + nip area(this is how it's laid out " +
-                        "relative to siblings), only area available to our content is the one " +
-                        "right side of the nip like chat messages.\n" +
-                        " This is the inner area after we remove nip's dimensions and padding " +
-                        "dimensions like in padding example in first section.",
+                text = "Зелёный прямоугольник — вся область Composable. Красный — " +
+                        "воображаемое пространство под «хвостик» сообщения. " +
+                        "Хотя реальный Composable включает и контент, и «хвостик», " +
+                        "только часть справа от «хвостика» доступна для контента. " +
+                        "Это внутренняя область после исключения «хвостика» и отступов.",
                 bullets = false
             )
 
             StyleableTutorialText(
-                text = "only **measurable.measure(constraint)** called for the layouts below. " +
-                        "Padding requires offset to measure placeable without the " +
-                        "region reserved for padding",
+                text = "Здесь мы не используем offset или constrainWidth, только " +
+                        "обычный вызов measurable.measure(constraint) " +
+                        "для примера отступов (padding).",
                 bullets = false
             )
 
             LayoutOnlySamples(message)
 
             StyleableTutorialText(
-                text = "**Constraints.constrainWidth()** restrains max width " +
-                        "placeables of this composable can have. Since we constrain width " +
-                        "to maxWidth - red area width" +
-                        " placeables can grow more than required.",
+                text = "**Constraints.constrainWidth()** ограничивает максимальную ширину " +
+                        "дочерних элементов. Поскольку мы ограничиваем ширину " +
+                        "(maxWidth - красная область), элементы могут «расти» больше, чем нужно.",
                 bullets = false
             )
 
             ConstrainWidthSamples(message)
 
             StyleableTutorialText(
-                text = "**Constraints.offset(x,y)** is used to limit measure placeable without " +
-                        "the area used for red area and padding",
+                text = "**Constraints.offset(x,y)** используется для исключения " +
+                        "области под «хвостик» и отступы из измерения " +
+                        "(placeable не выходит за эти границы).",
                 bullets = false
             )
             ConstraintsOffsetSample(message)
@@ -124,8 +120,8 @@ private fun TutorialContent() {
                 .padding(8.dp)
                 .fillMaxWidth(),
             value = message,
-            label = { Text("Main") },
-            placeholder = { Text("Set text to change main width") },
+            label = { Text("Основной ввод") },
+            placeholder = { Text("Впишите текст для изменения ширины") },
             onValueChange = { newValue: String ->
                 message = newValue
             }
@@ -308,11 +304,12 @@ private fun ComposableLayoutOnly(
         val offsetY: Int = (paddingTop + paddingBottom)
 
         val placeables = measurables.map { measurable: Measurable ->
+            // Просто обычный measurable.measure(constraints)
             measurable.measure(constraints)
         }
 
-        val desiredWidth: Int = (placeables.maxOf { it.width } + offsetX)
-        val desiredHeight: Int = (placeables.sumOf { it.height } + offsetY)
+        val desiredWidth: Int = placeables.maxOf { it.width } + offsetX
+        val desiredHeight: Int = placeables.sumOf { it.height } + offsetY
 
         createLayout(
             rect,
@@ -349,10 +346,11 @@ private fun ComposableWithConstrainWidth(
         val offsetY: Int = (paddingTop + paddingBottom)
 
         val placeables = measurables.map { measurable: Measurable ->
+            // 🔥🔥 Здесь используем constraints.constrainWidth(...) и constrainHeight(...),
+            // чтобы ограничить размеры.
             measurable.measure(constraints)
         }
 
-        // 🔥🔥 Constraint width+offsetX to maxWidth and height+offsetY to maxHeight of constraints
         val desiredWidth: Int =
             constraints.constrainWidth(placeables.maxOf { it.width } + offsetX)
         val desiredHeight: Int =
@@ -394,9 +392,8 @@ private fun ComposableConstraintsOffset(
         val offsetY: Int = (paddingTop + paddingBottom)
 
         val placeables = measurables.map { measurable: Measurable ->
-            // 🔥 With constraints.offset we limit placeable width/height to maxWidth/Height - offsetX/Y
-            // Even without arrow it's required to limit width/height for placeable to take space
-            // when padding is applied
+            // 🔥 С помощью constraints.offset мы уменьшаем доступную ширину/высоту
+            // на offsetX/Y, исключая зону «хвостика» и отступы из измерений.
             measurable.measure(constraints.offset(-offsetX, -offsetY))
         }
 
@@ -416,6 +413,10 @@ private fun ComposableConstraintsOffset(
     }
 }
 
+/**
+ * Функция, создающая базовый лейаут в виде колонки и рисующая
+ * зелёный прямоугольник (общая область) и красный (зона «хвостика»).
+ */
 private fun MeasureScope.createLayout(
     rect: CustomRect,
     desiredWidth: Int,
@@ -446,11 +447,17 @@ private fun MeasureScope.createLayout(
     }
 }
 
+/**
+ * Рисуем зеленый прямоугольник, представляющий полный Composable,
+ * и красный — выделяющий «хвостик» (зарезервированное место),
+ * чтобы наглядно показать, какая часть действительно отведена под контент.
+ */
 private fun Modifier.drawBackgroundRectangles(
     rect: CustomRect,
     contentRect: CustomRect
 ) = this
     .drawBehind {
+        // Рисуем белый прямоугольник под контент (можно убрать, оставлено для демонстрации)
         drawRoundRect(
             color = Color.White,
             topLeft = Offset(contentRect.left, contentRect.top),
@@ -458,7 +465,7 @@ private fun Modifier.drawBackgroundRectangles(
             cornerRadius = CornerRadius(40f, 40f)
         )
 
-        // This rectangle is drawn behind our whole composable
+        // Полный прямоугольник (зелёный) — вся область нашего Composable
         drawRect(
             color = Color.Red,
             topLeft = Offset(rect.left, rect.top),
@@ -466,10 +473,9 @@ private fun Modifier.drawBackgroundRectangles(
             style = Stroke(2f)
         )
 
-
-        // This rectangle is drawn behind our content(imaginary arrow is excluded)
-        // to show how offset and constraintWidth effects layout
-
+        // Прямоугольник для внутренней области (зелёный контур),
+        // показывающий, сколько места реально доступно под контент,
+        // исключая «хвостик» и/или отступы
         drawRect(
             color = Color.Green,
             topLeft = Offset(contentRect.left, contentRect.top),
@@ -478,6 +484,10 @@ private fun Modifier.drawBackgroundRectangles(
         )
     }
 
+/**
+ * Вспомогательная модель для хранения координат прямоугольника
+ * (для визуализации «хвостика» и реальной области контента).
+ */
 private data class CustomRect(
     var left: Float = 0f,
     var top: Float = 0f,
@@ -493,14 +503,10 @@ private data class CustomRect(
     }
 
     val height: Float
-        get() {
-            return bottom - top
-        }
+        get() = bottom - top
 
     val width: Float
-        get() {
-            return right - left
-        }
+        get() = right - left
 
     override fun toString(): String {
         return "left: $left, top: $top, right: $right, bottom: $bottom, " +

@@ -362,11 +362,10 @@ private fun IconButtonExample(modifier: Modifier) {
         }
     }
 }
-
 @Composable
 private fun CustomIconButtonExample(modifier: Modifier) {
 
-    // rememberRipple of this custom button defines ripple radius, color and if it will be bounded
+    // rememberRipple для этой кнопки задаёт радиус, цвет и будет ли эффект ограничен границами кнопки
 
     FullWidthRow(modifier.padding(horizontal = 30.dp)) {
         IndicatingIconButton(
@@ -374,9 +373,7 @@ private fun CustomIconButtonExample(modifier: Modifier) {
             indication = ripple(
                 bounded = false,
                 radius = 40.dp,
-                color = Color(
-                    0xff42A5F5
-                )
+                color = Color(0xff42A5F5)
             )
         ) {
             Icon(
@@ -405,7 +402,7 @@ private fun CustomIconButtonExample(modifier: Modifier) {
 
         Spacer(modifier = Modifier.width(40.dp))
 
-        // this one's ripple is bounded
+        // У этой кнопки эффект ripple ограничен границами
         IndicatingIconButton(
             onClick = { /*TODO*/ },
             indication = ripple(
@@ -469,7 +466,7 @@ private fun FloatingActionButtonExample(modifier: Modifier) {
         }
 
         ExtendedFloatingActionButton(
-            text = { Text("Extended") },
+            text = { Text("Расширенный") },
             onClick = {},
             modifier = modifier
         )
@@ -482,7 +479,7 @@ private fun FloatingActionButtonExample(modifier: Modifier) {
                     contentDescription = null
                 )
             },
-            text = { Text("Like", color = Color.White) },
+            text = { Text("Нравится", color = Color.White) },
             backgroundColor = Color(0xffEC407A),
             onClick = {},
             modifier = modifier
@@ -502,10 +499,10 @@ private fun ChipExamples() {
 
         Chip(
             onClick = {
-                Toast.makeText(context, "I'm clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Я был нажат", Toast.LENGTH_SHORT).show()
             }
         ) {
-            Text("Chip")
+            Text("Чип")
         }
 
 
@@ -513,7 +510,7 @@ private fun ChipExamples() {
             enabled = false,
             onClick = {}
         ) {
-            Text("Disabled Chip")
+            Text("Отключённый чип")
         }
 
         Chip(
@@ -524,13 +521,13 @@ private fun ChipExamples() {
                 contentColor = Color.White
             )
         ) {
-            Text("Colored Chip")
+            Text("Цветной чип")
         }
 
         Chip(
             shape = RoundedCornerShape(50),
             onClick = {
-                Toast.makeText(context, "I'm clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Я был нажат", Toast.LENGTH_SHORT).show()
             },
             leadingIcon = {
                 Image(
@@ -548,13 +545,13 @@ private fun ChipExamples() {
                 modifier = Modifier.border(1.dp, Color.Red),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Chip")
+                Text("Чип")
                 Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
                 Icon(
                     modifier = Modifier
                         .clip(CircleShape)
                         .clickable {
-                            Toast.makeText(context, "Cancel clicked", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Кнопка отмены нажата", Toast.LENGTH_SHORT).show()
                         }
                         .background(Color.Black.copy(alpha = .6f))
                         .size(20.dp)
@@ -569,7 +566,7 @@ private fun ChipExamples() {
         Chip(
             shape = RoundedCornerShape(50),
             onClick = {
-                Toast.makeText(context, "I'm clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Я был нажат", Toast.LENGTH_SHORT).show()
             },
             border = BorderStroke(1.dp, Green400.copy(alpha = .9f)),
             colors = ChipDefaults.chipColors(
@@ -587,13 +584,13 @@ private fun ChipExamples() {
                 )
             }
         ) {
-            Text("Chip")
+            Text("Чип")
             Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
             Icon(
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable {
-                        Toast.makeText(context, "Cancel clicked", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Кнопка отмены нажата", Toast.LENGTH_SHORT).show()
                     }
                     .background(Color.Black.copy(alpha = .6f))
                     .size(20.dp)

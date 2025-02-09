@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -39,7 +40,6 @@ import com.smarttoolfactory.tutorial1_1basics.ui.Pink400
 import com.smarttoolfactory.tutorial1_1basics.ui.components.StyleableTutorialText
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
-
 @Preview(showBackground = true)
 @Composable
 fun Tutorial3_2Screen4() {
@@ -51,13 +51,13 @@ private fun TutorialContent() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(
-                rememberScrollState()
-            ),
+            .fillMaxWidth()
+            // 🔥 Обратите внимание: при использовании вертикального скролла
+            // hasBoundedHeight может возвращать Constraints.Infinity.
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TutorialHeader(text = "Constraints Bounds")
+        TutorialHeader(text = "Границы (Bounds) Constraints")
         ConstraintsSample()
     }
 }
@@ -78,20 +78,22 @@ private fun ConstraintsSample() {
     ) {
 
         StyleableTutorialText(
-            text = "When layout width is not in bounds of " +
-                    "**Constraints.minWidth**..**Constraints.maxWidth** " +
-                    "Parent is placed at (Constraints.maxWidth- layout width)/2 or " +
-                    "(Constraints.minWidth-layout width)/2\n" +
-                    "Constraints used for measuring measurables determine size " +
-                    "of child Composables.\n" +
-                    "Setting layout width determines where parent will be positioned and which" +
-                    "size it will cover. 700px is chosen as containerWidth.",
+            text = "Когда ширина лейаута выходит за рамки " +
+                    "**Constraints.minWidth**..**Constraints.maxWidth**, " +
+                    "родительский лейаут помещается в позицию " +
+                    "(Constraints.maxWidth - ширина лейаута)/2 или " +
+                    "(Constraints.minWidth - ширина лейаута)/2.\n" +
+                    "Constraints, используемые для измерения дочерних элементов, " +
+                    "определяют их размер. \n" +
+                    "Установка ширины лейаута определяет, где родитель будет помещён " +
+                    "и какой участок он займёт. В примере выбрана ширина " +
+                    "containerWidth = 700px.",
             bullets = false
         )
 
         StyleableTutorialText(
-            text = "1-) In this example child composables are measured with " +
-                    "**constraints** which limits maxWidth to **containerWidth=700**",
+            text = "1) В этом примере дочерние Composable измеряются с **constraints**, " +
+                    "ограничивающими maxWidth = **containerWidth=700**."
         )
         MyLayout(
             modifier = Modifier.border(3.dp, Green400)
@@ -100,10 +102,10 @@ private fun ConstraintsSample() {
         Spacer(modifier = Modifier.height(10.dp))
 
         StyleableTutorialText(
-            text = "2-) In this example child composables are measured with " +
-                    "**constraints.copy(minWidth = 750, maxWidth = 900)**\n" +
-                    "Since child Composables' widths are bigger than container they overflow from" +
-                    " parent Composable.",
+            text = "2) В этом примере дочерние Composable измеряются с " +
+                    "**constraints.copy(minWidth = 750, maxWidth = 900)**.\n" +
+                    "Из-за того, что у дочерних Composable ширина больше контейнера, они " +
+                    "выходят за границы родительского Composable."
         )
 
         MyLayout2(
@@ -113,10 +115,10 @@ private fun ConstraintsSample() {
         Spacer(modifier = Modifier.height(10.dp))
 
         StyleableTutorialText(
-            text = "3-) In this example MyLayout3(green border) " +
-                    "overflows from parent **(Constraints.maxWidth-layout width)/2**, " +
-                    "maxWidth is 700px while layout width is 900px, and placed at " +
-                    "-100px left of parent Composable.",
+            text = "3) В этом примере MyLayout3 (зелёная рамка) " +
+                    "выходит за границы родителя, так как **Constraints.maxWidth = 700**, " +
+                    "а ширина лейаута = 900px. Элемент смещается на -100px влево " +
+                    "( (700 - 900) / 2 )."
         )
 
         MyLayout3(modifier = Modifier.border(3.dp, Green400)) {
@@ -128,15 +130,15 @@ private fun ConstraintsSample() {
         }
 
         StyleableTutorialText(
-            text = "4-) In this example layout width is 400px while " +
-                    "**Constraints.minWidth = 600f**, Constrains.maxWidth = 700f\n" +
-                    "MyLayout4(green border) " +
-                    "is placed **(Constraints.minWidth - layout width)/2**.\n" +
-                    "Also child Composable is measured with " +
-                    "**constraints.copy(minWidth = 100, maxWidth = 500)**",
+            text = "4) В этом примере ширина лейаута = 400px, " +
+                    "а **Constraints.minWidth = 600px** и **Constraints.maxWidth = 700px**. " +
+                    "MyLayout4(зелёная рамка) размещается на " +
+                    "**(Constraints.minWidth - ширина лейаута)/2**.\n" +
+                    "Также дочерний Composable измеряется с " +
+                    "**constraints.copy(minWidth = 100, maxWidth = 500)**."
         )
 
-        // 🔥Placed at (600f-400f)/2 = 100f pixels off from start of Composable
+        // 🔥 Размещается на ((600f - 400f)/2) = 100px от левого края родительского Composable
         MyLayout4(
             modifier = Modifier
                 .widthIn(min = minWidth)
@@ -154,9 +156,10 @@ private fun ConstraintsSample() {
         }
 
         StyleableTutorialText(
-            text = "5-) In this example min/max width of modifier in px, constraint min/max width" +
-                    " in px and layout width is adjustable via sliders to observe how " +
-                    "child Composables and parent Composable is laid out",
+            text = "5) В этом примере минимальная/максимальная ширина модификатора (в px), " +
+                    "минимальная/максимальная ширина constraints (в px) " +
+                    "и ширина лейаута настраиваются слайдерами, чтобы можно было " +
+                    "наблюдать, как дочерние и родительские Composable размещаются."
         )
 
         ConstraintsOffsetAndBoundsSample()
@@ -191,8 +194,8 @@ private fun ConstraintsOffsetAndBoundsSample() {
     }
 
     TutorialText2(
-        text = "Modifier min and max widths, " +
-                "Original Constraints are derived from min/max width values"
+        text = "minWidth и maxWidth для модификатора, " +
+                "изначальные Constraints берутся из этих значений"
     )
 
     SliderWithLabel(
@@ -214,8 +217,9 @@ private fun ConstraintsOffsetAndBoundsSample() {
     }
 
     TutorialText2(
-        text = "Width of the parent Composable. If it's out of original Constraints " +
-                "parent is placed difference between layout width and (min/max) constraints width"
+        text = "Ширина лейаута (parent Composable). Если выходит за рамки " +
+                "(minWidth..maxWidth), элемент смещается.\n" +
+                "От того, какая ширина выбрана, зависит позиция и покрытие лейаута."
     )
 
     SliderWithLabel(
@@ -225,7 +229,7 @@ private fun ConstraintsOffsetAndBoundsSample() {
         layoutWidth = it
     }
 
-    TutorialText2(text = "Child composable are measured with these values")
+    TutorialText2(text = "Дочерний Composable измеряется по значениям (constraintsMinWidth, constraintsMaxWidth)")
 
     SliderWithLabel(
         label = "Child Constraints MinWidth: ${constraintsMinWidth.toInt()}",
@@ -330,7 +334,7 @@ private fun MyLayout2(
         content = content
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-        // Measure with Constraints bigger than parent has.
+        // Измеряем дочерние элементы Constraints, которые больше, чем у родителя.
         val updatedConstraints = constraints.copy(minWidth = 750, maxWidth = 900)
 
         val placeables = measurables.map { measurable: Measurable ->
@@ -367,7 +371,6 @@ private fun MyLayout3(
         content = content
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-
         val placeables = measurables.map { measurable: Measurable ->
             measurable.measure(constraints)
         }
@@ -381,9 +384,8 @@ private fun MyLayout3(
 
         var posY = 0
 
-
-        // 🔥🔥 Changing  width changes where this Composable is positioned if it's not
-        // in parents bounds
+        // 🔥🔥 Меняем ширину на 900, что больше, чем constraints.maxWidth=700.
+        // Из-за этого лейаут выходит за границы родителя.
         layout(width = 900, height = totalHeight) {
             placeables.forEach { placeable: Placeable ->
                 placeable.placeRelative(0, posY)
@@ -420,9 +422,8 @@ private fun MyLayout4(
 
         var posY = 0
 
-
-        // 🔥🔥 Changing  width changes where this Composable is positioned if it's not
-        // in parents bounds
+        // 🔥🔥 Устанавливаем ширину лейаута в 400. Если это меньше Constraints.minWidth,
+        // лейаут будет смещён в зависимости от разницы.
         layout(width = 400, height = totalHeight) {
             placeables.forEach { placeable: Placeable ->
                 placeable.placeRelative(0, posY)
@@ -431,7 +432,6 @@ private fun MyLayout4(
         }
     }
 }
-
 
 @Composable
 private fun LayoutWithWidthParams(
@@ -454,8 +454,10 @@ private fun LayoutWithWidthParams(
         content = content
     ) { measurables: List<Measurable>, constraints: Constraints ->
 
-        val updatedConstraints =
-            constraints.copy(minWidth = constraintsMinWidth, maxWidth = constraintsMaxWidth)
+        val updatedConstraints = constraints.copy(
+            minWidth = constraintsMinWidth,
+            maxWidth = constraintsMaxWidth
+        )
 
         val placeables = measurables.map { measurable: Measurable ->
             measurable.measure(updatedConstraints)
@@ -463,8 +465,9 @@ private fun LayoutWithWidthParams(
 
         val totalHeight = placeables.sumOf { it.height }
         var posY = 0
-        // 🔥🔥 Changing  width changes where this Composable is positioned if it's not
-        // in parents bounds
+
+        // 🔥 Меняем фактическую ширину родительского лейаута
+        // (если она выходит за рамки, Composable будет смещён)
         layout(width = layoutWidth, height = totalHeight) {
             placeables.forEach { placeable: Placeable ->
                 placeable.placeRelative(0, posY)

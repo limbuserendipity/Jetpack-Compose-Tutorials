@@ -50,13 +50,11 @@ private fun TutorialContent() {
         item {
             TutorialText2(text = "two-line")
             TwoLineListItemExample()
-
         }
 
         item {
             TutorialText2(text = "three-line")
             ThreeLineListItemExample()
-
         }
 
         item {
@@ -70,10 +68,10 @@ private fun TutorialContent() {
 @Composable
 private fun OneLineListItemExample() {
     Column {
-        ListItem(text = { Text("One line list item with no icon") })
+        ListItem(text = { Text("Однострочный элемент списка без иконки") })
         Divider()
         ListItem(
-            text = { Text("One line list item with 24x24 icon") },
+            text = { Text("Однострочный элемент списка с иконкой 24x24") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -83,7 +81,7 @@ private fun OneLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("One line list item with 40x40 icon") },
+            text = { Text("Однострочный элемент списка с иконкой 40x40") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -94,7 +92,7 @@ private fun OneLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("One line list item with 56x56 icon") },
+            text = { Text("Однострочный элемент списка с иконкой 56x56") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -105,7 +103,7 @@ private fun OneLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("One line clickable list item") },
+            text = { Text("Однострочный кликабельный элемент списка") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -117,7 +115,7 @@ private fun OneLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("One line list item with trailing icon") },
+            text = { Text("Однострочный элемент списка с иконкой в конце") },
             trailing = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -127,7 +125,7 @@ private fun OneLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("One line list item") },
+            text = { Text("Однострочный элемент списка") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -151,18 +149,18 @@ private fun OneLineListItemExample() {
 private fun TwoLineListItemExample() {
     Column {
         ListItem(
-            text = { Text("Two line list item") },
-            secondaryText = { Text("Secondary text") }
+            text = { Text("Двухстрочный элемент списка") },
+            secondaryText = { Text("Вторичный текст") }
         )
         Divider()
         ListItem(
-            text = { Text("Two line list item") },
-            overlineText = { Text("OVERLINE") }
+            text = { Text("Двухстрочный элемент списка") },
+            overlineText = { Text("НАДПИСЬ") }
         )
         Divider()
         ListItem(
-            text = { Text("Two line list item with 24x24 icon") },
-            secondaryText = { Text("Secondary text") },
+            text = { Text("Двухстрочный элемент списка с иконкой 24x24") },
+            secondaryText = { Text("Вторичный текст") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -172,8 +170,8 @@ private fun TwoLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("Two line list item with 40x40 icon") },
-            secondaryText = { Text("Secondary text") },
+            text = { Text("Двухстрочный элемент списка с иконкой 40x40") },
+            secondaryText = { Text("Вторичный текст") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -184,9 +182,9 @@ private fun TwoLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("Two line list item with 40x40 icon") },
-            secondaryText = { Text("Secondary text") },
-            trailing = { Text("meta") },
+            text = { Text("Двухстрочный элемент списка с иконкой 40x40") },
+            secondaryText = { Text("Вторичный текст") },
+            trailing = { Text("мета") },
             icon = {
                 Icon(
                     Icons.Filled.Favorite,
@@ -204,29 +202,29 @@ private fun TwoLineListItemExample() {
 private fun ThreeLineListItemExample() {
     Column {
         ListItem(
-            text = { Text("Three line list item") },
+            text = { Text("Трехстрочный элемент списка") },
             secondaryText = {
                 Text(
-                    "This is a long secondary text for the current list item, " +
-                            "displayed on two lines"
+                    "Это длинный вторичный текст для текущего элемента списка, " +
+                            "отображается в две строки"
                 )
             },
             singleLineSecondaryText = false,
-            trailing = { Text("meta") }
+            trailing = { Text("мета") }
         )
         Divider()
         ListItem(
-            text = { Text("Three line list item") },
-            overlineText = { Text("OVERLINE") },
-            secondaryText = { Text("Secondary text") }
+            text = { Text("Трехстрочный элемент списка") },
+            overlineText = { Text("НАДПИСЬ") },
+            secondaryText = { Text("Вторичный текст") }
         )
         Divider()
         ListItem(
-            text = { Text("Three line list item with 24x24 icon") },
+            text = { Text("Трехстрочный элемент списка с иконкой 24x24") },
             secondaryText = {
                 Text(
-                    "This is a long secondary text for the current list item " +
-                            "displayed on two lines"
+                    "Это длинный вторичный текст для текущего элемента списка " +
+                            "отображается в две строки"
                 )
             },
             singleLineSecondaryText = false,
@@ -239,11 +237,11 @@ private fun ThreeLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("Three line list item with trailing icon") },
+            text = { Text("Трехстрочный элемент списка с иконкой в конце") },
             secondaryText = {
                 Text(
-                    "This is a long secondary text for the current list" +
-                            " item, displayed on two lines"
+                    "Это длинный вторичный текст для текущего элемента списка," +
+                            " отображается в две строки"
                 )
             },
             singleLineSecondaryText = false,
@@ -256,10 +254,10 @@ private fun ThreeLineListItemExample() {
         )
         Divider()
         ListItem(
-            text = { Text("Three line list item") },
-            overlineText = { Text("OVERLINE") },
-            secondaryText = { Text("Secondary text") },
-            trailing = { Text("meta") }
+            text = { Text("Трехстрочный элемент списка") },
+            overlineText = { Text("НАДПИСЬ") },
+            secondaryText = { Text("Вторичный текст") },
+            trailing = { Text("мета") }
         )
         Divider()
     }
@@ -268,16 +266,15 @@ private fun ThreeLineListItemExample() {
 @ExperimentalMaterialApi
 @Composable
 private fun CombinedListItemExample() {
-
     Column {
         var switched by remember { mutableStateOf(false) }
         val onSwitchedChange: (Boolean) -> Unit = { switched = it }
         ListItem(
-            text = { Text("Switch ListItem") },
+            text = { Text("Переключатель (Switch) в списке") },
             trailing = {
                 Switch(
                     checked = switched,
-                    onCheckedChange = null // null recommended for accessibility with screenreaders
+                    onCheckedChange = null
                 )
             },
             modifier = Modifier.toggleable(
@@ -289,11 +286,11 @@ private fun CombinedListItemExample() {
         var checked by remember { mutableStateOf(true) }
         val onCheckedChange: (Boolean) -> Unit = { checked = it }
         ListItem(
-            text = { Text("Checkbox ListItem") },
+            text = { Text("Флажок (Checkbox) в списке") },
             trailing = {
                 Checkbox(
                     checked = checked,
-                    onCheckedChange = null // null recommended for accessibility with screenreaders
+                    onCheckedChange = null
                 )
             },
             modifier = Modifier.toggleable(

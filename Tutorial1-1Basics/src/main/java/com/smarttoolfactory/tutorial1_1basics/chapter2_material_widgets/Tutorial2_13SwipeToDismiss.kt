@@ -55,39 +55,41 @@ fun Tutorial2_13Screen() {
 @Composable
 private fun TutorialContent(viewModel: MyViewModel) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        // Button  to generate list. viewmodel is used to generate list which is close to real world scenario
+        // Кнопка для генерации списка. ViewModel используется для генерации списка, что ближе к реальному сценарию
         Button(onClick = {
             viewModel.newList()
         }) {
-            Text(text = "Generate User List")
+            Text(text = "Сгенерировать список пользователей")
         }
 
-        // safely collecting flows
+        // Безопасная подписка на flow
         val usersList = viewModel.listFlow.collectAsStateWithLifecycle()
-        // This is an example of a list of dismissible items, similar to what you would see in an
-// email app. Swiping left reveals a 'delete' icon and swiping right reveals a 'done' icon.
-// The background will start as grey, but once the dismiss threshold is reached, the colour
-// will animate to red if you're swiping left or green if you're swiping right. When you let
-// go, the item will animate out of the way if you're swiping left (like deleting an email) or
-// back to its default position if you're swiping right (like marking an email as read/unread).
+
+        // Пример списка с элементами, которые можно «смахивать» (dismissible),
+        // похоже на то, что мы видим в почтовых клиентах. Смахивание влево показывает иконку «удалить»,
+        // а смахивание вправо показывает иконку «готово». Фон сначала будет серым, но когда будет
+        // достигнут порог смахивания, цвет анимированно поменяется на красный при смахивании влево
+        // или на зелёный при смахивании вправо. Когда пользователь отпускает элемент, он анимированно
+        // смещается в сторону при смахивании влево (как при удалении письма) или возвращается
+        // в исходное положение при смахивании вправо (как при пометке письма прочитанным/непрочитанным).
         LazyColumn {
-            // deleting items will change row positions so it is required to add key which is unique
-            // for demo user id is used as key
+            // При удалении элементов меняется позиция строк, поэтому нужно добавить key — уникальный для каждого элемента.
+            // Для демо используется user id в качестве key.
             items(items = usersList.value, key = { user -> user.id }) { user ->
 
                 // https://stackoverflow.com/questions/75040603/is-composes-swipe-to-dismiss-state-always-remember-the-old-item-based-on-id-ev
-                // This is required as explained in the link stackoverflow link
+                // Это требуется, как объясняется в ссылке (StackOverflow), чтобы обновлять состояние при изменении элементов
                 val currentItem by rememberUpdatedState(user)
 
                 val dismissState = rememberDismissState(
                     confirmStateChange = { dismissValue  ->
                         when (dismissValue) {
-                            // do something when right to left swipe
+                            // Что-то делаем при смахивании справа налево
                             DismissedToEnd -> {
                                 viewModel.removeItem(currentItem)
                                 true
                             }
-                            // do something when left to right swipe
+                            // Что-то делаем при смахивании слева направо
                             DismissedToStart -> {
                                 viewModel.removeItem(currentItem)
                                 true
@@ -96,6 +98,7 @@ private fun TutorialContent(viewModel: MyViewModel) {
                         }
                     }
                 )
+
                 SwipeToDismiss(
                     state = dismissState,
                     modifier = Modifier.padding(vertical = 4.dp),
@@ -108,7 +111,6 @@ private fun TutorialContent(viewModel: MyViewModel) {
                         val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
 
                         val color by animateColorAsState(
-
                             when (dismissState.targetValue) {
                                 Default -> Color.LightGray
                                 DismissedToEnd -> Color.Green
@@ -151,7 +153,7 @@ private fun TutorialContent(viewModel: MyViewModel) {
                                 text = {
                                     Text(user.name, fontWeight = FontWeight.Bold)
                                 },
-                                secondaryText = { Text("Swipe me left or right!") }
+                                secondaryText = { Text("Смахните меня влево или вправо!") }
                             )
                         }
                     }
@@ -161,7 +163,7 @@ private fun TutorialContent(viewModel: MyViewModel) {
     }
 }
 
-// ViewModel to generate list and expose the data as flow to ui
+// ViewModel для генерации списка и предоставления данных в виде flow для UI
 class MyViewModel : ViewModel() {
     private var userList = mutableStateListOf<User>()
     val listFlow = MutableStateFlow(userList)
@@ -180,7 +182,6 @@ class MyViewModel : ViewModel() {
         val index = userList.indexOf(item)
         userList.remove(userList[index])
     }
-
 }
 
 data class User(val id: Int, val name: String)

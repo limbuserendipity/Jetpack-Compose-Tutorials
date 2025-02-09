@@ -71,12 +71,12 @@ private fun TutorialContent(initialState: BottomSheetValue = BottomSheetValue.Co
         bottomSheetState = rememberBottomSheetState(
             initialValue = initialState,
             confirmStateChange = { bottomSheetValue: BottomSheetValue ->
-                // This callback gets called twice in Jetpack Compose version 1.5.4
-                println("State changed to $bottomSheetValue")
+                // В Jetpack Compose версии 1.5.4 данный колбэк вызывается дважды
+                println("Состояние изменилось на $bottomSheetValue")
                 if (!isInPreview) {
                     Toast.makeText(
                         context,
-                        "State changed to $bottomSheetValue",
+                        "Состояние изменилось на $bottomSheetValue",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -98,7 +98,7 @@ private fun TutorialContent(initialState: BottomSheetValue = BottomSheetValue.Co
         sheetContent = {
             SheetContent()
         },
-        // This is the height in collapsed state
+        // Высота в свернутом состоянии (Collapsed)
         sheetPeekHeight = 70.dp,
         floatingActionButton = {
             FloatingActionButtonComponent(bottomSheetScaffoldState.bottomSheetState)
@@ -136,7 +136,7 @@ private fun MainContent(bottomSheetState: BottomSheetState) {
 
         Text(
             color = Color.White,
-            text = "currentValue: ${currentValue}\n" +
+            text = "currentValue: $currentValue\n" +
                     "offset: $offset"
         )
 
@@ -147,7 +147,6 @@ private fun MainContent(bottomSheetState: BottomSheetState) {
     }
 }
 
-
 @ExperimentalMaterialApi
 @Composable
 private fun FloatingActionButtonComponent(
@@ -156,7 +155,7 @@ private fun FloatingActionButtonComponent(
     val coroutineScope = rememberCoroutineScope()
     val iconRotation by animateFloatAsState(
         targetValue = if (bottomSheetState.isCollapsed) 0f else 180f,
-        label = "Icon Rotation Anim",
+        label = "Поворот иконки",
         animationSpec = tween()
     )
 
@@ -175,8 +174,8 @@ private fun FloatingActionButtonComponent(
         Icon(
             imageVector = Icons.Filled.Navigation,
             tint = Color.White,
-            contentDescription = "Icon Rotation",
-            modifier = Modifier.graphicsLayer { this.rotationZ = iconRotation }
+            contentDescription = "Поворот иконки",
+            modifier = Modifier.graphicsLayer { rotationZ = iconRotation }
         )
     }
 }
@@ -185,16 +184,16 @@ private fun FloatingActionButtonComponent(
 private fun SheetContent() {
     Column(
         modifier = Modifier
-            // Min height doesn't have effect since peekHeight is
-            // used for BottomSheetValue.Collapsed
-            // max height determines how high content can be when
-            // BottomSheetValue.Expanded
+            // Минимальная высота не влияет, так как в свернутом состоянии
+            // используется sheetPeekHeight
+            // Максимальная высота определяет, какой высоты может достигать контент
+            // при состоянии Expanded
             .heightIn(min = 300.dp, max = 500.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Places to Visit",
+            text = "Места для посещения",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             color = Color(0xffFDD835),

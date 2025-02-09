@@ -32,19 +32,20 @@ import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
 
 
 /**
- * Tutorial about [Column]s, [Row]s, [Box] and [Modifier]s.
+ * Учебник о [Column], [Row], [Box] и [Modifier].
  *
- * * [Column] contains it's children in vertical order
- * * [Row] contains it's children in horizontal order.
- * * [Box] stacks it's children on top of each other.
+ * * [Column] размещает свои дочерние элементы в вертикальном порядке.
+ * * [Row] размещает свои дочерние элементы в горизонтальном порядке.
+ * * [Box] накладывает свои дочерние элементы друг на друга.
  *
- * * [Modifier] is used to set properties such as dimensions, padding, background color,
- * click action, ***padding***, and more.
+ * * [Modifier] используется для задания свойств, таких как размеры, отступы, цвет фона,
+ * действие при нажатии, ***padding*** и многое другое.
  *
- * ## Note
- * Order of modifiers matter. Depending on which order **padding** is added
- * it makes UI component(Compose) to have either margin or padding.
+ * ## Примечание
+ * Порядок модификаторов имеет значение. В зависимости от порядка добавления **padding**
+ * компонент интерфейса (Compose) будет иметь либо отступ, либо внутренний отступ (margin или padding).
  */
+
 @Preview(showBackground = true)
 @Composable
 fun Tutorial1_1Screen() {
@@ -58,47 +59,46 @@ private fun TutorialContent() {
 
         item {
             TutorialHeader(text = "Row")
-            StyleableTutorialText(text = "1-) **Row** is a layout composable that places its children in a horizontal sequence.")
+            StyleableTutorialText(text = "1-) **Row** — это layout composable, который размещает свои дочерние элементы в горизонтальной последовательности.")
             RowExample()
 
             TutorialHeader(text = "Column")
-            StyleableTutorialText(text = "2-) **Column** is a layout composable that places its children in a vertical sequence.")
+            StyleableTutorialText(text = "2-) **Column** — это layout composable, который размещает свои дочерние элементы в вертикальной последовательности.")
             ColumnExample()
 
             StyleableTutorialText(
-                text = "3-) Padding order determines whether it's padding or margin for that component."
-                        + "In example below check out paddings."
+                text = "3-) Порядок отступов определяет, является ли это padding или margin для компонента. " +
+                        "В приведённом ниже примере обратите внимание на отступы."
             )
             ColumnsAndRowPaddingsExample()
 
-            StyleableTutorialText(text = "4-) Shadow can be applied to Column or Row.")
+            StyleableTutorialText(text = "4-) Тень может быть применена к Column или Row.")
             ShadowExample()
 
             TutorialHeader(text = "Box")
             StyleableTutorialText(
-                text = "5-) **Box** aligns children on top of each other like a Stack. " +
-                        "The one declared last is on top"
+                text = "5-) **Box** выравнивает дочерние элементы друг над другом. " +
+                        "Элемент, объявленный последним, располагается сверху."
             )
             BoxExample()
 
             StyleableTutorialText(
-                text = "6-) Elements in Box can be aligned with different alignments."
+                text = "7-) Spacer можно использовать для выравнивания элементов по краям или внизу экрана."
             )
             BoxShadowAndAlignmentExample()
 
             TutorialHeader(text = "Spacer")
 
             StyleableTutorialText(
-                text = "7-) Spacer can be used to align elements to end or bottom of screen"
+                text = "7-) Spacer можно использовать для выравнивания элементов по краям или внизу экрана."
             )
             WeightExample()
 
             TutorialHeader(text = "Weight and Spacer")
             StyleableTutorialText(
-                text = "8-) **Weight** determines, based on total weight, how much of the parent's " +
-                        "dimensions should be occupied by each child. **Spacer** is used to " +
-                        "create horizontal or vertical " +
-                        "space between components."
+                text = "8-) **Weight** определяет, на основе общего веса, сколько пространства родительского контейнера " +
+                        "должно занимать каждое дочернее звено. **Spacer** используется для создания " +
+                        "горизонтальных или вертикальных промежутков между компонентами."
             )
             WeightAndSpacerExample()
         }
@@ -231,13 +231,13 @@ fun ColumnsAndRowPaddingsExample() {
         .fillMaxWidth()
         .wrapContentHeight()
 
-    // 🔥 Padding after Yellow background leaves space inside container
+    // 🔥 Отступ после жёлтого фона оставляет пространство внутри контейнера
     val modifierA = Modifier
         .background(Color(0xFFFFEB3B))
         .padding(15.dp)
 
-    // 🔥 Padding(10dp) before cyan color acts as margin while padding end leaves
-    // space(padding) for the content inside the container
+// 🔥 Отступ (10dp) перед голубым цветом действует как margin, а завершающий отступ оставляет
+// пространство (padding) для содержимого внутри контейнера
     val modifierB = Modifier
         .padding(10.dp)
         .background(Color(0xFF80DEEA))
@@ -317,7 +317,7 @@ fun BoxExample() {
 
     ) {
 
-        // This is the one at the bottom
+        // Это элемент внизу
         Text(
             text = "First",
             modifier = Modifier
@@ -326,7 +326,7 @@ fun BoxExample() {
             color = Color.White,
         )
 
-        // This is the one in the middle
+        // Это элемент в середине
         Text(
             text = "Second",
             modifier = Modifier
@@ -335,7 +335,7 @@ fun BoxExample() {
             color = Color.White
         )
 
-        // This is the one on top
+        // Это элемент сверху
         Text(
             text = "Third ",
             modifier = Modifier
@@ -364,7 +364,7 @@ fun BoxShadowAndAlignmentExample() {
                     shape = RoundedCornerShape(8.dp)
                 )
         ) {
-            // This is the one at the bottom
+            // Это элемент внизу
             Text(
                 text = "First",
                 modifier = Modifier
@@ -383,7 +383,7 @@ fun BoxShadowAndAlignmentExample() {
                 .align(Alignment.TopEnd)
 
         ) {
-            // This is the one in the middle
+            // Это элемент в середине
             Text(
                 text = "Second",
                 modifier = Modifier
@@ -405,7 +405,7 @@ fun BoxShadowAndAlignmentExample() {
             modifier = modifier
 
         ) {
-            // This is the one on top
+            // Это элемент сверху
             Text(
                 text = "Third ",
                 modifier = Modifier
@@ -429,7 +429,7 @@ fun WeightExample() {
                     .padding(4.dp)
             )
 
-            // 🔥 This spacer fills space between Row1 and space other than Row2, and Row3
+            // 🔥 Этот Spacer заполняет пространство между Row1 и остальными элементами Row2 и Row3
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
@@ -469,7 +469,7 @@ fun WeightExample() {
 @Composable
 fun WeightAndSpacerExample() {
 
-    // This is parent modifier
+    // Это элемент в середине
     val modifier = Modifier
         .fillMaxWidth()
         .height(60.dp)
@@ -488,7 +488,7 @@ fun WeightAndSpacerExample() {
             modifier = rowModifier.weight(2f)
         )
 
-        // Spacer creates a space with given modifier width or height based on which scope(row/column) it exists
+        // Этот Spacer создаёт пространство между компонентами в Row или Column
         Spacer(modifier = modifier.weight(1f))
 
         Text(
@@ -506,7 +506,7 @@ fun WeightAndSpacerExample() {
         )
     }
 
-    // This spacer is for column which behaves as padding below this component
+    // Этот Spacer используется в Column и действует как отступ ниже компонента
     Spacer(modifier = Modifier.height(16.dp))
 }
 

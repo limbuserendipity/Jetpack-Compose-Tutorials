@@ -59,7 +59,6 @@ import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialHeader
 import com.smarttoolfactory.tutorial1_1basics.ui.components.TutorialText2
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
-
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
@@ -91,35 +90,39 @@ private fun TutorialContent() {
 private fun SnackBarExample() {
     TutorialHeader(text = "SnackBar")
     StyleableTutorialText(
-        text = "1-) **Snackbar** provides brief messages about app processes at the bottom of the screen."
+        text = "1-) **Snackbar** предоставляет краткие сообщения о процессах приложения в нижней части экрана."
     )
 
-    TutorialText2(text = "Basic SnackBar")
+    TutorialText2(text = "Обычный SnackBar")
     Snackbar(modifier = Modifier.padding(4.dp)) {
-        Text("Basic Snackbar")
+        Text("Простой Snackbar")
     }
 
     TutorialText2(text = "Action SnackBar")
     val context = LocalContext.current
     val isInPreview = isInPreview
-    Snackbar(modifier = Modifier.padding(4.dp),
+    Snackbar(
+        modifier = Modifier.padding(4.dp),
         action = {
             Text(
-                text = "Action",
+                text = "Действие",
                 modifier = Modifier.clickable {
                     if (!isInPreview) {
                         Toast.makeText(context, "Action is clicked", Toast.LENGTH_SHORT).show()
                     }
                 })
-        }) {
+        }
+    ) {
         Text("Action Snackbar")
     }
 
     TutorialText2(text = "actionOnNewLine SnackBar")
-    Snackbar(modifier = Modifier.padding(4.dp),
+    Snackbar(
+        modifier = Modifier.padding(4.dp),
         actionOnNewLine = true,
         action = {
-            Text(text = "Action",
+            Text(
+                text = "Действие",
                 color = Color(0xffCE93D8),
                 modifier = Modifier.clickable {
                     if (!isInPreview) {
@@ -127,12 +130,14 @@ private fun SnackBarExample() {
                     }
                 }
             )
-        }) {
+        }
+    ) {
         Text("Action on new line Snackbar")
     }
 
-    TutorialText2(text = "Snackbar Style")
-    Snackbar(modifier = Modifier.padding(4.dp),
+    TutorialText2(text = "Snackbar Cтиль")
+    Snackbar(
+        modifier = Modifier.padding(4.dp),
         shape = CutCornerShape(topStart = 8.dp),
         elevation = 2.dp,
 //            backgroundColor = SnackbarDefaults.backgroundColor,
@@ -141,24 +146,26 @@ private fun SnackBarExample() {
         contentColor = Color(0xffEC407A),
         action = {
             Text(
-                text = "Action",
+                text = "Действие",
                 modifier = Modifier.clickable {
                     if (!isInPreview) {
                         Toast.makeText(context, "Action is clicked", Toast.LENGTH_SHORT).show()
                     }
                 })
-        }) {
-        Text("Snackbar with custom shape and colors")
+        }
+    ) {
+        Text("Snackbar с пользовательской формой и цветами")
     }
 
-    Snackbar(modifier = Modifier.padding(4.dp),
+    Snackbar(
+        modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         elevation = 1.dp,
         backgroundColor = Color(0xff4CAF50),
         contentColor = Color(0xffFFFF00),
         action = {
             Text(
-                text = "Action",
+                text = "Действие",
                 color = Color(0xffD32F2F),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable {
@@ -166,8 +173,9 @@ private fun SnackBarExample() {
                         Toast.makeText(context, "Action is clicked", Toast.LENGTH_SHORT).show()
                     }
                 })
-        }) {
-        Text("Snackbar with custom shape and colors")
+        }
+    ) {
+        Text("Snackbar с пользовательской формой и цветами")
     }
 }
 
@@ -175,18 +183,16 @@ private fun SnackBarExample() {
 private fun ProgressIndicatorExample() {
     TutorialHeader(text = "ProgressIndicator")
     StyleableTutorialText(
-        text = "2-) Progress indicators express an unspecified wait time or display the length of a process."
+        text = "2-) Индикаторы прогресса отображают неопределённое время ожидания или показывают, сколько осталось до завершения процесса."
     )
 
-    TutorialText2("Indeterminate progress")
+    TutorialText2("Неопределённый прогресс")
     CircularProgressIndicator()
     Spacer(modifier = Modifier.height(8.dp))
     LinearProgressIndicator()
     Spacer(modifier = Modifier.height(8.dp))
 
-
-
-    TutorialText2("Determinate progress")
+    TutorialText2("Определённый прогресс")
     val progress: Int by progressFlow.collectAsState(initial = 0)
     CircularProgressIndicator(
         progress = progress / 100f,
@@ -202,7 +208,7 @@ private fun ProgressIndicatorExample() {
         backgroundColor = Color(0xff2196F3)
     )
 
-    TutorialText2("Animated Progress")
+    TutorialText2("Анимированный прогресс")
     var progressAnimated by remember { mutableStateOf(0.1f) }
 
     val animatedProgress by animateFloatAsState(
@@ -215,7 +221,7 @@ private fun ProgressIndicatorExample() {
                 if (progressAnimated < 1f) progressAnimated += 0.1f
             }
         ) {
-            Text("Increase")
+            Text("Увеличить")
         }
         Spacer(Modifier.requiredWidth(30.dp))
         LinearProgressIndicator(progress = animatedProgress)
@@ -226,8 +232,8 @@ private fun ProgressIndicatorExample() {
 private fun CheckboxExample() {
     TutorialHeader(text = "Checkbox")
     StyleableTutorialText(
-        text = "2-) Progress indicators express an unspecified wait time or display the " +
-                "length of a process. **TriStateCheckbox** can be used to set child checkboxes."
+        text = "2-) Индикаторы прогресса отображают неопределённое время ожидания или показывают, " +
+                "сколько осталось до завершения процесса. **TriStateCheckbox** можно использовать для управления дочерними checkbox."
     )
 
     TutorialText2("Checkbox")
@@ -242,31 +248,31 @@ private fun CheckboxExample() {
 
     var checkBoxState2 by remember { mutableStateOf(false) }
 
-    CheckBoxWithText("Checkbox with Text", checkBoxState2) {
+    CheckBoxWithText("Checkbox с текстом", checkBoxState2) {
         checkBoxState2 = it
     }
 
     var checkBoxState3 by remember { mutableStateOf(false) }
 
-    CheckBoxWithTextRippleFullRow("Checkbox with Text and ripple", checkBoxState3) {
+    CheckBoxWithTextRippleFullRow("Checkbox с текстом и ripple", checkBoxState3) {
         checkBoxState3 = it
     }
 
     TutorialText2("TriStateCheckbox")
 
-    // Parent and children checkboxes with TriStateCheckbox
+    // Родительский и дочерние checkbox с TriStateCheckbox
     Column(modifier = Modifier.padding(8.dp)) {
-        // define dependent checkboxes states
+        // определяем состояния дочерних checkbox
         val (state, onStateChange) = remember { mutableStateOf(true) }
         val (state2, onStateChange2) = remember { mutableStateOf(true) }
 
-        // TriStateCheckbox state reflects state of dependent checkboxes
+        // Состояние TriStateCheckbox отражает состояние дочерних checkbox
         val parentState = remember(state, state2) {
             if (state && state2) ToggleableState.On
             else if (!state && !state2) ToggleableState.Off
             else ToggleableState.Indeterminate
         }
-        // click on TriStateCheckbox can set state for dependent checkboxes
+        // Нажатие на TriStateCheckbox может установить состояние для дочерних checkbox
         val onParentClick = {
             val s = parentState != ToggleableState.On
             onStateChange(s)
@@ -275,7 +281,7 @@ private fun CheckboxExample() {
 
         Spacer(modifier = Modifier.width(16.dp))
         Row {
-            // 🔥 Tri state
+            // 🔥 TriState
             TriStateCheckbox(
                 state = parentState,
                 onClick = onParentClick,
@@ -285,13 +291,13 @@ private fun CheckboxExample() {
             )
 
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Additions")
+            Text(text = "Дополнения")
         }
         Spacer(Modifier.height(8.dp))
         Column(Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)) {
-            CheckBoxWithText(label = "Pickles", state = state, onStateChange = onStateChange)
+            CheckBoxWithText(label = "Огурцы", state = state, onStateChange = onStateChange)
             Spacer(Modifier.height(8.dp))
-            CheckBoxWithText(label = "Tomato", state = state2, onStateChange = onStateChange2)
+            CheckBoxWithText(label = "Помидор", state = state2, onStateChange = onStateChange2)
         }
     }
 }
@@ -301,8 +307,8 @@ private fun SwitchExample() {
 
     TutorialHeader(text = "Switch")
     StyleableTutorialText(
-        text = "3-) **Switch** toggles the state of a single item on or off. " +
-                "**enabled** flag set to false on the ones in right half."
+        text = "3-) **Switch** переключает состояние одного элемента, включая или выключая его. " +
+                "**enabled** устанавливается в false для элементов в правой части."
     )
 
     val switchColors = SwitchDefaults.colors(
@@ -345,18 +351,16 @@ private fun SwitchExample() {
 @Composable
 private fun RadioButtonExample() {
 
-
     TutorialHeader(text = "RadioButton")
     StyleableTutorialText(
-        text = "4-) **RadioButton** allow users to select one option from a set."
+        text = "4-) **RadioButton** позволяет пользователям выбрать один вариант из набора."
     )
 
     var isRadioSelected by remember { mutableStateOf(true) }
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
 
-        // Enabled RadioButtons
-
+        // Включённые RadioButton
         RadioButton(selected = isRadioSelected, onClick = { isRadioSelected = !isRadioSelected })
         RadioButton(
             selected = isRadioSelected,
@@ -368,8 +372,7 @@ private fun RadioButtonExample() {
             )
         )
 
-        // Disabled RadioButtons
-
+        // Выключенные RadioButton
         RadioButton(
             enabled = false,
             selected = false,
@@ -389,13 +392,13 @@ private fun RadioButtonExample() {
         )
     }
 
-    TutorialText2("Selectable group")
+    TutorialText2("Группа RadioButton")
 
     Spacer(Modifier.height(8.dp))
 
-    // We have two radio buttons and only one can be selected
+    // У нас два radio button, и только один может быть выбран
     var state by remember { mutableStateOf(true) }
-    // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
+    // Modifier.selectableGroup() важен для корректной доступности
     Row(
         Modifier
             .selectableGroup()
@@ -412,16 +415,16 @@ private fun RadioButtonExample() {
         )
     }
 
-    TutorialText2("Selectable group with text")
+    TutorialText2("Группа RadioButton с текстом")
 
-    val radioOptions = listOf("Calls", "Missed", "Friends")
+    val radioOptions = listOf("Звонки", "Пропущенные", "Друзья")
 
     val (selectedOption: String, onOptionSelected: (String) -> Unit) = remember {
         mutableStateOf(
             radioOptions[0]
         )
     }
-// Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
+    // Modifier.selectableGroup() важен для корректной доступности
     Column(Modifier.selectableGroup()) {
         radioOptions.forEach { text ->
             Row(
@@ -438,7 +441,7 @@ private fun RadioButtonExample() {
             ) {
                 RadioButton(
                     selected = (text == selectedOption),
-                    onClick = null // null recommended for accessibility with screenreaders
+                    onClick = null
                 )
                 Text(
                     text = text,
@@ -456,9 +459,8 @@ private fun SliderExample() {
 
     TutorialHeader(text = "Slider")
     StyleableTutorialText(
-        text = "5-) **Slider** reflects a range of values along a bar, " +
-                "from which users may select a single value. They are ideal for adjusting " +
-                "settings such as volume, brightness, or applying image filters."
+        text = "5-) **Slider** отражает диапазон значений, из которых пользователь может выбрать одно. " +
+                "Он идеально подходит для регулировки таких параметров, как громкость, яркость или фильтры изображений."
     )
     TutorialText2("Slider")
 
@@ -522,14 +524,14 @@ private fun SliderExample() {
 }
 
 /**
- * Composable that shows a title as initial letter, title color and a Slider to pick color
+ * Компонент, показывающий заголовок в виде первой буквы, цвет заголовка и Slider для выбора цвета
  */
 @Composable
 fun ColorSlider(
     modifier: Modifier,
     title: String,
     titleColor: Color,
-    valueRange:  ClosedFloatingPointRange<Float> = 0f..255f,
+    valueRange: ClosedFloatingPointRange<Float> = 0f..255f,
     rgb: Float,
     onColorChanged: (Float) -> Unit
 ) {
@@ -552,14 +554,13 @@ fun ColorSlider(
             fontSize = 12.sp,
             modifier = Modifier.width(30.dp)
         )
-
     }
 }
 
 @Composable
 private fun CheckBoxWithText(label: String, state: Boolean, onStateChange: (Boolean) -> Unit) {
 
-    // Checkbox with text on right side
+    // Checkbox с текстом справа
     val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = Modifier
@@ -567,7 +568,7 @@ private fun CheckBoxWithText(label: String, state: Boolean, onStateChange: (Bool
             .height(40.dp)
             .clickable(
                 interactionSource = interactionSource,
-                // This is for removing ripple when Row is clicked
+                // Убираем ripple при клике на Row
                 indication = null,
                 role = Role.Checkbox,
                 onClick = {
@@ -588,23 +589,24 @@ private fun CheckBoxWithText(label: String, state: Boolean, onStateChange: (Bool
 }
 
 @Composable
- fun CheckBoxWithTextRippleFullRow(
+fun CheckBoxWithTextRippleFullRow(
     label: String,
     state: Boolean,
     onStateChange: (Boolean) -> Unit
 ) {
 
-    // Checkbox with text on right side
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(40.dp)
-        .clickable(
-            role = Role.Checkbox,
-            onClick = {
-                onStateChange(!state)
-            }
-        )
-        .padding(8.dp),
+    // Checkbox с текстом справа
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+            .clickable(
+                role = Role.Checkbox,
+                onClick = {
+                    onStateChange(!state)
+                }
+            )
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(

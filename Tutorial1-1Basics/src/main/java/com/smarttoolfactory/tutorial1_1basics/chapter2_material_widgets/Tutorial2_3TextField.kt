@@ -81,7 +81,6 @@ private fun TutorialContent() {
 
         item {
 
-
             val fullWidthModifier =
                 Modifier
                     .fillMaxWidth()
@@ -90,24 +89,24 @@ private fun TutorialContent() {
             TutorialHeader(text = "TextField")
 
             StyleableTutorialText(
-                text = "1-) **TextField** let users enter and edit text. remember is " +
-                        "used with MutableState to store state of text or TextFieldValue"
+                text = "1-) **TextField** позволяет пользователям вводить и редактировать текст. " +
+                        "remember используется с MutableState для сохранения состояния текста или TextFieldValue."
             )
 
             val textFieldValue = remember { mutableStateOf(TextFieldValue("")) }
             TextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                label = { Text("Label") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Метка") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 }
             )
 
-            TutorialText2(text = "Error")
+            TutorialText2(text = "Ошибка")
 
-            val errorText = remember { mutableStateOf(TextFieldValue("Don't leave blank")) }
+            val errorText = remember { mutableStateOf(TextFieldValue("Не оставляйте пустым")) }
 
             TextField(
                 modifier = fullWidthModifier,
@@ -118,12 +117,11 @@ private fun TutorialContent() {
                 label = {
                     Text(text = "")
                 },
-                placeholder = { Text("Placeholder") },
+                placeholder = { Text("Заполнитель") },
                 isError = errorText.value.text.isEmpty(),
             )
 
-
-            TutorialText2(text = "Colors")
+            TutorialText2(text = "Цвета")
 
             TextField(
                 modifier = fullWidthModifier,
@@ -131,8 +129,8 @@ private fun TutorialContent() {
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
-                label = { Text("Label") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Метка") },
+                placeholder = { Text("Заполнитель") },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color(0xffFFD54F),
                     disabledTextColor = Color(0xff42A5F5),
@@ -141,24 +139,22 @@ private fun TutorialContent() {
                 )
             )
 
-            TutorialText2(text = "Colors & Text Style")
+            TutorialText2(text = "Цвета и стиль текста")
             TextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                label = { Text("Label") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Метка") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
                 colors = TextFieldDefaults.textFieldColors(
-
                     backgroundColor = Color(0xff039BE5),
                     disabledTextColor = Color(0xff42A5F5),
                     errorLabelColor = Color(0xff2E7D32),
                     focusedLabelColor = Color(0xffAEEA00),
                     placeholderColor = Color(0xffFFE082),
                 ),
-
                 textStyle = TextStyle(
                     color = Color.White,
                     fontStyle = FontStyle.Italic,
@@ -166,9 +162,8 @@ private fun TutorialContent() {
                 )
             )
 
-            TutorialText2(text = "Shape")
+            TutorialText2(text = "Форма")
             Surface(
-                // This sets text color for Text if not set in textFieldColors
                 contentColor = Color.White,
                 color = Color(0xffEC407A),
                 modifier = fullWidthModifier,
@@ -179,9 +174,8 @@ private fun TutorialContent() {
                     onValueChange = { newValue ->
                         textFieldValue.value = newValue
                     },
-                    placeholder = { Text("Search") },
+                    placeholder = { Text("Поиск") },
                     colors = TextFieldDefaults.textFieldColors(
-                        // 🔥 Removes bottom indicator line
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
@@ -192,8 +186,8 @@ private fun TutorialContent() {
             TextField(
                 modifier = fullWidthModifier.clip(CutCornerShape(8.dp)),
                 value = textFieldValue.value,
-                label = { Text("Label") },
-                placeholder = { Text("No Bottom Line") },
+                label = { Text("Метка") },
+                placeholder = { Text("Без нижней линии") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
@@ -203,7 +197,6 @@ private fun TutorialContent() {
                     unfocusedLabelColor = Color(0xff795548),
                     focusedLabelColor = Color(0xff66BB6A),
                     cursorColor = Color(0xffE1F5FE),
-                    // 🔥 Removes bottom indicator line
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
@@ -218,8 +211,8 @@ private fun TutorialContent() {
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                label = { Text("Label") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Метка") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 }
@@ -228,21 +221,19 @@ private fun TutorialContent() {
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                placeholder = { Text("Placeholder") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 }
             )
-
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
-                label = { Text("Label") },
-                placeholder = { Text("Placeholder") },
-
+                label = { Text("Метка") },
+                placeholder = { Text("Заполнитель") },
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = Color.Blue,
                     backgroundColor = Color.Yellow,
@@ -255,13 +246,13 @@ private fun TutorialContent() {
                 )
             )
 
-            TutorialText2(text = "Single Line and Line Height")
+            TutorialText2(text = "Одна строка и высота строки")
 
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                label = { Text("Single Line") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Одна строка") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
@@ -271,8 +262,8 @@ private fun TutorialContent() {
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = textFieldValue.value,
-                label = { Text("Max Lines 2") },
-                placeholder = { Text("Placeholder") },
+                label = { Text("Максимум 2 строки") },
+                placeholder = { Text("Заполнитель") },
                 onValueChange = { newValue ->
                     textFieldValue.value = newValue
                 },
@@ -280,11 +271,11 @@ private fun TutorialContent() {
             )
 
             StyleableTutorialText(
-                text = "2-) Keyboard options change the type of TextField. For instance " +
-                        "PasswordVisualTransformation" +
-                        "transforms that TextField to password input area"
+                text = "2-) Опции клавиатуры изменяют тип TextField. Например, " +
+                        "PasswordVisualTransformation " +
+                        "превращает TextField в поле для ввода пароля."
             )
-            TutorialText2(text = "keyboardOptions")
+            TutorialText2(text = "Опции клавиатуры")
 
             OutlinedTextField(
                 modifier = fullWidthModifier,
@@ -311,8 +302,8 @@ private fun TutorialContent() {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
 
-            StyleableTutorialText(text = "3-) TextField can have leading and trailing icons.")
-            TutorialText2(text = "Leading and Trailing Icons")
+            StyleableTutorialText(text = "3-) TextField может содержать иконки в начале и конце.")
+            TutorialText2(text = "Ведущие и конечные иконки")
 
             val emailText = remember { mutableStateOf(TextFieldValue("")) }
             OutlinedTextField(
@@ -340,7 +331,7 @@ private fun TutorialContent() {
             ) {
                 TextField(
                     value = searchQuery,
-                    placeholder = { Text("Search") },
+                    placeholder = { Text("Поиск") },
                     leadingIcon = {
                         if (searchQuery.isEmpty()) {
                             Icon(
@@ -354,7 +345,6 @@ private fun TutorialContent() {
                     },
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color(0xffF5F5F5),
-                        // 🔥 Removes bottom indicator line
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
@@ -388,16 +378,16 @@ private fun TutorialContent() {
             )
 
             StyleableTutorialText(
-                text = "4-) Changing IME action changes icon/text at bottom right, " +
-                        "action to be performed when that button is clicked"
+                text = "4-) Изменение действия IME изменяет иконку/текст в правом нижнем углу " +
+                        "и действие, которое будет выполнено при нажатии этой кнопки."
             )
-            TutorialText2(text = "IME Icons and Actions")
+            TutorialText2(text = "Иконки и действия IME")
 
             val searchText = remember { mutableStateOf(TextFieldValue("")) }
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = searchText.value,
-                label = { Text("Search") },
+                label = { Text("Поиск") },
                 placeholder = { Text(text = "") },
                 onValueChange = { newValue ->
                     searchText.value = newValue
@@ -411,7 +401,6 @@ private fun TutorialContent() {
             )
 
             val context = LocalContext.current
-
             val keyboardController = LocalSoftwareKeyboardController.current
 
             OutlinedTextField(
@@ -420,40 +409,35 @@ private fun TutorialContent() {
                 onValueChange = { newValue ->
                     searchText.value = newValue
                 },
-                label = { Text("Search onImeActionPerformed") },
+                label = { Text("Поиск onImeActionPerformed") },
                 placeholder = { Text(text = "") },
-
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Characters,
                     imeAction = ImeAction.Go,
                 ),
-
                 keyboardActions = KeyboardActions(onGo = {
-
                     keyboardController?.hide()
-
                     Toast.makeText(
                         context,
-                        "ImeAction performed onGo " +
-                                ", and keyboardController?.hide()",
+                        "ImeAction выполнено onGo " +
+                                ", и keyboardController?.hide()",
                         Toast.LENGTH_SHORT
                     ).show()
                 })
             )
 
-
             StyleableTutorialText(
-                text = "5-) With **VisualTransformation** and Regex it's possible to " +
-                        "transform text based on a format such as masked chars, phone " +
-                        ", currency or credit card."
+                text = "5-) С помощью **VisualTransformation** и Regex можно " +
+                        "трансформировать текст в определенный формат, например маскированные символы, " +
+                        "телефон, валюту или кредитную карту."
             )
 
             val maskText = remember { mutableStateOf(TextFieldValue("")) }
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = maskText.value,
-                label = { Text("Mask Chars") },
+                label = { Text("Маскировать символы") },
                 placeholder = { Text(text = "") },
                 onValueChange = { newValue ->
                     maskText.value = newValue
@@ -462,14 +446,13 @@ private fun TutorialContent() {
                 visualTransformation = PasswordMaskTransformation()
             )
 
-
             val phoneText = remember { mutableStateOf(TextFieldValue("")) }
             val maxChar = 10
 
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = phoneText.value,
-                label = { Text("Phone") },
+                label = { Text("Телефон") },
                 placeholder = { Text(text = "") },
                 onValueChange = { newValue ->
                     if (newValue.text.length <= maxChar) phoneText.value = newValue
@@ -481,13 +464,12 @@ private fun TutorialContent() {
 
             val creditCardText = remember { mutableStateOf(TextFieldValue("")) }
             val maxCharCreditCard = 16
-            // this for entering number only
             val numberRegex = "^[0-9]+\$".toRegex()
 
             OutlinedTextField(
                 modifier = fullWidthModifier,
                 value = creditCardText.value,
-                label = { Text("Credit Card") },
+                label = { Text("Кредитная карта") },
                 placeholder = { Text(text = "") },
                 onValueChange = { newValue ->
                     val text = newValue.text
@@ -501,8 +483,8 @@ private fun TutorialContent() {
             )
 
             StyleableTutorialText(
-                text = "6-) Basic composable that enables users to edit text via hardware " +
-                        "or software keyboard, but provides no decorations like hint or placeholder."
+                text = "6-) Базовый элемент, который позволяет пользователям вводить текст через аппаратную " +
+                        "или программную клавиатуру, но не предоставляет декораций, таких как подсказка или заполнитель."
             )
 
             Surface(
@@ -516,8 +498,8 @@ private fun TutorialContent() {
                     value = basicText,
                     onValueChange = { newValue ->
                         basicText = newValue
-                    })
-
+                    }
+                )
             }
             Spacer(modifier = Modifier.padding(bottom = 32.dp))
         }
@@ -525,10 +507,9 @@ private fun TutorialContent() {
 }
 
 /**
- * VisualTransformation transforms [AnnotatedString] to required format.
+ * VisualTransformation преобразует [AnnotatedString] в нужный формат.
  */
 class PasswordMaskTransformation : VisualTransformation {
-
     override fun filter(text: AnnotatedString): TransformedText {
         return TransformedText(
             AnnotatedString(text.text.replace(".".toRegex(), "!")),
@@ -543,8 +524,8 @@ class PasswordMaskTransformation : VisualTransformation {
 }
 
 /**
- * VisualTransformation that transforms user input into in appearance, actual text is not
- * as displayed.
+ * VisualTransformation, который преобразует пользовательский ввод в соответствии с внешним видом.
+ * Реальный текст отображается не так, как вводится.
  * ```
  * XXX-XXX-XXXX
  * ```
@@ -552,8 +533,7 @@ class PasswordMaskTransformation : VisualTransformation {
 class PhoneVisualTransformation : VisualTransformation {
 
     override fun filter(text: AnnotatedString): TransformedText {
-        //
-        // Making XXX-XXX-XXXX
+        // Форматирование в виде XXX-XXX-XXXX
         val trimmed = if (text.text.length >= 10) text.text.substring(0..9) else text.text
 
         var output = ""
@@ -564,7 +544,6 @@ class PhoneVisualTransformation : VisualTransformation {
 
         println("PhoneVisualTransformation text: $text, trimmed: $trimmed, output: $output")
 
-
         return TransformedText(AnnotatedString(output), phoneOffsetMap)
     }
 
@@ -574,19 +553,19 @@ class PhoneVisualTransformation : VisualTransformation {
 
             // XXX
             if (offset <= 2) return offset
-            // XXXXXX(5th) is transformed to XXX-XXX
+            // XXXXXX(5-й символ) преобразуется в XXX-XXX
             if (offset <= 5) return offset + 1
-            // XXXXXXXXXX(5th to 9th) is transformed to XXX-XXX
+            // XXXXXXXXXX(от 5-го до 9-го символа) преобразуется в XXX-XXX
             if (offset <= 9) return offset + 2
 
-            // Number of chars in XXX-XXX-XXXX
+            // Количество символов в XXX-XXX-XXXX
             return 12
         }
 
         override fun transformedToOriginal(offset: Int): Int {
 
             println("🔥 transformedToOriginal() offset: $offset")
-            // indexes of -
+            // Индексы тире
             // XXX
             if (offset <= 2) return offset
             // XXX-XXX
@@ -595,13 +574,12 @@ class PhoneVisualTransformation : VisualTransformation {
             if (offset <= 11) return offset - 2
             return 10
         }
-
     }
 }
 
 /**
- * VisualTransformation that transforms user input into in appearance, actual text is not
- * as displayed.
+ * VisualTransformation, который преобразует пользовательский ввод в соответствии с внешним видом.
+ * Реальный текст отображается не так, как вводится.
  * ```
  * XXXX-XXXX-XXXX
  * ```
@@ -614,7 +592,7 @@ class CreditCardVisualTransformation : VisualTransformation {
 
 fun creditCardFilter(text: AnnotatedString): TransformedText {
 
-    // Making XXXX-XXXX-XXXX-XXXX string.
+    // Форматирование строки в виде XXXX-XXXX-XXXX-XXXX
     val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
     var out = ""
     for (i in trimmed.indices) {
@@ -623,13 +601,13 @@ fun creditCardFilter(text: AnnotatedString): TransformedText {
     }
 
     /**
-     * The offset translator should ignore the hyphen characters, so conversion from
-     *  original offset to transformed text works like
-     *  - The 4th char of the original text is 5th char in the transformed text.
-     *  - The 13th char of the original text is 15th char in the transformed text.
-     *  Similarly, the reverse conversion works like
-     *  - The 5th char of the transformed text is 4th char in the original text.
-     *  - The 12th char of the transformed text is 10th char in the original text.
+     * Транслятор смещений должен игнорировать символы тире, чтобы преобразование
+     * оригинального смещения в преобразованный текст работало следующим образом:
+     * - 4-й символ оригинального текста становится 5-м символом преобразованного текста.
+     * - 13-й символ оригинального текста становится 15-м символом преобразованного текста.
+     * Обратное преобразование:
+     * - 5-й символ преобразованного текста становится 4-м символом оригинального текста.
+     * - 12-й символ преобразованного текста становится 10-м символом оригинального текста.
      */
     val creditCardOffsetTranslator = object : OffsetMapping {
         override fun originalToTransformed(offset: Int): Int {
@@ -653,8 +631,8 @@ fun creditCardFilter(text: AnnotatedString): TransformedText {
 }
 
 /**
- * A sample for displaying label, placeholder and clickability with enabled or and readOnly
- * param variations
+ * Пример отображения метки, заполнителя и кликабельности с различными
+ * параметрами включения или readOnly.
  */
 @Preview(showBackground = true)
 @Composable
@@ -666,6 +644,7 @@ private fun TextFieldDisableTest() {
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
+        // Пример обычного TextField
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -673,7 +652,31 @@ private fun TextFieldDisableTest() {
                     Toast
                         .makeText(
                             context,
-                            "Clicked",
+                            "Clicked", // Текст сообщения при клике
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                },
+            value = value, // Текущее значение TextField
+            onValueChange = { value = it }, // Обработчик изменения текста
+            placeholder = {
+                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red)) // Заполнитель
+            },
+            label = {
+                Text("Label", Modifier.border(1.dp, Color.Yellow)) // Метка
+            }
+        )
+        Spacer(modifier = Modifier.height(20.dp)) // Разделитель
+
+        // Пример OutlinedTextField
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    Toast
+                        .makeText(
+                            context,
+                            "Clicked", // Текст сообщения при клике
                             Toast.LENGTH_SHORT
                         )
                         .show()
@@ -681,14 +684,15 @@ private fun TextFieldDisableTest() {
             value = value,
             onValueChange = { value = it },
             placeholder = {
-                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red))
+                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red)) // Заполнитель
             },
             label = {
-                Text("Label", Modifier.border(1.dp, Color.Yellow))
+                Text("Label", Modifier.border(1.dp, Color.Yellow)) // Метка
             }
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp)) // Разделитель
 
+        // Пример OutlinedTextField в режиме только для чтения
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -696,21 +700,24 @@ private fun TextFieldDisableTest() {
                     Toast
                         .makeText(
                             context,
-                            "Clicked",
+                            "Clicked", // Текст сообщения при клике
                             Toast.LENGTH_SHORT
                         )
                         .show()
                 },
             value = value,
-            onValueChange = { value = it },
-            placeholder = {
-                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red))
-            },
+            onValueChange = {}, // Нет обработки изменений
             label = {
-                Text("Label", Modifier.border(1.dp, Color.Yellow))
-            }
+                Text("Label", Modifier.border(1.dp, Color.Yellow)) // Метка
+            },
+            placeholder = {
+                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red)) // Заполнитель
+            },
+            readOnly = true // Режим только для чтения
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp)) // Разделитель
+
+        // Пример отключённого OutlinedTextField
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -718,24 +725,24 @@ private fun TextFieldDisableTest() {
                     Toast
                         .makeText(
                             context,
-                            "Clicked",
+                            "Clicked", // Текст сообщения при клике
                             Toast.LENGTH_SHORT
                         )
                         .show()
                 },
             value = value,
-            onValueChange = {},
+            onValueChange = {}, // Нет обработки изменений
             label = {
-                Text("Label", Modifier.border(1.dp, Color.Yellow))
+                Text("Label", Modifier.border(1.dp, Color.Yellow)) // Метка
             },
             placeholder = {
-                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red))
+                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red)) // Заполнитель
             },
-            readOnly = true
+            enabled = false // Поле отключено
         )
+        Spacer(modifier = Modifier.height(20.dp)) // Разделитель
 
-        Spacer(modifier = Modifier.height(20.dp))
-
+        // Пример отключённого OutlinedTextField в режиме только для чтения
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -743,46 +750,21 @@ private fun TextFieldDisableTest() {
                     Toast
                         .makeText(
                             context,
-                            "Clicked",
+                            "Clicked", // Текст сообщения при клике
                             Toast.LENGTH_SHORT
                         )
                         .show()
                 },
             value = value,
-            onValueChange = {},
+            onValueChange = {}, // Нет обработки изменений
             label = {
-                Text("Label", Modifier.border(1.dp, Color.Yellow))
+                Text("Label", Modifier.border(1.dp, Color.Yellow)) // Метка
             },
             placeholder = {
-                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red))
+                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red)) // Заполнитель
             },
-            enabled = false
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    Toast
-                        .makeText(
-                            context,
-                            "Clicked",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                },
-            value = value,
-            onValueChange = {},
-            label = {
-                Text("Label", Modifier.border(1.dp, Color.Yellow))
-            },
-            placeholder = {
-                Text("Placeholder", modifier = Modifier.border(1.dp, Color.Red))
-            },
-            enabled = false,
-            readOnly = true
+            enabled = false, // Поле отключено
+            readOnly = true // Режим только для чтения
         )
     }
 }

@@ -52,16 +52,15 @@ fun Tutorial2_8Screen(onBack: (() -> Unit)? = null) {
 @Composable
 private fun TutorialContent(onBack: (() -> Unit)? = null) {
     Scaffold(
-
         modifier = Modifier.background(backgroundColor),
-
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {},
                 backgroundColor = Color(0xffFFA000)
             ) {
                 Icon(
-                    Icons.Filled.Add, tint = Color.White,
+                    Icons.Filled.Add,
+                    tint = Color.White,
                     contentDescription = null
                 )
             }
@@ -80,7 +79,7 @@ private fun TutorialContent(onBack: (() -> Unit)? = null) {
 @Composable
 private fun MainContent(bottomAppBarHeight: Dp) {
 
-    // 🔥 Get BottomAppBar height to set correct bottom padding for LazyColumn
+    // 🔥 Получаем высоту BottomAppBar, чтобы установить корректный нижний отступ для LazyColumn
     LazyColumn(
         modifier = Modifier.background(backgroundColor),
         contentPadding = PaddingValues(
@@ -91,22 +90,23 @@ private fun MainContent(bottomAppBarHeight: Dp) {
         ),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
         items(userList) { item: String ->
             Card(shape = RoundedCornerShape(8.dp)) {
                 ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable { },
                     icon = {
                         Image(
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape),
-                            painter = painterResource(id = com.smarttoolfactory.tutorial1_1basics.R.drawable.avatar_1_raster),
+                            painter = painterResource(
+                                id = com.smarttoolfactory.tutorial1_1basics.R.drawable.avatar_1_raster
+                            ),
                             contentDescription = null
                         )
                     },
                     secondaryText = {
-                        Text(text = "Secondary text")
+                        Text(text = "Вторичный текст")
                     }
                 ) {
                     Text(text = item, fontSize = 18.sp)
@@ -125,16 +125,15 @@ private fun BottomAppBarComponent(onBack: (() -> Unit)? = null) {
         cutoutShape = CircleShape
     ) {
 
-        // Leading icons should typically have a high content alpha
+        // Ведущие иконки (Leading icons) обычно должны иметь высокий контент-альфа
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-            IconButton(
-                onClick = { onBack?.invoke() }) {
+            IconButton(onClick = { onBack?.invoke() }) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = null)
             }
-
         }
-        // The actions should be at the end of the BottomAppBar. They use the default medium
-        // content alpha provided by BottomAppBar
+        // Действия (actions) располагаются в конце BottomAppBar.
+        // Они используют значение content alpha по умолчанию (medium),
+        // которое определено в BottomAppBar
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = { }) {
             Icon(Icons.Filled.Search, contentDescription = null)
@@ -145,4 +144,3 @@ private fun BottomAppBarComponent(onBack: (() -> Unit)? = null) {
         }
     }
 }
-

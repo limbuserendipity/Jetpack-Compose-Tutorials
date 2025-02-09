@@ -1,4 +1,3 @@
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,9 +37,9 @@ import com.smarttoolfactory.tutorial1_1basics.model.snacks
 import com.smarttoolfactory.tutorial1_1basics.ui.backgroundColor
 
 /**
- * In this tutorial Snack card has a title below that can either be one or 2 lines
- * so we get line count and height and padding to bottom dynamically to match every Composable's
- * height to each other.
+ * В этом учебном примере у карточки «Snack» есть заголовок, который может состоять из одной или двух строк.
+ * Мы получаем количество строк и высоту заголовка, и динамически меняем отступ снизу,
+ * чтобы высота каждого Composable совпадала друг с другом.
  */
 @Preview
 @Composable
@@ -50,14 +49,17 @@ fun Tutorial2_5Screen6() {
 
 @Composable
 private fun TutorialContent() {
-
     LazyVerticalGrid(
+        // Вертикальный отступ между элементами
         verticalArrangement = Arrangement.spacedBy(8.dp),
+        // Горизонтальный отступ между элементами
         horizontalArrangement = Arrangement.spacedBy(8.dp),
+        // Отступы по краям
         contentPadding = PaddingValues(12.dp),
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor),
+        // Фиксированное количество столбцов
         columns = GridCells.Fixed(2),
         content = {
             items(snacks) { snack: Snack ->
@@ -65,7 +67,6 @@ private fun TutorialContent() {
             }
         }
     )
-
 }
 
 @Composable
@@ -76,23 +77,27 @@ fun GridSnackCardWithTitle(
     Column(
         modifier = modifier
             .heightIn(min = 200.dp)
+            // Тень для карточки
             .shadow(1.dp, shape = RoundedCornerShape(5.dp))
+            // Фон карточки
             .background(Color.White),
+    ) {
 
-        ) {
-
+        // Получаем текущее значение плотности пикселей (density) экрана
         val density = LocalDensity.current.density
 
         Image(
+            // Установка способа масштабирования контента
             contentScale = ContentScale.None,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .clip(RoundedCornerShape(8.dp))
-                .clickable { },
+                .clickable { /* Обработка нажатия на изображение */ },
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current).data(data = snack.imageUrl)
                     .apply(block = fun ImageRequest.Builder.() {
+                        // Плейсхолдер до загрузки изображения
                         placeholder(drawableResId = R.drawable.placeholder)
                     }
                     ).build()
@@ -100,19 +105,25 @@ fun GridSnackCardWithTitle(
             contentDescription = null
         )
 
+        // Переменная для динамического отступа снизу
         var padding by remember { mutableStateOf(0.dp) }
+
         Text(
-            modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 4.dp, bottom=padding),
+            modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 4.dp, bottom = padding),
             text = "Snack ${snack.name}",
             fontSize = 20.sp,
+            // onTextLayout вызывается при вычислении лейаута текста
             onTextLayout = {
                 val lineCount = it.lineCount
+                // Высота текста в dp
                 val height = (it.size.height / density).dp
 
                 println("lineCount: $lineCount, Height: $height")
+
+                // Если строк > 1, не добавляем дополнительный отступ, иначе
+                // прибавляем высоту, чтобы все карточки были одинакового размера
                 padding = 4.dp + if (lineCount > 1) 0.dp else height
             }
         )
-
     }
 }
